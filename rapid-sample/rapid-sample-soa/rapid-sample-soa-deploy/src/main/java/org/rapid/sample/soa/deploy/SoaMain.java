@@ -17,7 +17,7 @@ public class SoaMain {
 		System.setProperty("logback.configurationFile", SoaMain.class.getResource("/conf/logback.xml").getFile());
 				
 		SpringBoot boot = new SpringBoot();
-		boot.start(SoaConfig.class);
+		boot.start(SoaBoot.class);
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			Logger logger = LoggerFactory.getLogger(SoaMain.class);
             public void run() {
