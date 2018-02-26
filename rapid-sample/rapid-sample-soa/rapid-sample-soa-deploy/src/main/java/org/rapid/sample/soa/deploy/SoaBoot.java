@@ -10,5 +10,4 @@ import com.alibaba.dubbo.config.spring.context.annotation.DubboComponentScan;
 @DubboComponentScan("org.rapid.sample.soa.service")
 @Import(DubboConfig.class)
 public class SoaBoot {
-
 }
