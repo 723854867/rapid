@@ -60,6 +60,7 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	private synchronized void _initial() {
 		if (initial)
 			return;
+		this.initial = true;
 		logger.info("spring container initialize success, start initialize application...");
 		long start = System.nanoTime();
 		_configurationParser();
@@ -75,6 +76,7 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	private void _dispose() {
 		if (!initial)
 			return;
+		this.initial = false;
 		logger.info("start stop application...");
 		long start = System.nanoTime();
 

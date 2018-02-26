@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.DeleteProvider;
 import org.apache.ibatis.annotations.InsertProvider;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.rapid.core.bean.model.Identifiable;
@@ -17,9 +18,7 @@ import org.rapid.dao.db.mybatis.provider.DeleteByKeysSQLProvider;
 import org.rapid.dao.db.mybatis.provider.GetByKeySQLProvider;
 import org.rapid.dao.db.mybatis.provider.GetByKeysSQLProvider;
 import org.rapid.dao.db.mybatis.provider.InsertSQLProvider;
-import org.rapid.dao.db.mybatis.provider.QueryListSQLProvider;
 import org.rapid.dao.db.mybatis.provider.QuerySQLProvider;
-import org.rapid.dao.db.mybatis.provider.QueryUniqueSQLProvider;
 import org.rapid.dao.db.mybatis.provider.UpdateCollectionSQLProvider;
 import org.rapid.dao.db.mybatis.provider.UpdateMapSQLProvider;
 import org.rapid.dao.db.mybatis.provider.UpdateSQLProvider;
@@ -28,8 +27,11 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 
 	@Override
 	@InsertProvider(type = InsertSQLProvider.class, method = "dynamicSQL")
-	void insert(ENTITY entity);
+	long insert(ENTITY entity);
 	
+	/**
+	 * 该方法及支持主键自增又支持已经设置了主键的批量插入，但是不支持混搭(即同时存在有主键和未设置主键的，一旦出现这种情况，entity 中主键值是不可预测的)
+	 */
 	@Override
 	@InsertProvider(type = BatchInsertSQLProvider.class, method = "dynamicSQL")
 	void batchInsert(Collection<ENTITY> entities);
@@ -39,16 +41,16 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 	ENTITY getByKey(KEY key);
 	
 	@Override
-	@SelectProvider(type = QueryUniqueSQLProvider.class, method = "dynamicSQL")
-	ENTITY queryUnique(Query query);
+	@SelectProvider(type = QuerySQLProvider.class, method = "dynamicSQL")
+	ENTITY queryUnique(Query<?> query);
 	
 	@Override
 	@SelectProvider(type = QuerySQLProvider.class, method = "dynamicSQL")
-	Map<KEY, ENTITY> query(Query query);
+	Map<KEY, ENTITY> query(Query<?> query);
 	
 	@Override
-	@SelectProvider(type = QueryListSQLProvider.class, method = "dynamicSQL")
-	List<ENTITY> queryList(Query query);
+	@SelectProvider(type = QuerySQLProvider.class, method = "dynamicSQL")
+	List<ENTITY> queryList(Query<?> query);
 	
 	@Override
 	@SelectProvider(type = GetByKeysSQLProvider.class, method = "dynamicSQL")
@@ -60,7 +62,7 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 	
 	@Override
 	@UpdateProvider(type = UpdateMapSQLProvider.class, method = "dynamicSQL")
-	int updateMap(Map<KEY, ENTITY> entities);
+	int updateMap(@Param("map") Map<KEY, ENTITY> map);
 	
 	@Override
 	@UpdateProvider(type = UpdateCollectionSQLProvider.class, method = "dynamicSQL")
@@ -68,9 +70,9 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 	
 	@Override
 	@DeleteProvider(type = DeleteByKeySQLProvider.class, method = "dynamicSQL")
-	int deleteByKey(KEY key);
+	long deleteByKey(KEY key);
 	
 	@Override
 	@DeleteProvider(type = DeleteByKeysSQLProvider.class, method = "dynamicSQL")
-	int deleteByKeys(Collection<KEY> keys);
+	long deleteByKeys(Collection<KEY> keys);
 }

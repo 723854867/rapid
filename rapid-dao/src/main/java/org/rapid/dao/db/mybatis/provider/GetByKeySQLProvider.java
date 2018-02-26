@@ -10,8 +10,14 @@ public class GetByKeySQLProvider extends SQLProvider<String> {
 	}
 
 	@Override
-	public String effectiveSQL(MappedStatement ms) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String effectiveSQL(MappedStatement ms, Class<?> daoClass) {
+        final Class<?> entityClass = getEntityClass(ms);
+        //将返回值修改为实体类型
+        setResultType(ms, entityClass);
+        StringBuilder sql = new StringBuilder();
+        sql.append(selectAllColumns(entityClass));
+        sql.append(fromTable(entityClass));
+        sql.append(wherePKColumn(entityClass));
+        return sql.toString();
+    }
 }

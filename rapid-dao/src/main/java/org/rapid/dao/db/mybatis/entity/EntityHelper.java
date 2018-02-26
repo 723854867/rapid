@@ -1,22 +1,42 @@
 package org.rapid.dao.db.mybatis.entity;
 
-import java.util.LinkedHashSet;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.rapid.dao.bean.annotations.NameStyle;
 import org.rapid.dao.db.mybatis.DaoConfig;
 import org.rapid.dao.db.mybatis.DaoConfig.Style;
+import org.rapid.dao.db.mybatis.SqlKeyWords;
 import org.rapid.util.StringUtil;
 
 public class EntityHelper {
-	
-    // 实体类 => 表对象
-    private static final Map<Class<?>, EntityTable> entityTableMap = new ConcurrentHashMap<Class<?>, EntityTable>();
 
+	// 实体类 => 表对象
+	private static final Map<Class<?>, EntityTable> entityTableMap = new ConcurrentHashMap<Class<?>, EntityTable>();
+
+    public static Set<EntityColumn> getColumns(Class<?> entityClass) {
+        return getEntityTable(entityClass).getEntityClassColumns();
+    }
+	
+	public static EntityColumn getPKColumn(Class<?> entityClass) {
+        return getEntityTable(entityClass).getpKColumn();
+    }
+	
+	public static EntityTable getEntityTable(Class<?> entityClass) {
+        EntityTable entityTable = entityTableMap.get(entityClass);
+        if (entityTable == null)
+            throw new RuntimeException("无法获取实体类" + entityClass.getCanonicalName() + "对应的表名!");
+        return entityTable;
+    }
+	
 	/**
 	 * 初始化实体属性
 	 */
@@ -24,11 +44,10 @@ public class EntityHelper {
 		if (entityTableMap.get(entityClass) != null)
 			return;
 		Style style = config.getNameStyle();
-		if (entityClass.isAnnotationPresent(NameStyle.class)) {			// style，该注解优先于全局配置
+		if (entityClass.isAnnotationPresent(NameStyle.class)) { // style，该注解优先于全局配置
 			NameStyle nameStyle = entityClass.getAnnotation(NameStyle.class);
 			style = nameStyle.value();
 		}
-
 		// 创建并缓存EntityTable
 		EntityTable entityTable = null;
 		if (entityClass.isAnnotationPresent(Table.class)) {
@@ -40,50 +59,59 @@ public class EntityHelper {
 		}
 		if (entityTable == null) {
 			entityTable = new EntityTable(entityClass);
-			String className = entityClass.getSimpleName();
-			switch (style) {
-			case camelhump:
-				entityTable.setName(StringUtil.camel2Underline(className));
-				break;
-			case uppercase:
-				entityTable.setName(className.toUpperCase());
-				break;
-			case lowercase:
-				entityTable.setName(className.toLowerCase());
-				break;
-			case camelhumpAndLowercase:
-				entityTable.setName(StringUtil.camel2Underline(className).toLowerCase());
-				break;
-			case camelhumpAndUppercase:
-				entityTable.setName(StringUtil.camel2Underline(className).toUpperCase());
-				break;
-			default:
-				entityTable.setName(className);
-				break;
-			}
-			
+			entityTable.setName(_convertByStyle(entityClass.getSimpleName(), style));
 		}
 		// 处理所有列
-		List<EntityField> fields = null;
-		if (config.isEnableMethodAnnotation()) {
-			fields = FieldHelper.getAll(entityClass);
-		} else {
-			fields = FieldHelper.getFields(entityClass);
-		}
-		for (EntityField field : fields) {
-			// 如果启用了简单类型，就做简单类型校验，如果不是简单类型，直接跳过
-			// 3.5.0 如果启用了枚举作为简单类型，就不会自动忽略枚举类型
-			if (config.isUseSimpleType() && !(SimpleTypeUtil.isSimpleType(field.getJavaType())
-					|| (config.isEnumAsSimpleType() && Enum.class.isAssignableFrom(field.getJavaType())))) {
-				continue;
-			}
-			processField(entityTable, style, field, config.getWrapKeyword());
-		}
-		// 当pk.size=0的时候使用所有列作为主键
-		if (entityTable.getEntityClassPKColumns().size() == 0) {
-			entityTable.setEntityClassPKColumns(entityTable.getEntityClassColumns());
-		}
+		List<EntityField> fields = FieldHelper.getFields(entityClass);
+		for (EntityField field : fields)
+			_processField(entityTable, style, field, config.getKeyWordWrapper());
 		entityTable.initPropertyMap();
 		entityTableMap.put(entityClass, entityTable);
+	}
+
+	/**
+	 * 处理一列
+	 */
+	private static void _processField(EntityTable entityTable, Style style, EntityField field, String wrapKeyword) {
+		if (field.isAnnotationPresent(Transient.class))
+			return;
+		EntityColumn entityColumn = new EntityColumn(entityTable);
+		entityColumn.setEntityField(field);
+		if (field.isAnnotationPresent(Id.class))
+			entityColumn.setId(true);
+		String columnName = null;
+		if (field.isAnnotationPresent(Column.class)) {
+			Column column = field.getAnnotation(Column.class);
+			columnName = column.name();
+			entityColumn.setUpdatable(column.updatable());
+			entityColumn.setInsertable(column.insertable());
+		}
+		if (!StringUtil.hasText(columnName))
+			columnName = _convertByStyle(field.getName(), style);
+		if (StringUtil.hasText(wrapKeyword) && SqlKeyWords.containsWord(columnName))
+			columnName = MessageFormat.format(wrapKeyword, columnName);
+		entityColumn.setProperty(field.getName());
+		entityColumn.setColumn(columnName);
+		entityColumn.setJavaType(field.getJavaType());
+		if (entityColumn.isId())
+			entityTable.setpKColumn(entityColumn);
+		entityTable.getEntityClassColumns().add(entityColumn);
+	}
+
+	public static String _convertByStyle(String str, Style style) {
+		switch (style) {
+		case camelhump:
+			return StringUtil.camel2Underline(str);
+		case uppercase:
+			return str.toUpperCase();
+		case lowercase:
+			return str.toLowerCase();
+		case camelhumpAndLowercase:
+			return StringUtil.camel2Underline(str).toLowerCase();
+		case camelhumpAndUppercase:
+			return StringUtil.camel2Underline(str).toUpperCase();
+		default:
+			return str;
+		}
 	}
 }

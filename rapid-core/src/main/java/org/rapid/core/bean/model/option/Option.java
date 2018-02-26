@@ -7,6 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.rapid.core.bean.enums.Env;
 import org.rapid.core.bean.enums.Locale;
+import org.rapid.core.bean.model.code.ICode;
+import org.rapid.core.bean.model.message.Response;
 
 @SuppressWarnings("unchecked")
 public class Option<VALUE> {
@@ -65,7 +67,20 @@ public class Option<VALUE> {
 	public static Map<String, Option<?>> getOptions() {
 		return options;
 	}
-
+	
+	public static <T> Response<T> createResponse(ICode code) {
+		StrOption option = option(code.key());
+		Response<T> response = new Response<T>(code);
+		response.setDesc(null == option ? code.desc() : option.getDefaultValue());
+		return response;
+	}
+	
+	public static <T> Response<T> handleResponse(Response<T> response) {
+		StrOption option = option(response.getCodeRefer().key());
+		response.setDesc(null == option ? response.getCodeRefer().desc() : option.getDefaultValue());
+		return response;
+	}
+	
 	public static final <OPTION extends Option<VALUE>, VALUE> OPTION option(String key) {
 		Option<?> option = options.get(key);
 		return null == option ? null : (OPTION) option;

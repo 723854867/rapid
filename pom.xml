@@ -16,24 +16,39 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven-compiler-plugin.version>3.7.0</maven-compiler-plugin.version>
 
+		<asm.version>6.0</asm.version>
 		<gson.version>2.8.2</gson.version>
 		<junit.version>4.12</junit.version>
 		<cglib.version>3.2.6</cglib.version>
 		<jedis.version>2.9.0</jedis.version>
 		<mongo.version>3.6.2</mongo.version>
+		<dubbo.version>2.6.0</dubbo.version>
+		<okhttp.version>3.9.1</okhttp.version>
+		<servlet.version>3.1.0</servlet.version>
 		<mybatis.version>3.4.5</mybatis.version>
 		<logback.version>1.2.3</logback.version>
+		<zkclient.version>0.9</zkclient.version>
 		<HikariCP.version>2.7.7</HikariCP.version>
+		<netty.version>3.10.6.Final</netty.version>
 		<jsqlparser.version>1.1</jsqlparser.version>
-		<slf4j-api.version>1.7.25</slf4j-api.version>
+		<zookeeper.version>3.4.11</zookeeper.version>
 		<spring.version>5.0.3.RELEASE</spring.version>
 		<pagehelper.version>5.1.2</pagehelper.version>
+		<javassist.version>3.22.0-GA</javassist.version>
+		<jul-to-slf4j.version>1.7.25</jul-to-slf4j.version>
 		<commons-codec.version>1.11</commons-codec.version>
 		<commons-pool2.version>2.5.0</commons-pool2.version>
 		<validation.version>2.0.1.Final</validation.version>
-		<mybatis-spring.version>1.3.1</mybatis-spring.version>
 		<aspectjweaver.version>1.8.13</aspectjweaver.version>
+		<aspectjweaver.version>1.8.13</aspectjweaver.version>
+		<mybatis-spring.version>1.3.1</mybatis-spring.version>
+		<persistence-api.version>1.0.2</persistence-api.version>
+		<jboss-logging.version>3.3.2.Final</jboss-logging.version>
+		<log4j-over-slf4j.version>1.7.25</log4j-over-slf4j.version>
+		<logback-ext-spring.version>0.1.5</logback-ext-spring.version>
 		<mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+		<slf4j-jboss-logging.version>1.1.0.Final</slf4j-jboss-logging.version>
+		<hibernate-validator.version>6.0.7.Final</hibernate-validator.version>
 	</properties>
 
 	<dependencyManagement>
@@ -47,14 +62,47 @@
 
 			<!-- log -->
 			<dependency>
-				<groupId>org.slf4j</groupId>
-				<artifactId>slf4j-api</artifactId>
-				<version>${slf4j-api.version}</version>
-			</dependency>
-			<dependency>
 				<groupId>ch.qos.logback</groupId>
 				<artifactId>logback-classic</artifactId>
 				<version>${logback.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.logback-extensions</groupId>
+				<artifactId>logback-ext-spring</artifactId>
+				<version>${logback-ext-spring.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>ch.qos.logback</groupId>
+						<artifactId>logback-classic</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.jboss.logging</groupId>
+				<artifactId>jboss-logging</artifactId>
+				<version>${jboss-logging.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>jul-to-slf4j</artifactId>
+				<version>${jul-to-slf4j.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>log4j-over-slf4j</artifactId>
+				<version>${log4j-over-slf4j.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 
 			<!-- spring -->
@@ -85,6 +133,11 @@
 				<version>${spring.version}</version>
 				<scope>test</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-webmvc</artifactId>
+				<version>${spring.version}</version>
+			</dependency>
 
 			<!-- storage -->
 			<dependency>
@@ -102,11 +155,6 @@
 				<groupId>org.mongodb</groupId>
 				<artifactId>mongo-java-driver</artifactId>
 				<version>${mongo.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>tk.mybatis</groupId>
-				<artifactId>mapper</artifactId>
-				<version>3.5.2</version>
 			</dependency>
 			<dependency>
 				<groupId>org.mybatis</groupId>
@@ -150,12 +198,29 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${mysql-connector-java.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>javax.persistence</groupId>
+				<artifactId>persistence-api</artifactId>
+				<version>${persistence-api.version}</version>
+			</dependency>
 
 			<!-- serialize -->
 			<dependency>
 				<groupId>com.google.code.gson</groupId>
 				<artifactId>gson</artifactId>
 				<version>${gson.version}</version>
+			</dependency>
+
+			<dependency>
+				<groupId>com.squareup.okhttp3</groupId>
+				<artifactId>okhttp</artifactId>
+				<version>${okhttp.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>${servlet.version}</version>
+				<scope>provided</scope>
 			</dependency>
 
 			<dependency>
@@ -193,6 +258,124 @@
 				<artifactId>aspectjweaver</artifactId>
 				<version>${aspectjweaver.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm</artifactId>
+				<version>${asm.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.hibernate.validator</groupId>
+				<artifactId>hibernate-validator</artifactId>
+				<version>${hibernate-validator.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.jboss.logging</groupId>
+						<artifactId>jboss-logging</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>javax.validation</groupId>
+						<artifactId>validation-api</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectjweaver.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.javassist</groupId>
+				<artifactId>javassist</artifactId>
+				<version>${javassist.version}</version>
+			</dependency>
+
+			<!-- dubbo -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo</artifactId>
+				<version>${dubbo.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-context</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-web</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.springframework</groupId>
+						<artifactId>spring-beans</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.javassist</groupId>
+						<artifactId>javassist</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.jboss.netty</groupId>
+						<artifactId>netty</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.zookeeper</groupId>
+				<artifactId>zookeeper</artifactId>
+				<version>${zookeeper.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>jline</groupId>
+						<artifactId>jline</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>io.netty</groupId>
+						<artifactId>netty</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.yetus</groupId>
+						<artifactId>audience-annotations</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.101tec</groupId>
+				<artifactId>zkclient</artifactId>
+				<version>${zkclient.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>log4j</groupId>
+						<artifactId>log4j</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.apache.zookeeper</groupId>
+						<artifactId>zookeeper</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-api</artifactId>
+					</exclusion>
+					<exclusion>
+						<groupId>org.slf4j</groupId>
+						<artifactId>slf4j-log4j12</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty</artifactId>
+				<version>${netty.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -217,5 +400,9 @@
 		<module>rapid-util</module>
 		<module>rapid-core</module>
 		<module>rapid-dao</module>
+		<module>rapid-sdk</module>
+		<module>rapid-web-util</module>
+		<module>rapid-sample</module>
+		<module>rapid-dubbo</module>
 	</modules>
 </project>

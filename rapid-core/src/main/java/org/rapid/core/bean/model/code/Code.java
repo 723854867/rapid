@@ -9,7 +9,11 @@ public enum Code implements ICode {
 	SERVER_BUSY(10, "code.server.busy", "服务器繁忙"),
 	
 	CAPTCHA_OBTAIN_FREQ(20, "code.captcha.obtain.freq", "验证码获取太频繁"),
-	CAPTCHA_OBTAIN_COUNT_LIMIT(21, "code.captcha.obtain.count.limit", "验证码获取次数限制");
+	CAPTCHA_OBTAIN_COUNT_LIMIT(21, "code.captcha.obtain.count.limit", "验证码获取次数限制"),
+	
+	UNSUPPORT_CONTENT_TYPE(50, "code.unsupport.content.type", "不支持的 ContentType"),
+	UNSUPPORT_HTTP_METHOD(51, "code.unsupport.http.method", "不支持的HTTP请求方法"),
+	UPLOAD_SIZE_EXCEEDED(52, "code.upload.size.exceeded", "上传文件太大");
 	
 	private int code;
 	private String key;

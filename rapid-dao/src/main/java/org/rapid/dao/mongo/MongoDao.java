@@ -32,8 +32,9 @@ public class MongoDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 
 	@Override
-	public void insert(ENTITY entity) {
+	public long insert(ENTITY entity) {
 		mongo.insertOne(collection, entity);
+		return 0;
 	}
 
 	@Override
@@ -52,17 +53,17 @@ public class MongoDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 	
 	@Override
-	public ENTITY queryUnique(Query query) {
+	public ENTITY queryUnique(Query<?> query) {
 		return null;
 	}
 
 	@Override
-	public Map<KEY, ENTITY> query(Query query) {
+	public Map<KEY, ENTITY> query(Query<?> query) {
 		throw new UnsupportedOperationException("mongo db not support query!");
 	}
 
 	@Override
-	public List<ENTITY> queryList(Query query) {
+	public List<ENTITY> queryList(Query<?> query) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -84,12 +85,12 @@ public class MongoDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 
 	@Override
-	public int deleteByKey(KEY key) {
-		return (int) mongo.deleteOne(collection, Filters.eq(FIELD_ID, key));
+	public long deleteByKey(KEY key) {
+		return mongo.deleteOne(collection, Filters.eq(FIELD_ID, key));
 	}
 
 	@Override
-	public int deleteByKeys(Collection<KEY> keys) {
-		return (int) mongo.deleteMany(collection, MongoUtil.or(FIELD_ID, keys));
+	public long deleteByKeys(Collection<KEY> keys) {
+		return mongo.deleteMany(collection, MongoUtil.or(FIELD_ID, keys));
 	}
 }

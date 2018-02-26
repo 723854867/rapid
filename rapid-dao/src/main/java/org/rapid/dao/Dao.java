@@ -12,7 +12,7 @@ public interface Dao<KEY, ENTITY extends Identifiable<KEY>> {
 	/**
 	 * 插入一个对象
 	 */
-	void insert(ENTITY entity);
+	long insert(ENTITY entity);
 	
 	/**
 	 * 插入多个对象
@@ -27,17 +27,17 @@ public interface Dao<KEY, ENTITY extends Identifiable<KEY>> {
 	/**
 	 * 复杂查询:确定查询结果只有一个的时候使用
 	 */
-	ENTITY queryUnique(Query query);
+	ENTITY queryUnique(Query<?> query);
 	
 	/**
 	 * 复杂查询：返回的是一个map
 	 */
-	Map<KEY, ENTITY> query(Query query);
+	Map<KEY, ENTITY> query(Query<?> query);
 	
 	/**
 	 * 复杂查询:返回的是一个list
 	 */
-	List<ENTITY> queryList(Query query);
+	List<ENTITY> queryList(Query<?> query);
 	
 	/**
 	 * 一次获取多条数据
@@ -62,10 +62,10 @@ public interface Dao<KEY, ENTITY extends Identifiable<KEY>> {
 	/**
 	 * 根据主键删除
 	 */
-	int deleteByKey(KEY key);
+	long deleteByKey(KEY key);
 	
 	/**
 	 * 批量删除
 	 */
-	int deleteByKeys(Collection<KEY> keys);
+	long deleteByKeys(Collection<KEY> keys);
 }

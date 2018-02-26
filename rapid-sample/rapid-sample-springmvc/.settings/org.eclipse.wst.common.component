@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="rapid-sample-springmvc-1.0">
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main.java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="rapid-web-util-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rapid-web-util/rapid-web-util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="rapid-dao-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rapid-dao/rapid-dao">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="rapid-core-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rapid-core/rapid-core">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="rapid-util-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rapid-util/rapid-util">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="rapid-sample-soa-api-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rapid-sample-soa-api/rapid-sample-soa-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="rapid-dubbo-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/rapid-dubbo/rapid-dubbo">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="rapid-sample-springmvc"/>
+        <property name="java-output-path" value="/rapid-sample-springmvc/target/classes"/>
+    </wb-module>
+</project-modules>

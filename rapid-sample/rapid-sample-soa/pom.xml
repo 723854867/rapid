@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.rapid</groupId>
+		<artifactId>rapid-sample</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<artifactId>rapid-sample-soa</artifactId>
+	<name>rapid-sample-soa</name>
+	<url>http://maven.apache.org</url>
+	<packaging>pom</packaging>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.rapid</groupId>
+			<artifactId>rapid-dubbo</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+
+	<modules>
+		<module>rapid-sample-soa-api</module>
+		<module>rapid-sample-soa-service</module>
+		<module>rapid-sample-soa-deploy</module>
+	</modules>
+</project>

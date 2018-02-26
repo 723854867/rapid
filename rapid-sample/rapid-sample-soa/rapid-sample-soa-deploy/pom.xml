@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>org.rapid</groupId>
+		<artifactId>rapid-sample-soa</artifactId>
+		<version>1.0</version>
+	</parent>
+	
+	<artifactId>rapid-sample-soa-deploy</artifactId>
+	<name>rapid-sample-soa-deploy</name>
+	<url>http://maven.apache.org</url>
+	
+	<dependencies>
+		<dependency>
+			<groupId>org.rapid</groupId>
+			<artifactId>rapid-sample-soa-service</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
+</project>

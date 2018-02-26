@@ -2,6 +2,11 @@ package org.rapid.dao.redis;
 
 import static org.rapid.core.serialize.SerializeUtil.REDIS.encode;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.annotation.Resource;
 
 import org.rapid.core.Assert;
@@ -81,11 +86,50 @@ public class Redis {
 	
 	// ******************************** hash ********************************
 	
-	public String hget(String key, String field) {
-		return invoke(new Callback<Jedis, String>() {
+	public byte[] hget(Object key, Object field) {
+		return invoke(new Callback<Jedis, byte[]>() {
+			@Override
+			public byte[] invoke(Jedis jedis) {
+				return jedis.hget(encode(key), encode(field));
+			}
+		});
+	}
+	
+	public List<byte[]> hmget(Object key, Object... fields) {
+		return invoke(new Callback<Jedis, List<byte[]>>() {
+			@Override
+			public List<byte[]> invoke(Jedis jedis) {
+				return jedis.hmget(encode(key), encode(fields));
+			}
+		});
+	}
+	
+	public long hset(Object key, Object field, Object value) {
+		return invoke(new Callback<Jedis, Long>() {
+			@Override
+			public Long invoke(Jedis jedis) {
+				return jedis.hset(encode(key), encode(field), encode(value));
+			}
+		});
+	}
+	
+	public void hmset(Object key, Map<Object, Object> hash) {
+		invoke(new Callback<Jedis, String>() {
 			@Override
 			public String invoke(Jedis jedis) {
-				return jedis.hget(key, field);
+				Map<byte[], byte[]> data = new HashMap<byte[], byte[]>();
+				for (Entry<Object, Object> entry : hash.entrySet()) 
+					data.put(encode(entry.getKey()), encode(entry.getValue()));
+				return jedis.hmset(encode(key), data);
+			}
+		});
+	}
+	
+	public long hdel(Object key, Object...fields) { 
+		return invoke(new Callback<Jedis, Long>() {
+			@Override
+			public Long invoke(Jedis jedis) {
+				return jedis.hdel(encode(key), encode(fields));
 			}
 		});
 	}

@@ -7,7 +7,7 @@ public interface DaoConsts {
 
 	final StrOption DB_ORM_TYPE					= new StrOption("db.ormType");
 	final BoolOption REDIS_ENABLE				= new BoolOption("redis.enable", false);
-	final BoolOption MONGO_ENABLE				= new BoolOption("mongo.enable", false);
+	final StrOption MONGO_ENABLE				= new StrOption("mongo.enable", "false");
 	
 	interface RedisConsts {
 		

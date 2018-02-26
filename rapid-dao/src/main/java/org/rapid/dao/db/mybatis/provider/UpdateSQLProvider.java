@@ -10,8 +10,12 @@ public class UpdateSQLProvider extends SQLProvider<String> {
 	}
 
 	@Override
-	public String effectiveSQL(MappedStatement ms) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public String effectiveSQL(MappedStatement ms, Class<?> daoClass) {
+        Class<?> entityClass = getEntityClass(ms);
+        StringBuilder sql = new StringBuilder();
+        sql.append(updateTable(entityClass, tableName(entityClass)));
+        sql.append(updateSetColumns(entityClass, null));
+        sql.append(wherePKColumn(entityClass));
+        return sql.toString();
+    }
 }

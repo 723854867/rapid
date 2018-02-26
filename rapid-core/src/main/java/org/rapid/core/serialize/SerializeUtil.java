@@ -3,10 +3,12 @@ package org.rapid.core.serialize;
 import org.rapid.util.Consts;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public interface SerializeUtil {
 	
 	public static final Gson GSON = new Gson();
+	public static final Gson GSON_ANNO = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
 	class REDIS {
 		public static final byte[] encode(Object value) {

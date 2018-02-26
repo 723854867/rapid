@@ -1,6 +1,7 @@
 package org.rapid.dao.db.mybatis;
 
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 
 import org.apache.ibatis.plugin.Interceptor;
@@ -37,8 +38,11 @@ public class MybatisConfig extends DBConfig {
 		factory.setTypeAliasesPackage(getProperty("db.mybatis.typeAliasesPackage", null, String.class));
 		Set<Interceptor> interceptors = new HashSet<Interceptor>();
 		boolean page = getProperty("db.mybatis.page", false, boolean.class); 
-		if (page)
-			interceptors.add(new PageInterceptor());
+		if (page) {
+			PageInterceptor interceptor = new PageInterceptor();
+			interceptor.setProperties(new Properties());
+			interceptors.add(interceptor);
+		}
 		if (!CollectionUtil.isEmpty(interceptors))
 			factory.setPlugins(interceptors.toArray(new Interceptor[] {}));
 		org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();

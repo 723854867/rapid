@@ -28,6 +28,7 @@ public class DateUtil {
 	public static final String yyyy_MM_dd				= "yyyy-MM-dd";
 	public static final String yyyyMMddHHmmss			= "yyyyMMddHHmmss";
 	public static final String YYYY_MM_DD_HH_MM_SS		= "yyyy-MM-dd HH:mm:ss";
+	public static final String YYYY_MM_DD_HH_MM_SS_SSS	= "yyyy-MM-dd HH:mm:ss.SSS";
 
 	public static final TimeZone TIMEZONE_UTC			= TimeZone.getTimeZone("UTC");
 	public static final TimeZone TIMEZONE_GMT_8			= TimeZone.getTimeZone("GMT+8:00");

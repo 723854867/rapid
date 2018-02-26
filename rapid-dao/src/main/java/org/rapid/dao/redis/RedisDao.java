@@ -3,12 +3,15 @@ package org.rapid.dao.redis;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.rapid.core.bean.model.Identifiable;
+import org.rapid.core.serialize.SerializeUtil;
+import org.rapid.core.serialize.Serializer;
 import org.rapid.dao.Dao;
 import org.rapid.dao.bean.model.Query;
 
@@ -17,47 +20,64 @@ public class RedisDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	
 	@Resource
 	protected Redis redis;
+	protected byte[] mapperKey;
 	protected Class<ENTITY> clazz;
+	@Resource
+	protected Serializer serializer;
 	
-	public RedisDao() {
+	public RedisDao(String mapperKey) {
 		Type superType = getClass().getGenericSuperclass();   
 		Type[] generics = ((ParameterizedType) superType).getActualTypeArguments();  
 		this.clazz = (Class<ENTITY>) generics[1];
+		this.mapperKey = SerializeUtil.REDIS.encode(mapperKey);
 	}
 
 	@Override
-	public void insert(ENTITY entity) {
-		
+	public long insert(ENTITY entity) {
+		byte[] data = serializer.serial(entity);
+		return redis.hset(mapperKey, entity.identity(), data);
 	}
 
 	@Override
 	public void batchInsert(Collection<ENTITY> entities) {
-		
+		Map<Object, Object> map = new HashMap<Object, Object>();
+		for (ENTITY entity : entities) 
+			map.put(entity.identity(), serializer.serial(entities));
+		redis.hmset(mapperKey, map);
 	}
 
 	@Override
-	public ENTITY getByKey(KEY key) {
-		return null;
+	public ENTITY getByKey(KEY field) {
+		byte[] data = redis.hget(mapperKey, field);
+		return null == data ? null : serializer.deserial(data, clazz);
 	}
 
 	@Override
-	public ENTITY queryUnique(Query query) {
-		return null;
+	public ENTITY queryUnique(Query<?> query) {
+		throw new UnsupportedOperationException("Redis unsupport query!");
 	}
 
 	@Override
-	public Map<KEY, ENTITY> query(Query query) {
-		return null;
+	public Map<KEY, ENTITY> query(Query<?> query) {
+		throw new UnsupportedOperationException("Redis unsupport query!");
 	}
 
 	@Override
-	public List<ENTITY> queryList(Query query) {
-		return null;
+	public List<ENTITY> queryList(Query<?> query) {
+		throw new UnsupportedOperationException("Redis unsupport query!");
 	}
 
 	@Override
 	public Map<KEY, ENTITY> getByKeys(Collection<KEY> keys) {
-		return null;
+		List<byte[]> list = redis.hmget(mapperKey, keys.toArray());
+		Map<KEY, ENTITY> map = new HashMap<KEY, ENTITY>();
+		for (byte[] data : list) {
+			if (null == data)
+				continue;
+			ENTITY entity = serializer.deserial(data, clazz);
+			map.put(entity.identity(), entity);
+		}
+		return map;
 	}
 
 	@Override
@@ -76,12 +96,12 @@ public class RedisDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 
 	@Override
-	public int deleteByKey(KEY key) {
-		return 0;
+	public long deleteByKey(KEY field) {
+		return redis.hdel(mapperKey, field);
 	}
 
 	@Override
-	public int deleteByKeys(Collection<KEY> keys) {
-		return 0;
+	public long deleteByKeys(Collection<KEY> fields) {
+		return redis.hdel(mapperKey, fields.toArray());
 	}
 }
