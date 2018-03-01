@@ -19,7 +19,8 @@ public enum Code implements ICode {
 	PASSWORD_ERROR(101, "code.password.error", "密码错误"),
 	CAPTCHA_ERROR(102, "code.captcha.error", "验证码错误"),
 	KEY_DUPLICATED(103, "code.data.exist", "主键冲突,请重试"),
-	RESOURCE_LOCKED(104, "code.resource.locked", "数据已改变,请重试"),
+	RESOURCE_LOCKED(104, "code.resource.locked", "资源已被占用"),
+	DATA_CHANGED(105, "code.data.changed", "数据已改变"),
 	UNLOGIN(110, "code.unlogin", "未登录"),
 	TOKEN_INVALID(111, "code.token.invalid", "Token 已失效");
 	

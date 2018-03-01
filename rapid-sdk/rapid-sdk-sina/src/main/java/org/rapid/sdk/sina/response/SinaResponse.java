@@ -119,6 +119,6 @@ public class SinaResponse implements HttpResponse {
 
 	@Override
 	public boolean success() {
-		return false;
+		return this.responseCode.equalsIgnoreCase("APPLY_SUCCESS");
 	}
 }

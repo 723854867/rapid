@@ -50,6 +50,7 @@ public abstract class HttpRequest<RESPONSE extends HttpResponse> implements Seri
 	@SuppressWarnings("unchecked")
 	protected HttpRequest(String prefix, String url, Serializer serializer, Serializer deserializer) {
 		this.url = url;
+		this.prefix = prefix;
 		this.serializer = serializer;
 		this.deserializer = deserializer;
 		this.params = new HashMap<String, String>();

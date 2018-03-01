@@ -39,6 +39,20 @@ public class Assert {
 		}
 	}
 	
+	public static final void isNull(ICode code, Object... targets) {
+		for (Object target : targets) {
+			if (null != target)
+				throw new BizException(code);
+		}
+	}
+	
+	public static final void isNull(ICode code, String message, Object... targets) {
+		for (Object target : targets) {
+			if (null != target)
+				throw new BizException(code, message);
+		}
+	}
+	
 	public static final boolean isTrue(boolean expression) {
 		return isTrue(Code.SYS_ERROR, "arguments is not true", expression);
 	}

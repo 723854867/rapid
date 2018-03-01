@@ -18,7 +18,7 @@ public class RegisterRequest extends UserRequest<SinaResponse> {
 	// 会员类型：
 	@Expose
 	@SerializedName("member_type")
-	private String memberType;
+	private String memberType = "1";
 	@Expose
 	@SerializedName("client_ip")
 	private String clientIp;

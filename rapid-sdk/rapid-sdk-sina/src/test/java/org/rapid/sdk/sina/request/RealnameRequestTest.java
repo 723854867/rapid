@@ -10,7 +10,7 @@ public class RealnameRequestTest extends SinaTest {
 	public void test() {
 		RealnameRequest request = new RealnameRequest();
 		request.setIdentityId("704965772327");
-		request.setRealName("张飞");
+		request.setRealName("张辛林");
 		request.setCertNo("33012719870603341X");
 		request.setClientIp("127.0.0.1");
 		SinaResponse response = request.execute();
