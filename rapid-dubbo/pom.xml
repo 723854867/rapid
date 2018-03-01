@@ -16,6 +16,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.rapid</groupId>
+			<artifactId>rapid-core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 		</dependency>
@@ -35,11 +41,11 @@
 			<groupId>org.apache.zookeeper</groupId>
 			<artifactId>zookeeper</artifactId>
 		</dependency>
-
+		
 		<dependency>
-			<groupId>org.rapid</groupId>
-			<artifactId>rapid-core</artifactId>
-			<version>${project.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<optional>true</optional>
 		</dependency>
 	</dependencies>
 </project>

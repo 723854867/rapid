@@ -109,4 +109,9 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 			throw new InitialException("option \"" + option.getKey() + "\" parse fail!", e);
 		}
 	}
+	
+	public <T> T getProperty(String key, Class<T> clazz) { 
+		String value = environment.getProperty(key, String.class);
+		return environment.getConversionService().convert(value.trim(), clazz);
+	}
 }

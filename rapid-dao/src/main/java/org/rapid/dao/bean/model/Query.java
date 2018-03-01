@@ -81,8 +81,14 @@ public class Query<QUERY extends Query<QUERY>> extends Page {
 		return conditions;
 	}
 	
-	public void setConditions(List<Condition> conditions) {
+	public QUERY addCondition(Condition condition) {
+		this.conditions.add(condition);
+		return (QUERY) this;
+	}
+	
+	public QUERY setConditions(List<Condition> conditions) {
 		this.conditions = conditions;
+		return (QUERY) this;
 	}
 	
 	public List<Pair<String, Boolean>> getOrderBys() {

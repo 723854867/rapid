@@ -17,13 +17,26 @@ public abstract class ResourceLoader {
 	@Resource
 	protected PathMatchingResourcePatternResolver resourceResolver;
 	
-	protected Properties getProperties(String location) throws Exception { 
+	protected Properties getproperty(String location) throws Exception { 
 		org.springframework.core.io.Resource resource = resourceResolver.getResource(location);
 		InputStream in = resource.getInputStream();
 		Properties properties = new Properties();
 		properties.load(new InputStreamReader(in, Consts.UTF_8));
 		in.close();
 		return properties;
+	}
+	
+	protected Properties[] getProperties(String location) throws Exception { 
+		org.springframework.core.io.Resource[] resources = resourceResolver.getResources(location);
+		Properties[] arr = new Properties[resources.length];
+		for (int i = 0, len = resources.length; i < len; i++) {
+			InputStream in = resources[i].getInputStream();
+			arr[i] = new Properties();
+			arr[i].load(new InputStreamReader(in, Consts.UTF_8));
+			in.close();
+			
+		}
+		return arr;
 	}
 	
 	protected <T> T getProperty(String key, Class<T> clazz) {

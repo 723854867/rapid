@@ -52,8 +52,8 @@ public abstract class DBConfig extends ResourceLoader {
 		return new HikariDataSource(config);
 	}
 	
-	@Bean("txManager")
-	public PlatformTransactionManager transactionManager()  {
+	@Bean
+	public PlatformTransactionManager txManager()  {
 		return new DataSourceTransactionManager(datasource());
 	}
 }

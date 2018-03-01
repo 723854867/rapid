@@ -4,19 +4,14 @@ import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
 import org.rapid.util.Consts;
-import org.springframework.context.annotation.Conditional;
-import org.springframework.stereotype.Component;
 
-@Component("serializer")
-@Conditional(GsonCondition.class)
 public class GsonSerializer implements Serializer {
 	
 	public static final GsonSerializer INSTANCE = new GsonSerializer();
 	public static final GsonSerializer ANNOTATED = new GsonSerializer(true);
 	
-	private Charset charset = Consts.UTF_8;
-	
-	private boolean annotated;
+	protected Charset charset = Consts.UTF_8;
+	protected boolean annotated;
 	
 	public GsonSerializer() {}
 	

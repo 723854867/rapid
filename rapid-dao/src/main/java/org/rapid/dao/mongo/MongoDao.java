@@ -69,8 +69,8 @@ public class MongoDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 
 	@Override
-	public int update(ENTITY entity) {
-		return (int) mongo.replaceOne(collection, Filters.eq(FIELD_ID, entity.identity()), entity);
+	public long update(ENTITY entity) {
+		return mongo.replaceOne(collection, Filters.eq(FIELD_ID, entity.identity()), entity);
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import org.springframework.context.annotation.PropertySource;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
+import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
 
 @Configuration
@@ -77,6 +78,16 @@ public class DubboConfig extends ResourceLoader {
 		config.setAccepts(null != accepts ? accepts : 0);
 		Integer payload = getProperty("protocol.payload", null, Integer.class);
 		config.setPayload(null != payload ? payload : 88388608);
+		return config;
+	}
+	
+	@Bean
+	@Conditional(ProviderCondition.class)
+	public ProviderConfig providerConfig() {
+		ProviderConfig config = new ProviderConfig();
+		config.setRetries(0);
+		config.setFilter("exceptionFilter,-exception");
+		config.setTimeout(getProperty("provider.timeout", 3000, Integer.class));
 		return config;
 	}
 }

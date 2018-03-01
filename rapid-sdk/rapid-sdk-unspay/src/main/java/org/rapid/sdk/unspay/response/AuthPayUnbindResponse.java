@@ -4,7 +4,7 @@ import org.rapid.core.http.HttpResponse;
 
 import com.google.gson.annotations.SerializedName;
 
-public class AuthPayUnbindResponse extends HttpResponse {
+public class AuthPayUnbindResponse implements HttpResponse {
 
 	private static final long serialVersionUID = -2984964629923169793L;
 	

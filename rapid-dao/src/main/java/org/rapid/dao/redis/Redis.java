@@ -165,7 +165,7 @@ public class Redis {
 		return flag == 1;
 	}
 	
-	public <T> T execute(LuaCmd cmd, Object... params) {
+	public <T> T execute(ILuaCmd cmd, Object... params) {
 		return this.luaFiber.invoke(cmd, params);
 	}
 	

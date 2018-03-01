@@ -81,8 +81,8 @@ public class RedisDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 
 	@Override
-	public int update(ENTITY entity) {
-		return 0;
+	public long update(ENTITY entity) {
+		return this.insert(entity);
 	}
 
 	@Override

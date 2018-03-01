@@ -1,6 +1,8 @@
 package org.rapid.core.bean.exception;
 
-public class InitialException extends RuntimeException {
+import org.rapid.util.exception.RapidRuntimeException;
+
+public class InitialException extends RapidRuntimeException {
 
 	private static final long serialVersionUID = 349450456065272771L;
 	

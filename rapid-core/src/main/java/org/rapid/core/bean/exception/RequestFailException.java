@@ -1,6 +1,8 @@
 package org.rapid.core.bean.exception;
 
-public class RequestFailException extends Exception {
+import org.rapid.util.exception.RapidException;
+
+public class RequestFailException extends RapidException {
 
 	private static final long serialVersionUID = -8215218194929028619L;
 

@@ -58,7 +58,7 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 	
 	@Override
 	@UpdateProvider(type = UpdateSQLProvider.class, method = "dynamicSQL")
-	int update(ENTITY entity);
+	long update(ENTITY entity);
 	
 	@Override
 	@UpdateProvider(type = UpdateMapSQLProvider.class, method = "dynamicSQL")

@@ -47,7 +47,7 @@ public interface Dao<KEY, ENTITY extends Identifiable<KEY>> {
 	/**
 	 * 更新对象：是更新对象的所有属性，因此要注意每个属性是否都是最新的
 	 */
-	int update(ENTITY entity);
+	long update(ENTITY entity);
 	
 	/**
 	 * 批量更新

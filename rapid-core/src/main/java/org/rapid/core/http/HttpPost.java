@@ -53,6 +53,7 @@ public abstract class HttpPost<RESPONSE extends HttpResponse> extends HttpReques
 	private RequestBody _requestBody() {
 		switch (contentType) {
 		case APPLICATION_FORM_URLENCODED_UTF_8:
+			serial();
 			FormBody.Builder fb = new FormBody.Builder(Consts.UTF_8);
 			for (Entry<String, String> entry : params.entrySet())
 				fb.add(entry.getKey(), entry.getValue());
@@ -63,6 +64,6 @@ public abstract class HttpPost<RESPONSE extends HttpResponse> extends HttpReques
 	}
 	
 	protected byte[] serial() {
-		throw new UnsupportedOperationException("Sub class must implements the serial method!");
+		return this.serializer.serial(this);
 	}
 }

@@ -1,11 +1,17 @@
 package org.rapid.util;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class CollectionUtil {
+	
+	public static final <T> List<T> emptyList() {
+		return new ArrayList<T>();
+	}
 	
 	public static final boolean isEmpty(Map<?, ?> map) { 
 		return null == map || map.isEmpty();

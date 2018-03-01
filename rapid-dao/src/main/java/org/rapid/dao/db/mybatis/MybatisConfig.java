@@ -13,7 +13,6 @@ import org.rapid.dao.db.DBConfig;
 import org.rapid.dao.db.conditions.MybatisCondition;
 import org.rapid.util.CollectionUtil;
 import org.rapid.util.StringUtil;
-import org.springframework.context.annotation.AdviceMode;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
@@ -23,9 +22,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.github.pagehelper.PageInterceptor;
 
 @Configuration
+@EnableTransactionManagement
 @Conditional(MybatisCondition.class)
 @PropertySource("classpath:conf/db.properties")
-@EnableTransactionManagement(mode = AdviceMode.ASPECTJ)
 public class MybatisConfig extends DBConfig {
 
 	@Bean("sqlSessionFactory")

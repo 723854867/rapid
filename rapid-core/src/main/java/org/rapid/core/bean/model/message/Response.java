@@ -73,4 +73,8 @@ public class Response<T> implements Message {
 	public String identity() {
 		return this.requestId;
 	}
+	
+	public static <T> Response<T> ok() {
+		return new Response<T>(Code.SUCCESS);
+	}
 }
