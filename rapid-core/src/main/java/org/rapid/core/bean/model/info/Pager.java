@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.rapid.core.Assert;
+import org.rapid.core.bean.model.code.Code;
 import org.rapid.util.Callback;
 
 import com.github.pagehelper.Page;
@@ -67,8 +69,10 @@ public class Pager<T> implements Serializable {
 		this.list = list;
 	}
 	
-	public static final <T> Pager<T> convert(Page<?> page, Callback<Page<?>, List<T>> callback) {
+	public static final <T, K> Pager<T> convert(List<K> list, Callback<List<K>, List<T>> callback) {
 		Pager<T> pager = new Pager<T>();
+		Assert.isTrue(Code.SYS_ERROR, list instanceof Page);
+		Page<K> page = (Page<K>)list;
 		pager.setPages(page.getPages());
 		pager.setTotal(page.getTotal());
 		pager.setList(callback.invoke(page));
