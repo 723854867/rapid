@@ -2,12 +2,12 @@ package org.rapid.sdk.sina.request;
 
 import org.rapid.core.IDWorker;
 import org.rapid.sdk.sina.SinaConfig;
-import org.rapid.sdk.sina.response.BankBindResponse;
+import org.rapid.sdk.sina.response.CardBindResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BankBindRequest extends UserRequest<BankBindResponse> {
+public class CardBindRequest extends UserRequest<CardBindResponse> {
 
 	private static final long serialVersionUID = -9196948315866644633L;
 
@@ -71,7 +71,7 @@ public class BankBindRequest extends UserRequest<BankBindResponse> {
 	@SerializedName("client_ip")
 	private String clientIp;
 
-	public BankBindRequest() {
+	public CardBindRequest() {
 		super("新浪绑定银行卡", SinaConfig.getGateWayMember());
 		setService("binding_bank_card");
 		this.requestNo = IDWorker.INSTANCE.nextSid();

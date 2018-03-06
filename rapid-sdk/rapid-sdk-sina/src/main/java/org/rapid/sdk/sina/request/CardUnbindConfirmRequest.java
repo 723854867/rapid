@@ -6,7 +6,7 @@ import org.rapid.sdk.sina.response.SinaResponse;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BankUnbindConfirmRequest extends UserRequest<SinaResponse> {
+public class CardUnbindConfirmRequest extends UserRequest<SinaResponse> {
 
 	private static final long serialVersionUID = 8155848489612705416L;
 
@@ -19,7 +19,7 @@ public class BankUnbindConfirmRequest extends UserRequest<SinaResponse> {
 	@SerializedName("client_ip")
 	private String clientIp;
 
-	public BankUnbindConfirmRequest() {
+	public CardUnbindConfirmRequest() {
 		super("新浪解绑银行卡推进", SinaConfig.getGateWayMember());
 		setService("unbinding_bank_card_advance");
 	}

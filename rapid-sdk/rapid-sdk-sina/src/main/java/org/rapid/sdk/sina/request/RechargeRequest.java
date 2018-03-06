@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 
 import org.rapid.core.IDWorker;
 import org.rapid.sdk.sina.SinaConfig;
+import org.rapid.sdk.sina.enums.AccountType;
 import org.rapid.sdk.sina.request.so.PayMethod;
 import org.rapid.sdk.sina.response.RechargeResponse;
 
@@ -23,7 +24,7 @@ public class RechargeRequest extends UserRequest<RechargeResponse> {
 	private String summary;
 	@Expose
 	@SerializedName("account_type")
-	private String accountType = "BASIC";
+	private String accountType = AccountType.SAVING_POT.name();
 	@Expose
 	private String amount;
 	@Expose
@@ -39,6 +40,9 @@ public class RechargeRequest extends UserRequest<RechargeResponse> {
 	@Expose
 	@SerializedName("pay_method")
 	private String payMethod;
+	@Expose
+	@SerializedName("cashdesk_addr_category")
+	private String cashdeskAddrCategory = "MOBILE";
 
 	public RechargeRequest() {
 		super("新浪托管充值", SinaConfig.getGateWayOrder());
@@ -100,6 +104,14 @@ public class RechargeRequest extends UserRequest<RechargeResponse> {
 
 	public String getPayMethod() {
 		return payMethod;
+	}
+	
+	public String getCashdeskAddrCategory() {
+		return cashdeskAddrCategory;
+	}
+	
+	public void setCashdeskAddrCategory(String cashdeskAddrCategory) {
+		this.cashdeskAddrCategory = cashdeskAddrCategory;
 	}
 
 	public void amount(PayMethod payMethod, BigDecimal amount) {
