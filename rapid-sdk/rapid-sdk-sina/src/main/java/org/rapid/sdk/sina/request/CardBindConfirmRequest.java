@@ -1,7 +1,7 @@
 package org.rapid.sdk.sina.request;
 
 import org.rapid.sdk.sina.SinaConfig;
-import org.rapid.sdk.sina.response.BankBindResponse;
+import org.rapid.sdk.sina.response.CardBindResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName;
 /**
  * 确认绑定银行卡
  */
-public class BankBindConfirmRequest extends SinaRequest<BankBindResponse> {
+public class CardBindConfirmRequest extends SinaRequest<CardBindResponse> {
 
 	private static final long serialVersionUID = -2281544212572534030L;
 
@@ -25,7 +25,7 @@ public class BankBindConfirmRequest extends SinaRequest<BankBindResponse> {
 	@SerializedName("extend_param")
 	private String extendParam;
 
-	public BankBindConfirmRequest() {
+	public CardBindConfirmRequest() {
 		super("新浪绑定银行卡推进", SinaConfig.getGateWayMember());
 		setService("binding_bank_card_advance");
 	}

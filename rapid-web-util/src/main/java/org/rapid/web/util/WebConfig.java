@@ -7,15 +7,19 @@ import org.rapid.core.ResourceLoader;
 import org.rapid.core.bean.enums.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 @EnableAspectJAutoProxy
 @PropertySource("classpath:conf/rapid.properties")
+@PropertySource(value = "classpath:conf/upload.properties", ignoreResourceNotFound = true)
 public class WebConfig extends ResourceLoader {
 	
 	@Bean("validator")
@@ -36,5 +40,16 @@ public class WebConfig extends ResourceLoader {
 		messageSource.setDefaultEncoding("UTF-8");
 		messageSource.setCacheSeconds(60);
 		return messageSource;
+	}
+	
+	@Bean
+	@Conditional(UploadCondition.class)
+	public MultipartResolver multipartResolver() {
+		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
+		resolver.setDefaultEncoding("UTF-8");
+		resolver.setMaxUploadSize(getProperty("maxUploadSize", 5242880, Integer.class));
+		resolver.setMaxInMemorySize(getProperty("maxInMemorySize", 51200, Integer.class));
+		resolver.setMaxUploadSizePerFile(getProperty("maxUploadSizePerFile", 1048576, Integer.class));
+		return resolver;
 	}
 }

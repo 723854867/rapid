@@ -4,11 +4,11 @@ import org.junit.Test;
 import org.rapid.sdk.sina.SinaTest;
 import org.rapid.sdk.sina.response.SinaResponse;
 
-public class BankUnbindConfirmRequestTest extends SinaTest {
+public class CardUnbindConfirmRequestTest extends SinaTest {
 
 	@Test
 	public void test() {
-		BankUnbindConfirmRequest request = new BankUnbindConfirmRequest();
+		CardUnbindConfirmRequest request = new CardUnbindConfirmRequest();
 		request.setIdentityId("704965772327");
 		request.setTicket("dce8e3cef01943f9be99f283761de042");
 		request.setValidCode("122540");
