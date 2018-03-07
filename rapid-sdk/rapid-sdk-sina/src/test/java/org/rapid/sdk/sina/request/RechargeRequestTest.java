@@ -14,9 +14,9 @@ public class RechargeRequestTest extends SinaTest {
 	public void testExecute() {
 		RechargeRequest request = new RechargeRequest();
 		OnlineBankPay pay = new OnlineBankPay();
-		request.amount(pay, new BigDecimal("1.25"));
+		request.amount(pay, new BigDecimal("50000"));
 		request.setPayerIp("127.0.0.1");
-		request.setIdentityId("704965772327");
+		request.setIdentityId("420223089893179392");
 		RechargeResponse response = request.execute();
 		System.out.println(response.code() + " " + response.desc());
 		System.out.println(SerializeUtil.GSON.toJson(response));

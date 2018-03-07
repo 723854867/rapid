@@ -1,5 +1,6 @@
 package org.rapid.core.bean.model.option;
 
+import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -11,13 +12,17 @@ import org.rapid.core.bean.model.code.ICode;
 import org.rapid.core.bean.model.message.Response;
 
 @SuppressWarnings("unchecked")
-public class Option<VALUE> {
+public class Option<VALUE> implements Serializable {
 
-	private static final Map<String, Option<?>> options = new ConcurrentHashMap<String, Option<?>>();
+	private static transient final Map<String, Option<?>> options = new ConcurrentHashMap<String, Option<?>>();
 
+	private static final long serialVersionUID = -4013391922070099509L;
+	
 	protected String key;
 	protected VALUE defaultValue;
 	protected Class<VALUE> clazz;
+	
+	protected Option() {}
 	
 	/**
 	 * 子类

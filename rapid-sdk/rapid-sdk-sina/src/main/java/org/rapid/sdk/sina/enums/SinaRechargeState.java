@@ -5,7 +5,7 @@ package org.rapid.sdk.sina.enums;
  * 
  * @author lynn
  */
-public enum RechargeState {
+public enum SinaRechargeState {
 
 	SUCCESS,
 	FAILED,

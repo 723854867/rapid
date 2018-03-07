@@ -1,10 +1,12 @@
 package org.rapid.sdk.sina.notice;
 
-import org.rapid.core.bean.model.message.Request;
+import org.rapid.core.bean.model.message.Notice;
 
-public class Notice implements Request {
+public class SinaNotice extends Notice {
 
 	private static final long serialVersionUID = 1782908032182804981L;
+	
+	public static final String RESPONSE_OK			= "success";
 
 	// 通知类型
 	private String notify_type;

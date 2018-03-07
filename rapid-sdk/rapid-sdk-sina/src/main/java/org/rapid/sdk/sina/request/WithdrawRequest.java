@@ -1,6 +1,8 @@
 package org.rapid.sdk.sina.request;
 
 import org.rapid.sdk.sina.SinaConfig;
+import org.rapid.sdk.sina.enums.AccountType;
+import org.rapid.sdk.sina.enums.CashdeskAddrCategory;
 import org.rapid.sdk.sina.response.WithdrawResponse;
 
 import com.google.gson.annotations.Expose;
@@ -13,11 +15,13 @@ public class WithdrawRequest extends UserRequest<WithdrawResponse> {
 	@Expose
 	@SerializedName("out_trade_no")
 	private String outTradeNo;
+	@SerializedName("withdraw_status")
+	private String withdrawStatus;
 	@Expose
 	private String summary;
 	@Expose
 	@SerializedName("account_type")
-	private String accountType = "BASIC";
+	private String accountType = AccountType.SAVING_POT.name();
 	@Expose
 	private String amount;
 	@Expose
@@ -32,13 +36,16 @@ public class WithdrawRequest extends UserRequest<WithdrawResponse> {
 	// GENERAL-普通;FAST-快速
 	@Expose
 	@SerializedName("payto_type")
-	private String paytoType = "GENERAL";
+	private String paytoType = "FAST";
 	@Expose
 	@SerializedName("withdraw_close_time")
 	private String withdrawCloseTime;
 	@Expose
 	@SerializedName("user_ip")
 	private String userIp;
+	@Expose
+	@SerializedName("cashdesk_addr_category")
+	private String cashdeskAddrCategory = CashdeskAddrCategory.MOBILE.name();
 
 	public WithdrawRequest() {
 		super("新浪托管提现", SinaConfig.getGateWayOrder());
@@ -51,6 +58,14 @@ public class WithdrawRequest extends UserRequest<WithdrawResponse> {
 
 	public void setOutTradeNo(String outTradeNo) {
 		this.outTradeNo = outTradeNo;
+	}
+	
+	public String getWithdrawStatus() {
+		return withdrawStatus;
+	}
+	
+	public void setWithdrawStatus(String withdrawStatus) {
+		this.withdrawStatus = withdrawStatus;
 	}
 
 	public String getSummary() {
@@ -123,5 +138,13 @@ public class WithdrawRequest extends UserRequest<WithdrawResponse> {
 
 	public void setUserIp(String userIp) {
 		this.userIp = userIp;
+	}
+	
+	public String getCashdeskAddrCategory() {
+		return cashdeskAddrCategory;
+	}
+	
+	public void setCashdeskAddrCategory(String cashdeskAddrCategory) {
+		this.cashdeskAddrCategory = cashdeskAddrCategory;
 	}
 }

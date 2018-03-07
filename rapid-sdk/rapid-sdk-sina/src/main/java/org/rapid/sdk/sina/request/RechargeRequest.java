@@ -119,4 +119,14 @@ public class RechargeRequest extends UserRequest<RechargeResponse> {
 		this.amount = amount.toString();
 		this.payMethod = MessageFormat.format(payMethod.toString(), this.amount);
 	}
+
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+
+	public void setPayMethod(String payMethod) {
+		this.payMethod = payMethod;
+	}
+	
+	
 }

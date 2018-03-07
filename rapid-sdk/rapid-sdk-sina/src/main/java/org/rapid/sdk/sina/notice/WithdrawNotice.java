@@ -1,6 +1,6 @@
 package org.rapid.sdk.sina.notice;
 
-public class WithdrawNotice extends Notice {
+public class WithdrawNotice extends SinaNotice {
 
 	private static final long serialVersionUID = 4437089553046489251L;
 
