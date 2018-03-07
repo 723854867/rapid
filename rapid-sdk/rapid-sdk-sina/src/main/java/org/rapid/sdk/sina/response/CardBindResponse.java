@@ -2,7 +2,7 @@ package org.rapid.sdk.sina.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class BankBindResponse extends SinaResponse {
+public class CardBindResponse extends SinaResponse {
 
 	private static final long serialVersionUID = -7573843293495092804L;
 

@@ -28,6 +28,7 @@ public class UserRequest<RESPONSE extends SinaResponse> extends SinaRequest<RESP
 	
 	public UserRequest(UserAction action, String url) {
 		super(action.prefix(), url);
+		setService(action.service());
 	}
 	
 	public String getIdentityId() {

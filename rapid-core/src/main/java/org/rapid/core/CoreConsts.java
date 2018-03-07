@@ -9,4 +9,5 @@ public interface CoreConsts {
 	final StrOption ZOOKEEPER_ENABLE			= new StrOption("zookeeper.enable", "false");
 	final StrOption ACTIVEMQ_TYPE				= new StrOption("activemq.type", "");
 	final BoolOption HTTP_ENABLE				= new BoolOption("http.enable", false);
+	final StrOption UPLOAD_ENABLE				= new StrOption("upload.enable", "false");
 }

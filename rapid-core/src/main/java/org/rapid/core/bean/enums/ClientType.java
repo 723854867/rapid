@@ -5,7 +5,7 @@ package org.rapid.core.bean.enums;
  * 
  * @author lynn
  */
-public enum ChannelType {
+public enum ClientType {
 	
 	// ios客户端
 	IOS(1),
@@ -18,7 +18,7 @@ public enum ChannelType {
 
 	private int mark;
 
-	private ChannelType(int mark) {
+	private ClientType(int mark) {
 		this.mark = mark;
 	}
 
@@ -26,8 +26,8 @@ public enum ChannelType {
 		return mark;
 	}
 
-	public static final ChannelType match(int type) {
-		for (ChannelType temp : ChannelType.values()) {
+	public static final ClientType match(int type) {
+		for (ClientType temp : ClientType.values()) {
 			if (temp.mark == type)
 				return temp;
 		}

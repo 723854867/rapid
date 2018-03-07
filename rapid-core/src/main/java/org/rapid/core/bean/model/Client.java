@@ -2,19 +2,19 @@ package org.rapid.core.bean.model;
 
 import java.io.Serializable;
 
-import org.rapid.core.bean.enums.ChannelType;
+import org.rapid.core.bean.enums.ClientType;
 
-public class Channel implements Serializable {
+public class Client implements Serializable {
 
 	private static final long serialVersionUID = 7639535073015645638L;
 
-	private ChannelType type;
+	private ClientType type;
 	
-	public ChannelType getType() {
+	public ClientType getType() {
 		return type;
 	}
 	
-	public void setType(ChannelType type) {
+	public void setType(ClientType type) {
 		this.type = type;
 	}
 }

@@ -1,6 +1,8 @@
 package org.rapid.sdk.sina.enums;
 
 public enum UserAction {
+	
+	SET_PWD("新浪设置支付密码重定向", "set_pay_password"),
 
 	// 修改密码
 	MODIFY_PWD("新浪修改支付密码重定向", "modify_pay_password"),

@@ -1,12 +1,12 @@
 package org.rapid.sdk.sina.request;
 
 import org.rapid.sdk.sina.SinaConfig;
-import org.rapid.sdk.sina.response.BankUnbindResponse;
+import org.rapid.sdk.sina.response.CardUnbindResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BankUnbindRequest extends UserRequest<BankUnbindResponse> {
+public class CardUnbindRequest extends UserRequest<CardUnbindResponse> {
 
 	private static final long serialVersionUID = 206933137089000118L;
 
@@ -20,7 +20,7 @@ public class BankUnbindRequest extends UserRequest<BankUnbindResponse> {
 	@SerializedName("client_ip")
 	private String clientIp;
 
-	public BankUnbindRequest() {
+	public CardUnbindRequest() {
 		super("新浪解绑银行卡", SinaConfig.getGateWayMember());
 		setService("unbinding_bank_card");
 	}
