@@ -22,7 +22,9 @@ public enum Code implements ICode {
 	RESOURCE_LOCKED(104, "code.resource.locked", "资源已被占用"),
 	DATA_CHANGED(105, "code.data.changed", "数据已改变"),
 	UNLOGIN(110, "code.unlogin", "未登录"),
-	TOKEN_INVALID(111, "code.token.invalid", "Token 已失效");
+	TOKEN_INVALID(111, "code.token.invalid", "Token 已失效"),
+	USABLE_LACK(120, "code.money.lack", "可用余额不足"),
+	FROZEN_LACK(121, "code.frozen.lack", "冻结余额不足");
 	
 	private int code;
 	private String key;

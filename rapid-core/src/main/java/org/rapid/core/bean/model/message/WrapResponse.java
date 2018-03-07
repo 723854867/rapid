@@ -8,6 +8,12 @@ public class WrapResponse implements Serializable {
 
 	private Object result;
 	
+	public WrapResponse() {}
+	
+	public WrapResponse(Object result) {
+		this.result = result;
+	}
+	
 	public Object getResult() {
 		return result;
 	}

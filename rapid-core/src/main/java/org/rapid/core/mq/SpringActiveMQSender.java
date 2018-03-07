@@ -1,4 +1,4 @@
-package org.rapid.core;
+package org.rapid.core.mq;
 
 import java.io.Serializable;
 
@@ -6,10 +6,8 @@ import javax.annotation.Resource;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
-import javax.jms.Queue;
 import javax.jms.Session;
 
-import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
@@ -22,6 +20,8 @@ public class SpringActiveMQSender {
 
 	@Resource
 	private JmsTemplate jmsTemplate;
+	@Resource
+	private SchedulerMessageProcessor schedulerMessageProcessor;
 	
 	protected MessageCreator generateObjectCreator(Serializable message) {
 		return new MessageCreator() {
@@ -44,8 +44,10 @@ public class SpringActiveMQSender {
 	}
 	
 	protected void sendMessage(String queueName, MessageCreator creator) {
-		Queue queue = new ActiveMQQueue(queueName);
-		jmsTemplate.setDefaultDestination(queue);
-		jmsTemplate.send(creator);
+		jmsTemplate.send(queueName, creator);
+	}
+	
+	protected void sendMessage(String queueName, SchedulerMessage message) {
+		jmsTemplate.convertAndSend(queueName, message, schedulerMessageProcessor);
 	}
 }

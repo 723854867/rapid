@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class DateUtil {
 	
+	public static final int MINITUE_MILLS				= 60000;
 	public static final int DAY_SECONDS					= 86400;
 	public static final int DAY_MILLS					= 86400000;
 	public static final int HOUR_SECONDS				= 3600;
