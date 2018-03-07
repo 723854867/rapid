@@ -2,6 +2,7 @@ package org.rapid.util;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.Collection;
 import java.util.Random;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -134,5 +135,19 @@ public class StringUtil {
 			builder.append(object.toString()).append(seperator);
 		builder.deleteCharAt(builder.length() - len);
 		return builder.toString();
+	}
+	
+	/**
+	 * 把set根据split分割组装成string
+	 * @param set
+	 * @param split
+	 * @return
+	 */
+	public static String collectionToString(Collection<?> set,String split) {
+		String value = "";
+		for(Object object : set) {
+			value+=object+split;
+		}
+		return value.substring(0,value.length()-1);
 	}
 }

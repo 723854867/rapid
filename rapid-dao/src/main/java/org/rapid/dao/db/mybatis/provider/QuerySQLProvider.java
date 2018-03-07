@@ -49,7 +49,7 @@ public class QuerySQLProvider extends SQLProvider<String> {
 								+ "${item.col}!=#{item.value}"
 							+ "</when>"
 							+ "<when test=\"item.comparison==64\">"
-								+ "${item.col} LIKE %#{item.value}%"
+								+ "${item.col} LIKE concat(concat('%',#{item.value}),'%')"
 							+ "</when>"
 							+ "<when test=\"item.comparison==128\">"
 								+ "${item.col} IN ("
