@@ -49,12 +49,12 @@ public abstract class DistributeConfigLoader<T extends DistributeConfig> impleme
 		if (!zkClient.exists(configPath))
 			zkClient.createPersistent(configPath, true);
 		T temp = ZkUtil.read(zkClient, configPath, clazz, serializer);
-		config = null == temp ? config.defaultConfiguration() : temp;
+		config = null == temp ? defaultConfiguration() : temp;
 		zkClient.subscribeDataChanges(configPath, new IZkDataListener() {
 			@Override
 			public void handleDataDeleted(String dataPath) throws Exception {
 				logger.info("Distribute config deleted!");
-				config = config.defaultConfiguration();
+				config = defaultConfiguration();
 			}
 			@Override
 			public void handleDataChange(String dataPath, Object data) throws Exception {
@@ -89,4 +89,6 @@ public abstract class DistributeConfigLoader<T extends DistributeConfig> impleme
 	public int priority() {
 		return 10;
 	}
+	
+	protected abstract T defaultConfiguration();
 }
