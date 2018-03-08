@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
+import org.rapid.util.bean.enums.TimeType;
+
 public class DateUtil {
 	
 	public static final int MINITUE_MILLS				= 60000;
@@ -245,5 +247,31 @@ public class DateUtil {
 	
 	public static final int nextZeroTimeInSecond(Date date) {
 		return (int) (nextZeroTime(date) / 1000);
+	}
+	
+	// ************* 计算两个时间之间的相隔  *************
+	
+	/**
+	 * 获取当前时间到指定时间之间的差值：当前时间精确到毫秒
+	 */
+	public static final long interval(Object date2, String format2, TimeType type) {
+		return interval(getDate(DateUtil.yyyyMMddHHmmss), DateUtil.yyyyMMddHHmmss, date2, format2, TIMEZONE_GMT_8, type);
+	}
+	
+	public static final long interval(Object date1, String format1, Object date2, String format2, TimeType type) {
+		return interval(date1, format1, date2, format2, TIMEZONE_GMT_8, type);
+	}
+	
+	/**
+	 * 计算 date1 和 date2 之间的时间差:如果 剩余时间不够一个周期则算一个时间差
+	 * 如果 date1 小于 date2 则返回正值，否则返回负值
+	 */
+	public static final long interval(Object date1, String format1, Object date2, String format2, TimeZone timeZone, TimeType type) {
+		long time1 = getTime(date1.toString(), format1, timeZone);
+		long time2 = getTime(date2.toString(), format2, timeZone);
+		long interval = Math.abs(time1 - time2);
+		long mod = interval % type.millis();
+		interval = 0 == mod ? interval / type.millis() : interval / type.millis() + 1;
+		return time1 < time2 ? interval : -interval;
 	}
 }
