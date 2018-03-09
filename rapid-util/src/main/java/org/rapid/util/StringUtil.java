@@ -150,4 +150,18 @@ public class StringUtil {
 		}
 		return value.substring(0,value.length()-1);
 	}
+	
+	/**
+	 * 匹配数字或带小数的数字
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNumberOrPoint(String str) {
+		Pattern pattern = Pattern.compile("([1-9]\\d*\\.?\\d*)|(0\\.\\d*[1-9])");
+        Matcher isNumP = pattern.matcher(str);
+        if( !isNumP.matches() ){
+            return false;
+        }
+        return true;
+	}
 }
