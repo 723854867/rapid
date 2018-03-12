@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
-import org.rapid.util.bean.enums.TimeType;
-
 public class DateUtil {
 	
 	public static final int MINITUE_MILLS				= 60000;
@@ -46,15 +44,15 @@ public class DateUtil {
 		return getTime(date, ISO8601_UTC_S, TIMEZONE_UTC);
 	}
 	
-	public static final long getTime(String date, String format) { 
+	public static final long getTime(Object date, String format) { 
 		return getTime(date, format, TIMEZONE_GMT_8);
 	}
 	
-	public static final long getTime(String date, String format, TimeZone zone) { 
+	public static final long getTime(Object date, String format, TimeZone zone) { 
 		DateFormat df = new SimpleDateFormat(format);
 		df.setTimeZone(zone);
 		try {
-			return df.parse(date).getTime();
+			return df.parse(date.toString()).getTime();
 		} catch (ParseException e) {
 			return 0;
 		}
@@ -86,7 +84,7 @@ public class DateUtil {
 		return df.format(date);
 	}
 	
-	public static final String getDate(String format, long timestamp) {
+	public static final String getDate(Object format, long timestamp) {
 		return getDate(format, timestamp, TIMEZONE_GMT_8);
 	}
 	
@@ -96,8 +94,8 @@ public class DateUtil {
 		return df.format(date);
 	}
 	
-	public static final String getDate(String format, long timestamp, TimeZone timeZone) {
-		DateFormat df = new SimpleDateFormat(format);
+	public static final String getDate(Object format, long timestamp, TimeZone timeZone) {
+		DateFormat df = new SimpleDateFormat(format.toString());
 		df.setTimeZone(timeZone);
 		return df.format(new Date(timestamp));
 	}
@@ -125,19 +123,19 @@ public class DateUtil {
 		return getDate(format, timestamp);
 	}
 	
-	public static final String add(String source, String format, TimeUnit unit, long duration) {
+	public static final String add(Object source, String format, TimeUnit unit, long duration) {
 		return add(source, format, format, unit, duration, TIMEZONE_GMT_8);
 	}
 	
-	public static final String add(String source, String sf, String tf, TimeUnit unit, long duration) {
+	public static final String add(Object source, String sf, String tf, TimeUnit unit, long duration) {
 		return add(source, sf, tf, unit, duration, TIMEZONE_GMT_8);
 	}
 	
-	public static final String add(String source, String format, TimeUnit unit, long duration, TimeZone timeZone) {
+	public static final String add(Object source, String format, TimeUnit unit, long duration, TimeZone timeZone) {
 		return add(source, format,format, unit, duration, timeZone);
 	}
 	
-	public static final String add(String source, String sf, String tf, TimeUnit unit, long duration, TimeZone timeZone) {
+	public static final String add(Object source, String sf, String tf, TimeUnit unit, long duration, TimeZone timeZone) {
 		long timestamp = getTime(source, sf, timeZone);
 		timestamp += unit.toMillis(duration);
 		return getDate(tf, timestamp);
@@ -145,29 +143,29 @@ public class DateUtil {
 	
 	// ************* 减时间   ************* 
 	
-	public static final String substract(String format, TimeUnit unit, long duration) {
+	public static final String substract(Object format, TimeUnit unit, long duration) {
 		return substract(format, unit, duration, TIMEZONE_GMT_8);
 	}
 	
-	public static final String substract(String format, TimeUnit unit, long duration, TimeZone timeZone) {
+	public static final String substract(Object format, TimeUnit unit, long duration, TimeZone timeZone) {
 		long timestamp = System.currentTimeMillis();
 		timestamp -= unit.toMillis(duration);
 		return getDate(format, timestamp);
 	}
 	
-	public static final String substract(String source, String format, TimeUnit unit, long duration) {
+	public static final String substract(Object source, String format, TimeUnit unit, long duration) {
 		return substract(source, format, format, unit, duration, TIMEZONE_GMT_8);
 	}
 	
-	public static final String substract(String source, String sf, String tf, TimeUnit unit, long duration) {
+	public static final String substract(Object source, String sf, String tf, TimeUnit unit, long duration) {
 		return substract(source, sf, tf, unit, duration, TIMEZONE_GMT_8);
 	}
 	
-	public static final String substract(String source, String format, TimeUnit unit, long duration, TimeZone timeZone) {
+	public static final String substract(Object source, String format, TimeUnit unit, long duration, TimeZone timeZone) {
 		return substract(source, format,format, unit, duration, timeZone);
 	}
 	
-	public static final String substract(String source, String sf, String tf, TimeUnit unit, long duration, TimeZone timeZone) {
+	public static final String substract(Object source, String sf, String tf, TimeUnit unit, long duration, TimeZone timeZone) {
 		long timestamp = getTime(source, sf, timeZone);
 		timestamp -= unit.toMillis(duration);
 		return getDate(tf, timestamp);
@@ -254,24 +252,43 @@ public class DateUtil {
 	/**
 	 * 获取当前时间到指定时间之间的差值：当前时间精确到毫秒
 	 */
-	public static final long interval(Object date2, String format2, TimeType type) {
-		return interval(getDate(DateUtil.yyyyMMddHHmmss), DateUtil.yyyyMMddHHmmss, date2, format2, TIMEZONE_GMT_8, type);
+	public static final long interval(Object date2, String format2, org.rapid.util.bean.enums.TimeUnit unit) {
+		return interval(getDate(DateUtil.yyyyMMddHHmmss), DateUtil.yyyyMMddHHmmss, date2, format2, TIMEZONE_GMT_8, unit);
 	}
 	
-	public static final long interval(Object date1, String format1, Object date2, String format2, TimeType type) {
-		return interval(date1, format1, date2, format2, TIMEZONE_GMT_8, type);
+	public static final long interval(Object date1, String format1, Object date2, String format2, org.rapid.util.bean.enums.TimeUnit unit) {
+		return interval(date1, format1, date2, format2, TIMEZONE_GMT_8, unit);
 	}
 	
 	/**
 	 * 计算 date1 和 date2 之间的时间差:如果 剩余时间不够一个周期则算一个时间差
 	 * 如果 date1 小于 date2 则返回正值，否则返回负值
 	 */
-	public static final long interval(Object date1, String format1, Object date2, String format2, TimeZone timeZone, TimeType type) {
+	public static final long interval(Object date1, String format1, Object date2, String format2, TimeZone timeZone, org.rapid.util.bean.enums.TimeUnit unit) {
 		long time1 = getTime(date1.toString(), format1, timeZone);
 		long time2 = getTime(date2.toString(), format2, timeZone);
 		long interval = Math.abs(time1 - time2);
-		long mod = interval % type.millis();
-		interval = 0 == mod ? interval / type.millis() : interval / type.millis() + 1;
+		long mod = interval % unit.millis();
+		interval = 0 == mod ? interval / unit.millis() : interval / unit.millis() + 1;
 		return time1 < time2 ? interval : -interval;
+	}
+	
+	public static final int monthDays() {
+		return monthDays(System.currentTimeMillis());
+	}
+	
+	public static final int monthDays(Object date, String format) {
+		return monthDays(getTime(date, format));
+	}
+	
+	/**
+	 * 获取指定月份的天数
+	 */
+	public static final int monthDays(long timestamp) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(timestamp);
+		calendar.set(Calendar.DATE, 1);
+		calendar.roll(Calendar.DATE, false);
+		return calendar.get(Calendar.DATE);
 	}
 }
