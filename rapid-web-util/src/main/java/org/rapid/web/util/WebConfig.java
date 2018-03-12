@@ -3,14 +3,14 @@ package org.rapid.web.util;
 import javax.validation.Validator;
 
 import org.hibernate.validator.HibernateValidator;
-import org.rapid.core.ResourceLoader;
+import org.rapid.core.CoreConsts;
+import org.rapid.core.RapidConfiguration;
 import org.rapid.core.bean.enums.Locale;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.multipart.MultipartResolver;
@@ -18,9 +18,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 @Configuration
 @EnableAspectJAutoProxy
-@PropertySource("classpath:conf/rapid.properties")
-@PropertySource(value = "classpath:conf/upload.properties", ignoreResourceNotFound = true)
-public class WebConfig extends ResourceLoader {
+public class WebConfig {
 	
 	@Bean("validator")
 	public Validator validator() {
@@ -33,7 +31,7 @@ public class WebConfig extends ResourceLoader {
 	@Bean("messageSource")
 	public MessageSource messageSource() {
 		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-		Locale locale = getProperty("rapid.locale", Locale.ZH_CN, Locale.class);
+		Locale locale = RapidConfiguration.get(CoreConsts.RAPID_LOCALE, true);
 		String langFile = "classpath:conf/lang/lang_" + locale.mark();
 		messageSource.setBasenames(new String[] {langFile, "classpath:org/hibernate/validator/ValidationMessages"});
 		messageSource.setUseCodeAsDefaultMessage(false);
@@ -47,9 +45,9 @@ public class WebConfig extends ResourceLoader {
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setDefaultEncoding("UTF-8");
-		resolver.setMaxUploadSize(getProperty("maxUploadSize", 5242880, Integer.class));
-		resolver.setMaxInMemorySize(getProperty("maxInMemorySize", 51200, Integer.class));
-		resolver.setMaxUploadSizePerFile(getProperty("maxUploadSizePerFile", 1048576, Integer.class));
+		resolver.setMaxUploadSize(RapidConfiguration.get(CoreConsts.RAPID_MAX_UPLOAD_SIZE, true));
+		resolver.setMaxInMemorySize(RapidConfiguration.get(CoreConsts.RAPID_MAX_IN_MEMORY_SIZE, true));
+		resolver.setMaxUploadSizePerFile(RapidConfiguration.get(CoreConsts.RAPID_MAX_UPLOAD_SIZE_PER_FILE, true));
 		return resolver;
 	}
 }

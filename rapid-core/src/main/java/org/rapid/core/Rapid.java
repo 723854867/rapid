@@ -85,8 +85,8 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	}
 	
 	private void _configurationParser() {
-		this.env = option(Option.RAPID_ENV);
-		this.locale = option(Option.RAPID_LOCALE);
+		this.env = option(CoreConsts.RAPID_ENV);
+		this.locale = option(CoreConsts.RAPID_LOCALE);
 	}
 	
 	public Env getEnv() {

@@ -2,10 +2,10 @@ package org.rapid.core.condition;
 
 import org.rapid.core.CoreConsts;
 
-public class ZookeeperCondition extends ConfigrationCondtion<Boolean> {
+public class HttpCondition extends ConfigrationCondtion<Boolean> {
 
-	public ZookeeperCondition() {
-		super(CoreConsts.ZOOKEEPER_ENABLE);
+	public HttpCondition() {
+		super(CoreConsts.HTTP_ENABLE);
 	}
 
 	@Override

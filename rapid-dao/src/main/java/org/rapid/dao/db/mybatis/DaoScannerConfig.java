@@ -1,8 +1,7 @@
 package org.rapid.dao.db.mybatis;
 
-import java.util.Properties;
-
-import org.rapid.core.ResourceLoader;
+import org.rapid.core.CoreConsts;
+import org.rapid.core.RapidConfiguration;
 import org.rapid.dao.db.conditions.MybatisCondition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -10,13 +9,14 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @Conditional(MybatisCondition.class)
-public class DaoScannerConfig extends ResourceLoader {
+public class DaoScannerConfig {
 
 	@Bean
 	public DaoScannerConfigurer mapperScannerConfigurer() throws Exception {
 		DaoScannerConfigurer scanner = new DaoScannerConfigurer();
-		Properties properties = loadProperties("classpath:conf/db.properties");
-		scanner.setBasePackage(properties.getProperty("db.mybatis.basePackage"));
+		String value = RapidConfiguration.get(CoreConsts.DB_MYBATIS_BASE_PACKAGE, false);
+		if (null != value)
+			scanner.setBasePackage(value);
 		return scanner;
 	}
 }

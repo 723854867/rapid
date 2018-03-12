@@ -2,15 +2,12 @@ package org.rapid.dao.redis;
 
 import java.util.Set;
 
-import javax.annotation.Resource;
-
-import org.apache.commons.pool2.impl.DefaultEvictionPolicy;
+import org.rapid.core.CoreConsts;
+import org.rapid.core.RapidConfiguration;
 import org.rapid.util.CollectionUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.core.env.Environment;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
@@ -20,65 +17,61 @@ import redis.clients.jedis.ShardedJedisPool;
 import redis.clients.util.Pool;
 
 @Configuration
-@PropertySource("classpath:conf/redis.properties")
 @Conditional(RedisCondition.class)
 public class RedisConfig {
 	
-	@Resource
-	private Environment environment;
-
 	@Bean(name = "jedisPool")
 	public Pool<Jedis> jedisPool() {
 		JedisPoolConfig config = new JedisPoolConfig();
 		// 连接耗尽时是否阻塞：false-直接抛异常，true-阻塞直到超时，默认 true
-		config.setBlockWhenExhausted(environment.getProperty("redis.blockWhenExhausted", boolean.class, true));
+		config.setBlockWhenExhausted(RapidConfiguration.get(CoreConsts.REDIS_BLOCK_WHEN_EXHAUSTED, true));
 		// 设置注册策略类名：默认 DefaultEvictionPolicy(当连接超过最大空闲时间，或连接数超过最大空闲连接数时逐出)
-		config.setEvictionPolicyClassName(environment.getProperty("redis.evictionPolicyClassName", String.class, DefaultEvictionPolicy.class.getName()));
+		config.setEvictionPolicyClassName(RapidConfiguration.get(CoreConsts.REDIS_EVICTION_POLICY_CLASS, true));
 //		config.setFairness(fairness);
 		// 是否启用pool的jmx管理功能, 默认true
-		config.setJmxEnabled(environment.getProperty("redis.jmxEnabled", boolean.class, true));
+		config.setJmxEnabled(RapidConfiguration.get(CoreConsts.REDIS_JMX_ENABLED, true));
 //		config.setJmxNameBase(jmxNameBase);
 //		config.setJmxNamePrefix("");
 		// 是否启用后进先出  - last in first out, 默认true
-		config.setLifo(environment.getProperty("redis.lifo", boolean.class, true));
+		config.setLifo(RapidConfiguration.get(CoreConsts.REDIS_LIFO, true));
 		// 最大空闲连接数, 默认8个
-		config.setMaxIdle(environment.getProperty("redis.maxIdle", int.class, 8));
+		config.setMaxIdle(RapidConfiguration.get(CoreConsts.REDIS_MAX_IDLE, true));
 		// 最小空闲连接数, 默认0
-		config.setMinIdle(environment.getProperty("redis.minIdle", int.class, 0));
+		config.setMinIdle(RapidConfiguration.get(CoreConsts.REDIS_MIN_IDLE, true));
 		// 最大连接数, 默认8个
-		config.setMaxTotal(environment.getProperty("redis.maxTotal", int.class, 8));
+		config.setMaxTotal(RapidConfiguration.get(CoreConsts.REDIS_MAX_TOTAL, true));
 		// 获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间, 默认-1
-		config.setMaxWaitMillis(environment.getProperty("redis.maxWaitMillis", int.class, -1));
+		config.setMaxWaitMillis(RapidConfiguration.get(CoreConsts.REDIS_MAX_WAIT_MILLIS, true));
 		// 逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
-		config.setMinEvictableIdleTimeMillis(environment.getProperty("redis.minEvictableIdleTimeMillis", int.class, 1800000));
+		config.setMinEvictableIdleTimeMillis(RapidConfiguration.get(CoreConsts.REDIS_MIN_EVICTABLE_IDLE_TIME_MILLIS, true));
 		// 每次逐出检查时逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3
-		config.setNumTestsPerEvictionRun(environment.getProperty("redis.numTestsPerEvictionRun", int.class, 3));
+		config.setNumTestsPerEvictionRun(RapidConfiguration.get(CoreConsts.REDIS_NUM_TESTS_PER_EVICTION_RUN, true));
 		// 对象空闲多久后逐出, 当空闲时间>该值且空闲连接>最大空闲数时直接逐出,不再根据MinEvictableIdleTimeMillis判断  (默认逐出策略)   
-		config.setSoftMinEvictableIdleTimeMillis(environment.getProperty("redis.softMinEvictableIdleTimeMillis", int.class, 1800000));
+		config.setSoftMinEvictableIdleTimeMillis(RapidConfiguration.get(CoreConsts.REDIS_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS, true));
 		// 在获取连接的时候检查有效性, 默认false
-		config.setTestOnBorrow(environment.getProperty("redis.testOnBorrow", boolean.class, false));
-		config.setTestOnCreate(environment.getProperty("redis.testOnCreate", boolean.class, false));
-		config.setTestOnReturn(environment.getProperty("redis.testOnReturn", boolean.class, false));
+		config.setTestOnBorrow(RapidConfiguration.get(CoreConsts.REDIS_TEST_ON_BORROW, true));
+		config.setTestOnCreate(RapidConfiguration.get(CoreConsts.REDIS_TEST_ON_CREATE, true));
+		config.setTestOnReturn(RapidConfiguration.get(CoreConsts.REDIS_TEST_ON_RETURN, true));
 		// 在空闲时检查有效性, 默认false
-		config.setTestWhileIdle(environment.getProperty("redis.testWhileIdle", boolean.class, false));
+		config.setTestWhileIdle(RapidConfiguration.get(CoreConsts.REDIS_TEST_WHILE_IDLE, true));
 		// 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
-		config.setTimeBetweenEvictionRunsMillis(environment.getProperty("redis.timeBetweenEvictionRunsMillis", int.class, -1));
+		config.setTimeBetweenEvictionRunsMillis(RapidConfiguration.get(CoreConsts.REDIS_TIME_BETWEEN_EVICTION_RUNS_MILLIS, true));
 		
-		String poolName = environment.getProperty("redis.pool", String.class, JedisPool.class.getName());
+		String poolName = RapidConfiguration.get(CoreConsts.REDIS_POOL, true);
 		if (poolName.equals(ShardedJedisPool.class.getName())) {
 			return null;
 		} else if (poolName.equals(JedisSentinelPool.class.getName())) {
-			String sentinels = environment.getProperty("redis.host");
+			String sentinels = RapidConfiguration.get(CoreConsts.REDIS_HOST, true);
 			Set<String> set = CollectionUtil.splitIntoStringSet(sentinels, ";");
-			return new JedisSentinelPool(environment.getProperty("redis.masterName"), set, config, 
-					environment.getProperty("redis.connTimeout", int.class, 3000), 
-					environment.getProperty("redis.password", String.class));
+			return new JedisSentinelPool(RapidConfiguration.get(CoreConsts.REDIS_MASTER, true), set, config, 
+					RapidConfiguration.get(CoreConsts.REDIS_CONN_TIMEOUT, true), 
+					RapidConfiguration.get(CoreConsts.REDIS_PASSWORD, true));
 		} else {
-			return new JedisPool(config, environment.getProperty("redis.host"), 
-					environment.getProperty("redis.port", int.class, 6379), 
-					environment.getProperty("redis.connTimeout", int.class, 3000), 
-					environment.getProperty("redis.password", String.class),
-					environment.getProperty("redis.database", int.class, 0));
+			return new JedisPool(config, RapidConfiguration.get(CoreConsts.REDIS_HOST, true), 
+					RapidConfiguration.get(CoreConsts.REDIS_PORT, true), 
+					RapidConfiguration.get(CoreConsts.REDIS_CONN_TIMEOUT, true), 
+					RapidConfiguration.get(CoreConsts.REDIS_PASSWORD, true),
+					RapidConfiguration.get(CoreConsts.REDIS_DATABASE, true));
 		}
 	}
 }

@@ -11,11 +11,11 @@ import javax.annotation.PostConstruct;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.rapid.core.Assert;
+import org.rapid.core.CoreConsts;
+import org.rapid.core.RapidConfiguration;
 import org.rapid.core.bean.model.Identifiable;
 import org.rapid.core.serialize.SerializeUtil;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
@@ -33,21 +33,16 @@ import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
 
 @Component
-@PropertySource("classpath:conf/mongo.properties")
 @Conditional(MongoCondition.class)
 public class Mongo {
 
-	@Value("${mongo.db}")
-	private String db;
-	@Value("${mongo.host}")
-	private String host;
 	private MongoClient mongo;
 	private MongoDatabase connection;
 	
 	@PostConstruct
 	public void init() {
-		this.mongo = new MongoClient(host);
-		this.connection = mongo.getDatabase(db);
+		this.mongo = new MongoClient(RapidConfiguration.get(CoreConsts.MONGO_HOST, true));
+		this.connection = mongo.getDatabase(RapidConfiguration.get(CoreConsts.MONGO_DB, true));
 	}
 	
 	public void insertOne(String collectionName, Object object) {
@@ -247,13 +242,5 @@ public class Mongo {
 	
 	public MongoCollection<Document> collection(String collectionName) {
 		return connection.getCollection(collectionName);
-	}
-	
-	public void setDb(String db) {
-		this.db = db;
-	}
-	
-	public void setHost(String host) {
-		this.host = host;
 	}
 }

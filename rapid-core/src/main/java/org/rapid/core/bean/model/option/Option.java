@@ -6,8 +6,6 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.rapid.core.bean.enums.Env;
-import org.rapid.core.bean.enums.Locale;
 import org.rapid.core.bean.model.code.ICode;
 import org.rapid.core.bean.model.message.Response;
 
@@ -49,12 +47,17 @@ public class Option<VALUE> implements Serializable {
 	/**
 	 * 有默认值
 	 */
-	protected Option(String key, VALUE defaultValue) {
+	public Option(String key, VALUE defaultValue) {
 		if (null != options.putIfAbsent(key, this))
-			throw new RuntimeException("rapid option duplicated, option must be unique!");
+			throw new RuntimeException("rapid option [" + key + "] duplicated, option  must be unique!");
 		this.key = key;
 		this.defaultValue = defaultValue;
-		this.clazz = (Class<VALUE>) defaultValue.getClass();
+		if (null == defaultValue) {
+			Type superType = getClass().getGenericSuperclass();   
+			Type[] generics = ((ParameterizedType) superType).getActualTypeArguments();  
+			this.clazz = (Class<VALUE>) generics[0];
+		} else
+			this.clazz = (Class<VALUE>) defaultValue.getClass();
 	}
 
 	public String getKey() {
@@ -90,8 +93,4 @@ public class Option<VALUE> implements Serializable {
 		Option<?> option = options.get(key);
 		return null == option ? null : (OPTION) option;
 	}
-	
-	public static final Option<Env> RAPID_ENV = new Option<Env>("rapid.env", Env.LOCAL);
-	public static final Option<Locale> RAPID_LOCALE = new Option<Locale>("rapid.locale", Locale.ZH_CN);
-	public static final Option<String> RESOURCES_PREFIX = new StrOption("resources.prefix");
 }

@@ -8,6 +8,7 @@ import javax.annotation.PostConstruct;
 
 import org.rapid.core.bean.enums.ContentType;
 import org.rapid.core.bean.exception.RequestFailException;
+import org.rapid.core.condition.HttpCondition;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 

@@ -1,12 +1,12 @@
 package org.rapid.dubbo;
 
-import org.rapid.core.ResourceLoader;
+import org.rapid.core.CoreConsts;
+import org.rapid.core.RapidConfiguration;
 import org.rapid.util.StringUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import com.alibaba.dubbo.config.ApplicationConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
@@ -15,48 +15,47 @@ import com.alibaba.dubbo.config.RegistryConfig;
 
 @Configuration
 @ComponentScan("org.rapid")
-@PropertySource("classpath:conf/dubbo.properties")
-public class DubboConfig extends ResourceLoader {
+public class DubboConfig {
 	
 	@Bean
 	public ApplicationConfig applicationConfig() {
 		ApplicationConfig application = new ApplicationConfig();
-		application.setName(getProperty("application.name", String.class));
-		application.setOrganization(getProperty("application.owner", String.class));
-		application.setOrganization(getProperty("application.environment", String.class));
-		application.setOrganization(getProperty("application.organization", String.class));
+		application.setName(RapidConfiguration.get(CoreConsts.DUBBO_APP_NAME, true));
+		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_OWNER, true));
+		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_ENVIRONMENT, true));
+		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_ORGANZATION, true));
 		return application;
 	}
 
 	@Bean
 	public RegistryConfig registryConfig() {
 		RegistryConfig registry = new RegistryConfig();
-		String id = getProperty("registry.id", null, String.class);
+		String id = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_ID, false);
 		if (StringUtil.hasText(id))
 			registry.setId(id);
-		String protocol = getProperty("registry.protocol", null, String.class);
+		String protocol = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_PROTOCOL, false);
 		if (StringUtil.hasText(protocol))
 			registry.setProtocol(protocol);
-		Integer port = getProperty("registry.port", null, Integer.class);
+		Integer port = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_PORT, false);
 		if (null != port)
 			registry.setPort(port);
-		String username = getProperty("registry.username", null, String.class);
+		String username = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_USERNAME, false);
 		if (StringUtil.hasText(username))
 			registry.setUsername(username);
-		String password = getProperty("registry.password", null, String.class);
+		String password = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_PASSWORD, false);
 		if (StringUtil.hasText(password))
 			registry.setPassword(password);
-		String transporter = getProperty("registry.transporter", null, String.class);
+		String transporter = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_TRANSPORTER, false);
 		if (StringUtil.hasText(transporter))
 			registry.setTransporter(transporter);
-		Integer timeout = getProperty("registry.timeout", null, Integer.class);
+		Integer timeout = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_TIMEOUT, false);
 		if (null != timeout)
 			registry.setTimeout(timeout);
-		Integer session = getProperty("registry.session", null, Integer.class);
+		Integer session = RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_SESSION, false);
 		if (null != session)
 			registry.setSession(session);
-		registry.setFile(getProperty("registry.file",String.class));
-		registry.setAddress(getProperty("registry.address", String.class));
+		registry.setFile(RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_FILE, true));
+		registry.setAddress(RapidConfiguration.get(CoreConsts.DUBBO_REGISTRY_ADDRESS, true));
 		return registry;
 	}
 	
@@ -64,20 +63,13 @@ public class DubboConfig extends ResourceLoader {
 	@Conditional(ProviderCondition.class)
 	public ProtocolConfig protocolConfig() {
 		ProtocolConfig config = new ProtocolConfig();
-		Integer port = getProperty("protocol.port", null, Integer.class);
-		config.setPort(null == port ? -1 : port);
-		String name = getProperty("protocol.type", null, String.class);
-		config.setName(StringUtil.hasText(name) ? name : "dubbo");
-		String threadpool = getProperty("protocol.threadpool", null, String.class);
-		config.setThreadpool(StringUtil.hasText(threadpool) ? threadpool : "fixed");
-		Integer threads = getProperty("protocol.threads", null, Integer.class);
-		config.setThreads(null != threads ? threads : 100);
-		Integer iothreads = getProperty("protocol.iothreads", null, Integer.class);
-		config.setIothreads(null != iothreads ? iothreads : Runtime.getRuntime().availableProcessors() + 1);
-		Integer accepts = getProperty("protocol.accepts", null, Integer.class);
-		config.setAccepts(null != accepts ? accepts : 0);
-		Integer payload = getProperty("protocol.payload", null, Integer.class);
-		config.setPayload(null != payload ? payload : 88388608);
+		config.setPort(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_PORT, false));
+		config.setName(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_TYPE, false));
+		config.setThreadpool(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_THREADPOOL, false));
+		config.setThreads(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_THREADS, false));
+		config.setIothreads(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_IOTHREADS, false));
+		config.setAccepts(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_ACCEPTS, false));
+		config.setPayload(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_PAYLOAD, false));
 		return config;
 	}
 	
@@ -87,7 +79,7 @@ public class DubboConfig extends ResourceLoader {
 		ProviderConfig config = new ProviderConfig();
 		config.setRetries(0);
 		config.setFilter("exceptionFilter,-exception");
-		config.setTimeout(getProperty("provider.timeout", 3000, Integer.class));
+		config.setTimeout(RapidConfiguration.get(CoreConsts.DUBBO_PROTOCOL_TIMEOUT, false));
 		return config;
 	}
 }
