@@ -23,7 +23,7 @@ public class DubboConfig {
 		application.setName(RapidConfiguration.get(CoreConsts.DUBBO_APP_NAME, true));
 		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_OWNER, true));
 		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_ENVIRONMENT, true));
-		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_ORGANZATION, true));
+		application.setOrganization(RapidConfiguration.get(CoreConsts.DUBBO_APP_ORGANIZATION, true));
 		return application;
 	}
 

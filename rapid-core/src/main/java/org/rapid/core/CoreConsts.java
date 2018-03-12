@@ -104,7 +104,7 @@ public interface CoreConsts {
 	final StrOption DUBBO_APP_NAME					= new StrOption("dubbo.app.name");
 	final StrOption DUBBO_APP_OWNER					= new StrOption("dubbo.app.owner");
 	final StrOption DUBBO_APP_ENVIRONMENT			= new StrOption("dubbo.app.environment");
-	final StrOption DUBBO_APP_ORGANZATION			= new StrOption("dubbo.app.organzation");
+	final StrOption DUBBO_APP_ORGANIZATION			= new StrOption("dubbo.app.organization");
 	final StrOption DUBBO_REGISTRY_ID				= new StrOption("dubbo.registry.id");
 	final StrOption DUBBO_REGISTRY_PROTOCOL			= new StrOption("dubbo.registry.protocol");
 	final IntegerOption DUBBO_REGISTRY_PORT			= new IntegerOption("dubbo.registry.port");
