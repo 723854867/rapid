@@ -93,4 +93,5 @@ public class Option<VALUE> implements Serializable {
 	
 	public static final Option<Env> RAPID_ENV = new Option<Env>("rapid.env", Env.LOCAL);
 	public static final Option<Locale> RAPID_LOCALE = new Option<Locale>("rapid.locale", Locale.ZH_CN);
+	public static final Option<String> RESOURCES_PREFIX = new StrOption("resources.prefix");
 }
