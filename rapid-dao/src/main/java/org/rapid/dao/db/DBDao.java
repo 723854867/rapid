@@ -38,11 +38,11 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 	void batchInsert(Collection<ENTITY> entities);
 	
 	@Override
-	@InsertProvider(type = GetAllSQLProvider.class, method = "dynamicSQL")
+	@SelectProvider(type = GetAllSQLProvider.class, method = "dynamicSQL")
 	Map<KEY, ENTITY> getAll();
 	
 	@Override
-	@InsertProvider(type = GetAllSQLProvider.class, method = "dynamicSQL")
+	@SelectProvider(type = GetAllSQLProvider.class, method = "dynamicSQL")
 	List<ENTITY> getAllList();
 	
 	@Override
