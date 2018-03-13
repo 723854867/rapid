@@ -54,7 +54,7 @@ public class AccessInterceptor<ACCESS extends Access> {
 			result = point.proceed();
 		} catch (Throwable e) {
 			if (null != access) 
-				accessFilter.afterAccess(_accessResult(access, e.getMessage(), false));
+				accessFilter.afterAccess(_accessResult(access, e, false));
 			throw e;
 		}
 		
