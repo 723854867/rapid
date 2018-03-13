@@ -103,6 +103,7 @@ public interface CoreConsts {
 	final BoolOption MONGO_ENABLE				= new BoolOption("mongo.enable", false);
 	
 	// dubbo
+	final StrOption DUBBO_APP_TYPE					= new StrOption("dubbo.app.type", "provider");
 	final StrOption DUBBO_APP_NAME					= new StrOption("dubbo.app.name");
 	final StrOption DUBBO_APP_OWNER					= new StrOption("dubbo.app.owner");
 	final StrOption DUBBO_APP_ENVIRONMENT			= new StrOption("dubbo.app.environment");
