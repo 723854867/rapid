@@ -72,7 +72,7 @@ public class CardBindRequest extends UserRequest<CardBindResponse> {
 	private String clientIp;
 
 	public CardBindRequest() {
-		super("新浪绑定银行卡", SinaConfig.getGateWayMember());
+		super("新浪绑定银行卡", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("binding_bank_card");
 		this.requestNo = IDWorker.INSTANCE.nextSid();
 	}

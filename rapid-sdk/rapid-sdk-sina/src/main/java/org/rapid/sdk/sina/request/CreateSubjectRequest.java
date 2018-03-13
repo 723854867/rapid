@@ -93,7 +93,7 @@ public class CreateSubjectRequest extends SinaRequest<CreateSubjectResponse> {
 	private String borrowerInfoList;
 
 	public CreateSubjectRequest() {
-		super("新浪标的录入", SinaConfig.getGateWayOrder());
+		super("新浪标的录入", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_bid_info");
 	}
 

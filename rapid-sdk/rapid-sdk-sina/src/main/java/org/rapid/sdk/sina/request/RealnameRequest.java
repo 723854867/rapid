@@ -27,7 +27,7 @@ public class RealnameRequest extends UserRequest<SinaResponse> {
 	private String clientIp;
 
 	public RealnameRequest() {
-		super("新浪设置实名信息", SinaConfig.getGateWayMember());
+		super("新浪设置实名信息", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("set_real_name");
 	}
 

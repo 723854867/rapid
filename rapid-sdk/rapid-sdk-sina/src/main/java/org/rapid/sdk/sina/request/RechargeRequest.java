@@ -45,7 +45,7 @@ public class RechargeRequest extends UserRequest<RechargeResponse> {
 	private String cashdeskAddrCategory = "MOBILE";
 
 	public RechargeRequest() {
-		super("新浪托管充值", SinaConfig.getGateWayOrder());
+		super("新浪托管充值", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_hosting_deposit");
 		this.outTradeNo = IDWorker.INSTANCE.nextSid();
 	}

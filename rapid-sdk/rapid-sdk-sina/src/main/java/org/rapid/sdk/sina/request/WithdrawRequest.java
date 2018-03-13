@@ -48,7 +48,7 @@ public class WithdrawRequest extends UserRequest<WithdrawResponse> {
 	private String cashdeskAddrCategory = CashdeskAddrCategory.MOBILE.name();
 
 	public WithdrawRequest() {
-		super("新浪托管提现", SinaConfig.getGateWayOrder());
+		super("新浪托管提现", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_hosting_withdraw");
 	}
 

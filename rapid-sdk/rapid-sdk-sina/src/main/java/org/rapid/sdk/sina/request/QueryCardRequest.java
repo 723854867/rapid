@@ -16,7 +16,7 @@ public class QueryCardRequest extends UserRequest<QueryCardResponse> {
 	private String cardId;
 
 	public QueryCardRequest() {
-		super("新浪查询银行卡", SinaConfig.getGateWayMember());
+		super("新浪查询银行卡", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("query_bank_card");
 	}
 

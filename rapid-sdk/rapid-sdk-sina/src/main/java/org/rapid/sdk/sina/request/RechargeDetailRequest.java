@@ -16,7 +16,7 @@ public class RechargeDetailRequest extends UserRequest<RechargeDetailResponse> {
 	private String outTradeNo;
 
 	public RechargeDetailRequest() {
-		super("新浪托管充值查询", SinaConfig.getGateWayOrder());
+		super("新浪托管充值查询", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("query_hosting_deposit");
 		this.outTradeNo = IDWorker.INSTANCE.nextSid();
 	}

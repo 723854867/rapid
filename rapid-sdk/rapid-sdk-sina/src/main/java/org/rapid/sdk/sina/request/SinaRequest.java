@@ -75,7 +75,7 @@ public class SinaRequest<RESPONSE extends SinaResponse> extends HttpPost<RESPONS
 	
 	public SinaRequest(String prefix, String url) {
 		super(prefix, url, ContentType.APPLICATION_FORM_URLENCODED_UTF_8, GsonSerializer.ANNOTATED, SinaSerializer.INSTANCE);
-		this.partnerId = SinaConfig.getMerchantId();
+		this.partnerId = SinaConfig.MERCHANT_ID.getDefaultValue();
 		this.requestTime = DateUtil.getDate(DateUtil.yyyyMMddHHmmss);
 	}
 
@@ -179,8 +179,8 @@ public class SinaRequest<RESPONSE extends SinaResponse> extends HttpPost<RESPONS
 	protected byte[] serial() {
 		String json = SerializeUtil.GSON_ANNO.toJson(this);
 		TreeMap<String, String> params = SerializeUtil.GSON.fromJson(json, TREEMAP_TYPE);
-		SignUtil.encrypt(params, SinaConfig.getPubKey());
-		this.sign = SignUtil.sign(params, SinaConfig.getPriKey());
+		SignUtil.encrypt(params, SinaConfig.PRI_KEY.getDefaultValue());
+		this.sign = SignUtil.sign(params, SinaConfig.PRI_KEY.getDefaultValue());
 		params.put("sign", this.sign);
 		for (Entry<String, String> entry : params.entrySet()) {
 			try {

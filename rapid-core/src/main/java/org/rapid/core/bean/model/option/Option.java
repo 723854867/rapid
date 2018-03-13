@@ -72,6 +72,10 @@ public class Option<VALUE> implements Serializable {
 		return defaultValue;
 	}
 	
+	public void setDefaultValue(VALUE defaultValue) {
+		this.defaultValue = defaultValue;
+	}
+	
 	public static Map<String, Option<?>> getOptions() {
 		return options;
 	}

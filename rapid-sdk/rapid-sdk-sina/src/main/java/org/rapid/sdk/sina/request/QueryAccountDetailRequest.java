@@ -36,7 +36,7 @@ public class QueryAccountDetailRequest extends UserRequest<QueryAccountDetailRes
 	private String pageSize;
 
 	public QueryAccountDetailRequest() {
-		super("新浪查询收支明细", SinaConfig.getGateWayMember());
+		super("新浪查询收支明细", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("query_account_details");
 	}
 

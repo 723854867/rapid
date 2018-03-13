@@ -29,7 +29,7 @@ public class BalanceUnfreezeRequest extends UserRequest<SinaResponse> {
 	private String clientIp;
 
 	public BalanceUnfreezeRequest() {
-		super("新浪解冻余额", SinaConfig.getGateWayMember());
+		super("新浪解冻余额", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("balance_unfreeze");
 		this.outUnfreezeNo = IDWorker.INSTANCE.nextSid();
 	}

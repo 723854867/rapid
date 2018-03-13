@@ -27,7 +27,7 @@ public class WithholdAuthorityRequest extends UserRequest<CommonResponse> {
 	private String cashdeskAddrCategory = "MOBILE";
 
 	public WithholdAuthorityRequest() {
-		super("新浪委托扣款重定向", SinaConfig.getGateWayMember());
+		super("新浪委托扣款重定向", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("handle_withhold_authority");
 	}
 

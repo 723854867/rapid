@@ -62,7 +62,7 @@ public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
 	private String collectTradeType;
 
 	public CreateCollectRequest() {
-		super("新浪创建托管代收交易", SinaConfig.getGateWayOrder());
+		super("新浪创建托管代收交易", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_hosting_collect_trade");
 		this.outTradeNo = IDWorker.INSTANCE.nextSid();
 	}

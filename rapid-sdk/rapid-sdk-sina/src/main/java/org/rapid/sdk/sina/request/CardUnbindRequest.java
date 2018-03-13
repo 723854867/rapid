@@ -21,7 +21,7 @@ public class CardUnbindRequest extends UserRequest<CardUnbindResponse> {
 	private String clientIp;
 
 	public CardUnbindRequest() {
-		super("新浪解绑银行卡", SinaConfig.getGateWayMember());
+		super("新浪解绑银行卡", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("unbinding_bank_card");
 	}
 

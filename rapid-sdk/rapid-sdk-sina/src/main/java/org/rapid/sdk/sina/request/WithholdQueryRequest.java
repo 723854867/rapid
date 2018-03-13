@@ -21,7 +21,7 @@ public class WithholdQueryRequest extends UserRequest<WithholdQueryResponse> {
 	private String isDetailDisp = "N";
 
 	public WithholdQueryRequest() {
-		super("新浪查看用户是否委托扣款", SinaConfig.getGateWayMember());
+		super("新浪查看用户是否委托扣款", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("query_withhold_authority");
 	}
 

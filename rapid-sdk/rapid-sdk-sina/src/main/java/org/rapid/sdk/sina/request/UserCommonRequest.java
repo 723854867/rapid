@@ -9,7 +9,7 @@ public class UserCommonRequest extends UserRequest<CommonResponse> {
 	private static final long serialVersionUID = 5766839857739272751L;
 
 	public UserCommonRequest(UserAction action) {
-		super(action, SinaConfig.getGateWayMember());
+		super(action, SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService(action.service());
 	}
 }

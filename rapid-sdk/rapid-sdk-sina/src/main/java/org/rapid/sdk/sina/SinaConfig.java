@@ -1,67 +1,33 @@
 package org.rapid.sdk.sina;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.rapid.core.RapidConfiguration;
+import org.rapid.core.bean.model.option.StrOption;
 import org.springframework.context.annotation.Conditional;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 @Component
 @Conditional(SinaCondition.class)
-@PropertySource("classpath:conf/sina.properties")
 public class SinaConfig {
-
+	
 	// 微钱进公钥
-	private static String pubKey;
+	public static final StrOption PUB_KEY			= new StrOption("sina.pubKey");
 	// 微钱进私钥
-	private static String priKey;
+	public static final StrOption PRI_KEY			= new StrOption("sina.priKey");
 	// 商户ID
-	private static String merchantId;
+	public static final StrOption MERCHANT_ID		= new StrOption("sina.merchantId");
 	
-	private static String gateWayMember				= "https://testgate.pay.sina.com.cn/mgs/gateway.do";
-	private static String gateWayOrder				= "https://testgate.pay.sina.com.cn/mas/gateway.do";
-	
-	public static String getPubKey() {
-		return pubKey;
-	}
-	
-	@Value("${sina.pubKey}")
-	public void setPubKey(String pubKey) {
-		SinaConfig.pubKey = pubKey;
-	}
-	
-	public static String getPriKey() {
-		return priKey;
-	}
-	
-	@Value("${sina.priKey}")
-	public void setPriKey(String priKey) {
-		SinaConfig.priKey = priKey;
-	}
-	
-	public static String getGateWayOrder() {
-		return gateWayOrder;
-	}
-	
-	public static String getMerchantId() {
-		return merchantId;
-	}
-	
-	@Value("${sina.merchantId}")
-	public void setMerchantId(String merchantId) {
-		SinaConfig.merchantId = merchantId;
-	}
-	
-	@Value("${sina.gateWayOrder}")
-	public void setGateWayOrder(String gateWayOrder) {
-		SinaConfig.gateWayOrder = gateWayOrder;
-	}
-	
-	public static String getGateWayMember() {
-		return gateWayMember;
-	}
-	
-	@Value("${sina.gateWayMember}")
-	public void setGateWayMember(String gateWayMember) {
-		SinaConfig.gateWayMember = gateWayMember;
+	public static final StrOption GATEWAY_ORDER		= new StrOption("sina.gatewayOrder", "https://testgate.pay.sina.com.cn/mas/gateway.do");
+	public static final StrOption GATEWAY_MEMBER	= new StrOption("sina.gatewayMember", "https://testgate.pay.sina.com.cn/mgs/gateway.do");
+
+	static {
+		PUB_KEY.setDefaultValue(RapidConfiguration.get(PUB_KEY, true));
+		PRI_KEY.setDefaultValue(RapidConfiguration.get(PRI_KEY, true));
+		MERCHANT_ID.setDefaultValue(RapidConfiguration.get(MERCHANT_ID, true));
+		String gatewayOrder = RapidConfiguration.get(GATEWAY_ORDER, false);
+		if (null != gatewayOrder)
+			GATEWAY_ORDER.setDefaultValue(gatewayOrder);
+		String gatewayMember = RapidConfiguration.get(GATEWAY_MEMBER, false);
+		if (null != gatewayMember)
+			GATEWAY_MEMBER.setDefaultValue(gatewayMember);
 	}
 }

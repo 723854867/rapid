@@ -32,10 +32,8 @@ public class QueryBalanceFreezeRequest extends UserRequest<QueryBalanceFreezeRes
 	private String clientIp;
 	
 	
-	
-	
 	public QueryBalanceFreezeRequest() {
-		super("冻结余额", SinaConfig.getGateWayMember());
+		super("冻结余额", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("balance_freeze");
 	}
 	

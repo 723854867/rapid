@@ -26,7 +26,7 @@ public class CardBindConfirmRequest extends SinaRequest<CardBindResponse> {
 	private String extendParam;
 
 	public CardBindConfirmRequest() {
-		super("新浪绑定银行卡推进", SinaConfig.getGateWayMember());
+		super("新浪绑定银行卡推进", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("binding_bank_card_advance");
 	}
 

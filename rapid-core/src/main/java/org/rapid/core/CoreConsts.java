@@ -16,6 +16,8 @@ public interface CoreConsts {
 	final Option<Locale> RAPID_LOCALE							= new Option<Locale>("rapid.locale", Locale.ZH_CN);
 	final IntegerOption RAPID_MAX_UPLOAD_SIZE_PER_FILE			= new IntegerOption("maxUploadSizePerFile", 1048576);
 	
+	final BoolOption SINA_ENABLE								= new BoolOption("sina.enable", false);
+	
 	final StrOption SERIALIZER					= new StrOption("serializer");
 	final StrOption DB_ORM_TYPE					= new StrOption("db.ormType");
 	final StrOption ACTIVEMQ_TYPE				= new StrOption("activemq.type");

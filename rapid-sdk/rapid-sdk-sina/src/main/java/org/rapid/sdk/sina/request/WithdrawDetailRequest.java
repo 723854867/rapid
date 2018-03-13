@@ -16,7 +16,7 @@ public class WithdrawDetailRequest extends UserRequest<WithdrawDetailResponse> {
 	private String outTradeNo;
 
 	public WithdrawDetailRequest() {
-		super("新浪托管提现查询", SinaConfig.getGateWayOrder());
+		super("新浪托管提现查询", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("query_hosting_withdraw");
 		this.outTradeNo = IDWorker.INSTANCE.nextSid();
 	}

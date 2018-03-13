@@ -20,7 +20,7 @@ public class CardUnbindConfirmRequest extends UserRequest<SinaResponse> {
 	private String clientIp;
 
 	public CardUnbindConfirmRequest() {
-		super("新浪解绑银行卡推进", SinaConfig.getGateWayMember());
+		super("新浪解绑银行卡推进", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("unbinding_bank_card_advance");
 	}
 

@@ -24,7 +24,7 @@ public class RegisterRequest extends UserRequest<SinaResponse> {
 	private String clientIp;
 
 	public RegisterRequest() {
-		super("新浪创建激活会员", SinaConfig.getGateWayMember());
+		super("新浪创建激活会员", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("create_activate_member");
 	}
 

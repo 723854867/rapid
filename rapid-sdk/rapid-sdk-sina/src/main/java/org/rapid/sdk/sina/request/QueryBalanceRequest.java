@@ -16,7 +16,7 @@ public class QueryBalanceRequest extends UserRequest<QueryBalanceResponse> {
 	private String accountType;
 
 	public QueryBalanceRequest() {
-		super("新浪查询余额/基金份额", SinaConfig.getGateWayMember());
+		super("新浪查询余额/基金份额", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("query_balance");
 	}
 	

@@ -20,7 +20,7 @@ public class PwdRequest extends UserRequest<CommonResponse> {
 	private String withholdParam;
 
 	public PwdRequest(UserAction action) {
-		super(action, SinaConfig.getGateWayMember());
+		super(action, SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 	}
 
 	public UserAction getAction() {

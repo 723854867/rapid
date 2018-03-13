@@ -57,7 +57,7 @@ public class CreatePayRequest extends SinaRequest<CreatePayResponse> {
 	private String creditorInfoList;
 
 	public CreatePayRequest() {
-		super("新浪创建托管代付交易", SinaConfig.getGateWayOrder());
+		super("新浪创建托管代付交易", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_single_hosting_pay_trade");
 	}
 

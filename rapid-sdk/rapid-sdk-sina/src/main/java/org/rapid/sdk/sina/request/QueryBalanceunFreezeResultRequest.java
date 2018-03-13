@@ -14,7 +14,7 @@ public class QueryBalanceunFreezeResultRequest extends UserRequest<QueryBalanceF
 	private String outCtrlNo;
 
 	public QueryBalanceunFreezeResultRequest() {
-		super("查询冻结解冻结果", SinaConfig.getGateWayMember());
+		super("查询冻结解冻结果", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("query_ctrl_result");
 	}
 

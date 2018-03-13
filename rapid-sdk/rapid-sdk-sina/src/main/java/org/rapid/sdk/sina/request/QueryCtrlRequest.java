@@ -18,7 +18,7 @@ public class QueryCtrlRequest extends SinaRequest<QueryCtrlResponse> {
 	private String extendParam;
 
 	public QueryCtrlRequest() {
-		super("查询冻结解冻结果", SinaConfig.getGateWayMember());
+		super("查询冻结解冻结果", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("query_ctrl_result");
 	}
 
