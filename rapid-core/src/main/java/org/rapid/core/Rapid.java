@@ -6,27 +6,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
-
 import org.rapid.core.bean.enums.Env;
 import org.rapid.core.bean.enums.Locale;
-import org.rapid.core.bean.exception.InitialException;
-import org.rapid.core.bean.model.option.Option;
 import org.rapid.core.initial.InitialHook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationListener;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.event.ApplicationContextEvent;
 import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.ContextStartedEvent;
 import org.springframework.context.event.ContextStoppedEvent;
-import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.stereotype.Component;
 
 @Component
-@PropertySource({"classpath:conf/rapid.properties"})
 public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	
 	private static final Logger logger = LoggerFactory.getLogger(Rapid.class);
@@ -34,8 +27,6 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	private Env env;
 	private Locale locale;
 	private boolean initial;
-	@Resource
-	private AbstractEnvironment environment;
 	
 	@Override
 	public void onApplicationEvent(ApplicationContextEvent event) {
@@ -85,8 +76,8 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	}
 	
 	private void _configurationParser() {
-		this.env = option(CoreConsts.RAPID_ENV);
-		this.locale = option(CoreConsts.RAPID_LOCALE);
+		this.env = RapidConfiguration.get(CoreConsts.RAPID_ENV, true);
+		this.locale = RapidConfiguration.get(CoreConsts.RAPID_LOCALE, true);
 	}
 	
 	public Env getEnv() {
@@ -95,23 +86,5 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 	
 	public Locale getLocale() {
 		return locale;
-	}
-	
-	public <VALUE> VALUE option(Option<VALUE> option) {
-		String value = environment.getProperty(option.getKey(), String.class);
-		try {
-			return environment.getConversionService().convert(value.trim(), option.getClazz());
-		} catch (Exception e) {
-			if (null != option.getDefaultValue()) {
-				logger.warn("option \"{}\" parse fail, default value [{}] is used!", option.getKey(), option.getDefaultValue());
-				return option.getDefaultValue();
-			}
-			throw new InitialException("option \"" + option.getKey() + "\" parse fail!", e);
-		}
-	}
-	
-	public <T> T getProperty(String key, Class<T> clazz) { 
-		String value = environment.getProperty(key, String.class);
-		return environment.getConversionService().convert(value.trim(), clazz);
 	}
 }

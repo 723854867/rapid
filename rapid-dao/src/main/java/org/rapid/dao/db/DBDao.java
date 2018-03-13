@@ -15,6 +15,7 @@ import org.rapid.dao.bean.model.Query;
 import org.rapid.dao.db.mybatis.provider.BatchInsertSQLProvider;
 import org.rapid.dao.db.mybatis.provider.DeleteByKeySQLProvider;
 import org.rapid.dao.db.mybatis.provider.DeleteByKeysSQLProvider;
+import org.rapid.dao.db.mybatis.provider.GetAllSQLProvider;
 import org.rapid.dao.db.mybatis.provider.GetByKeySQLProvider;
 import org.rapid.dao.db.mybatis.provider.GetByKeysSQLProvider;
 import org.rapid.dao.db.mybatis.provider.InsertSQLProvider;
@@ -35,6 +36,14 @@ public interface DBDao<KEY, ENTITY extends Identifiable<KEY>> extends Dao<KEY, E
 	@Override
 	@InsertProvider(type = BatchInsertSQLProvider.class, method = "dynamicSQL")
 	void batchInsert(Collection<ENTITY> entities);
+	
+	@Override
+	@InsertProvider(type = GetAllSQLProvider.class, method = "dynamicSQL")
+	Map<KEY, ENTITY> getAll();
+	
+	@Override
+	@InsertProvider(type = GetAllSQLProvider.class, method = "dynamicSQL")
+	List<ENTITY> getAllList();
 	
 	@Override
 	@SelectProvider(type = GetByKeySQLProvider.class, method = "dynamicSQL")

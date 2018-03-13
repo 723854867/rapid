@@ -20,6 +20,16 @@ public interface Dao<KEY, ENTITY extends Identifiable<KEY>> {
 	void batchInsert(Collection<ENTITY> entities);
 	
 	/**
+	 * 获取所有数据
+	 */
+	Map<KEY, ENTITY> getAll();
+	
+	/**
+	 * 获取所有数据
+	 */
+	List<ENTITY> getAllList();
+	
+	/**
 	 * 根据主键获取对象
 	 */
 	ENTITY getByKey(KEY key);

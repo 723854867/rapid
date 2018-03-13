@@ -127,7 +127,27 @@ public class Query<QUERY extends Query<QUERY>> extends Page {
 		return (QUERY) this;
 	}
 	
-	public QUERY orderBy(String col, boolean asc) {
+	public QUERY orderByAsc(String col) {
+		return orderBy(col, true);
+	}
+	
+	public QUERY orderByAsc(String... cols) {
+		for (String col : cols)
+			orderBy(col, true);
+		return (QUERY) this;
+	}
+	
+	public QUERY orderByDesc(String col) {
+		return orderBy(col, false);
+	}
+	
+	public QUERY orderByDesc(String... cols) {
+		for (String col : cols)
+			orderBy(col, false);
+		return (QUERY) this;
+	}
+	
+	protected QUERY orderBy(String col, boolean asc) {
 		this.orderBys.add(new Pair<String, Boolean>(col, asc));
 		return (QUERY) this;
 	}

@@ -17,11 +17,6 @@ public class Condition implements Serializable {
 	
 	public Condition() {}
 	
-	public Condition(Comparison comparison, Object value) {
-		this.value = value;
-		this.comparison = comparison.mark();
-	}
-	
 	public Condition(String col, Comparison comparison, Object value) {
 		this.col = col;
 		this.value = value;

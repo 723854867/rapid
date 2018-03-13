@@ -51,6 +51,18 @@ public class RedisDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 		byte[] data = redis.hget(mapperKey, field);
 		return null == data ? null : serializer.deserial(data, clazz);
 	}
+	
+	@Override
+	public Map<KEY, ENTITY> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<ENTITY> getAllList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	@Override
 	public ENTITY queryUnique(Query<?> query) {

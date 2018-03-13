@@ -53,6 +53,18 @@ public class MongoDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 	}
 	
 	@Override
+	public Map<KEY, ENTITY> getAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public List<ENTITY> getAllList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	public ENTITY queryUnique(Query<?> query) {
 		return null;
 	}
