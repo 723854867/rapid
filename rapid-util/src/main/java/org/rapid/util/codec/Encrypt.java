@@ -37,7 +37,9 @@ public class Encrypt {
 	public static String AESEncode(String aesKey, String content) {
 		try {
 			KeyGenerator keygen = KeyGenerator.getInstance("AES");
-			keygen.init(128, new SecureRandom(aesKey.getBytes()));
+			SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+	        random.setSeed(aesKey.getBytes());
+			keygen.init(128, random);
 			SecretKey original_key = keygen.generateKey();
 			byte[] raw = original_key.getEncoded();
 			SecretKey key = new SecretKeySpec(raw, "AES");
@@ -125,5 +127,10 @@ public class Encrypt {
 		System.out.println(Base64.encodeBase64String(encryptData));
 		byte[] decryptData = Decrypt.RSADecodeByPrivateKey(encryptData, priKey, Transformation.RSA);
 		System.out.println(new String(decryptData));
+		
+		String aesKey = "sdsdsd";
+		String encryptAesData = AESEncode(aesKey, content);
+		System.out.println(encryptAesData);
+		System.out.println(Decrypt.AESDecode(aesKey, encryptAesData));
 	}
 }

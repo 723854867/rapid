@@ -32,7 +32,9 @@ public class Decrypt {
 	public static String AESDecode(String aesKey, String content) {
 		try {
 			KeyGenerator keygen = KeyGenerator.getInstance("AES");
-			keygen.init(128, new SecureRandom(aesKey.getBytes()));
+			SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+	        random.setSeed(aesKey.getBytes());
+			keygen.init(128, random);
 			SecretKey originalKey = keygen.generateKey();
 			byte[] raw = originalKey.getEncoded();
 			SecretKey key = new SecretKeySpec(raw, "AES");
