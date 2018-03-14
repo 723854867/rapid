@@ -2,6 +2,8 @@ package org.rapid.core.bean.model.param;
 
 import javax.validation.constraints.Min;
 
+import org.rapid.core.Assert;
+import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.bean.model.message.Request;
 
 public class Page implements Request {
@@ -52,5 +54,12 @@ public class Page implements Request {
 		this.page = Math.max(1, this.page);
 		this.page = Math.min(this.pages, this.page);
 		this.pageStart = (this.page - 1) * pageSize;
+	}
+	
+	@Override
+	public String verify() {
+		if (null != page)
+			Assert.isTrue(Code.PARAM_ERROR, null != pageSize);
+		return Request.super.verify();
 	}
 }

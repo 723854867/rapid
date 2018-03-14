@@ -261,7 +261,8 @@ public class DaoAccessor {
 				mp.put(method, mm);
 			}
 			MethodSignature ms = (MethodSignature) mapperMethod.get(mm);
-			mapKey.set(ms, table.getpKColumn().getColumn());
+			String keyColum = table.getpKColumn().getColumn().replaceAll("`", "");
+			mapKey.set(ms, keyColum);
 			returnMap.setBoolean(ms, true);
 			ResultMap resultMap = statement.getResultMaps().get(0);
 			resultMapType.set(resultMap, table.getEntityClass());
