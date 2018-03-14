@@ -27,6 +27,10 @@ public class Assert {
 			throw new BizException(code, message);
 		return target;
 	}
+	
+	public static final void notNull(Object... targets) {
+		notNull(Code.SYS_ERROR, targets);
+	}
 
 	public static final void notNull(ICode code, Object... targets) {
 		notNull(code, "arguments is null!", targets);

@@ -36,7 +36,7 @@ public class WithdrawRequest extends UserRequest<WithdrawResponse> {
 	// GENERAL-普通;FAST-快速
 	@Expose
 	@SerializedName("payto_type")
-	private String paytoType = "FAST";
+	private String paytoType = "GENERAL";
 	@Expose
 	@SerializedName("withdraw_close_time")
 	private String withdrawCloseTime;

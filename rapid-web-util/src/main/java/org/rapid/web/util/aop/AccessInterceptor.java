@@ -6,8 +6,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.rapid.core.bean.AccessAware;
 import org.rapid.core.bean.Access;
+import org.rapid.core.bean.AccessAware;
 import org.rapid.core.bean.exception.BizException;
 import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.bean.model.message.Request;
@@ -28,7 +28,8 @@ public class AccessInterceptor<ACCESS extends Access> {
 	private AccessFilter<ACCESS> accessFilter;
 
 	@Pointcut("execution(* org..controller.*.*(..))")
-	public void pointcut() {}
+	public void pointcut() {
+	}
 
 	@Around("pointcut()")
 	public Object controllerAround(ProceedingJoinPoint point) throws Throwable {
@@ -47,17 +48,17 @@ public class AccessInterceptor<ACCESS extends Access> {
 				throw new BizException(Code.PARAM_ERROR, err);
 			}
 		}
-		
+
 		// 执行业务
 		Object result;
 		try {
 			result = point.proceed();
 		} catch (Throwable e) {
-			if (null != access) 
+			if (null != access)
 				accessFilter.afterAccess(_accessResult(access, e, false));
 			throw e;
 		}
-		
+
 		// 结果处理
 		Object response = null;
 		if (null != result) {
@@ -67,18 +68,28 @@ public class AccessInterceptor<ACCESS extends Access> {
 				response = new Response<Object>(result);
 			else
 				response = result;
-		}
+		} else
+			response = Response.ok();
 		if (response instanceof Response<?>)
 			Option.handleResponse((Response<?>) response);
-		if (null != access) 
+		if (null != access)
 			accessFilter.afterAccess(_accessResult(access, response, true));
 		return response;
 	}
-	
+
 	private ACCESS _accessResult(ACCESS access, Object result, boolean success) {
 		access.setResponse(result);
 		access.setSuccess(success);
 		access.setRtime(DateUtil.getDate(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS));
 		return access;
 	}
+
+//	private Class<?> _returnType(ProceedingJoinPoint point) throws Exception {
+//		Object[] args = point.getArgs();
+//		Class<?>[] paramsCls = new Class<?>[args.length];
+//		for (int i = 0; i < args.length; ++i)
+//			paramsCls[i] = args[i].getClass();
+//		Method method = point.getTarget().getClass().getMethod(point.getSignature().getName(), paramsCls);
+//		return method.getReturnType();
+//	}
 }
