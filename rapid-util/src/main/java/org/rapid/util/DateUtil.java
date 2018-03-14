@@ -84,7 +84,7 @@ public class DateUtil {
 		return df.format(date);
 	}
 	
-	public static final String getDate(Object format, long timestamp) {
+	public static final String getDate(String format, long timestamp) {
 		return getDate(format, timestamp, TIMEZONE_GMT_8);
 	}
 	
@@ -94,10 +94,20 @@ public class DateUtil {
 		return df.format(date);
 	}
 	
-	public static final String getDate(Object format, long timestamp, TimeZone timeZone) {
+	public static final String getDate(String format, long timestamp, TimeZone timeZone) {
 		DateFormat df = new SimpleDateFormat(format.toString());
 		df.setTimeZone(timeZone);
 		return df.format(new Date(timestamp));
+	}
+	
+	public static final String getDate(Object date, String format, String toFormat) {
+		long time = getTime(date, format, TIMEZONE_GMT_8);
+		return getDate(toFormat, time);
+	}
+	
+	public static final String getDate(Object date, String format, String toFormat, TimeZone timeZone) {
+		long time = getTime(date, format, timeZone);
+		return getDate(toFormat, time);
 	}
 	
 	// ************* 时间格式转换   *************
@@ -143,11 +153,11 @@ public class DateUtil {
 	
 	// ************* 减时间   ************* 
 	
-	public static final String substract(Object format, TimeUnit unit, long duration) {
+	public static final String substract(String format, TimeUnit unit, long duration) {
 		return substract(format, unit, duration, TIMEZONE_GMT_8);
 	}
 	
-	public static final String substract(Object format, TimeUnit unit, long duration, TimeZone timeZone) {
+	public static final String substract(String format, TimeUnit unit, long duration, TimeZone timeZone) {
 		long timestamp = System.currentTimeMillis();
 		timestamp -= unit.toMillis(duration);
 		return getDate(format, timestamp);
