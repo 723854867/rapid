@@ -8,16 +8,21 @@ import org.springframework.stereotype.Component;
 @Component
 @Conditional(SinaCondition.class)
 public class SinaConfig {
-	
+
 	// 微钱进公钥
-	public static final StrOption PUB_KEY			= new StrOption("sina.pubKey");
+	public static final StrOption PUB_KEY = new StrOption("sina.pubKey");
 	// 微钱进私钥
-	public static final StrOption PRI_KEY			= new StrOption("sina.priKey");
+	public static final StrOption PRI_KEY = new StrOption("sina.priKey");
 	// 商户ID
-	public static final StrOption MERCHANT_ID		= new StrOption("sina.merchantId");
-	
-	public static final StrOption GATEWAY_ORDER		= new StrOption("sina.gatewayOrder", "https://testgate.pay.sina.com.cn/mas/gateway.do");
-	public static final StrOption GATEWAY_MEMBER	= new StrOption("sina.gatewayMember", "https://testgate.pay.sina.com.cn/mgs/gateway.do");
+	public static final StrOption MERCHANT_ID = new StrOption("sina.merchantId");
+
+	public static final StrOption GATEWAY_ORDER = new StrOption("sina.gatewayOrder","https://testgate.pay.sina.com.cn/mas/gateway.do");
+	public static final StrOption GATEWAY_MEMBER = new StrOption("sina.gatewayMember","https://testgate.pay.sina.com.cn/mgs/gateway.do");
+
+	public static final StrOption HOST = new StrOption("sina.host");
+	public static final StrOption PORT = new StrOption("sina.port");
+	public static final StrOption DIRECTORY = new StrOption("sina.directory");
+	public static final StrOption PRIVATEKEY = new StrOption("sina.privateKey");
 
 	static {
 		PUB_KEY.setDefaultValue(RapidConfiguration.get(PUB_KEY, true));
@@ -29,5 +34,11 @@ public class SinaConfig {
 		String gatewayMember = RapidConfiguration.get(GATEWAY_MEMBER, false);
 		if (null != gatewayMember)
 			GATEWAY_MEMBER.setDefaultValue(gatewayMember);
+		
+		HOST.setDefaultValue(RapidConfiguration.get(HOST, true));
+		PORT.setDefaultValue(RapidConfiguration.get(PORT, true));
+		DIRECTORY.setDefaultValue(RapidConfiguration.get(DIRECTORY, true));
+		PRIVATEKEY.setDefaultValue(RapidConfiguration.get(PRIVATEKEY, true));
+		
 	}
 }
