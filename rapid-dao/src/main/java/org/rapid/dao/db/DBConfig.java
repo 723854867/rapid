@@ -40,12 +40,12 @@ public abstract class DBConfig extends RapidConfiguration {
 		config.setMinimumIdle(RapidConfiguration.get(CoreConsts.DB_DATASOURCE_MIN_IDLE, true));
 		// 一个连接的生命时长（毫秒），超时而且没被使用则被释放。强烈建议设置比数据库超时时长少30秒，（MySQL的wait_timeout参数，show variables like ‘%timeout%’，一般为8小时）
 		// 和IdleTimeout的区别是不管连接池链接数量多少，只要一个连接超过该时间没被使用就会被回收
-		config.setMaxLifetime(RapidConfiguration.get(CoreConsts.DB_DATASOURCE_MAX_LIFE_TIME, true));
+		config.setMaxLifetime((long)RapidConfiguration.get(CoreConsts.DB_DATASOURCE_MAX_LIFE_TIME, true));
 		// 如果idleTimeout+1秒>maxLifetime 且 maxLifetime>0，则会被重置为0。如果idleTimeout=0则表示空闲的连接在连接池中永远不被移除。
 		// 只有当minimumIdle小于maximumPoolSize时，这个参数才生效，当空闲连接数超过minimumIdle且空闲时间超过idleTimeout，才会被移除。
-		config.setIdleTimeout(RapidConfiguration.get(CoreConsts.DB_DATASOURCE_IDLE_TIMEOUT, true));
+		config.setIdleTimeout((long)RapidConfiguration.get(CoreConsts.DB_DATASOURCE_IDLE_TIMEOUT, true));
 		// 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException。 缺省:30秒
-		config.setConnectionTimeout(RapidConfiguration.get(CoreConsts.DB_DATASOURCE_CONNECTION_TIMEOUT, true));
+		config.setConnectionTimeout((long)RapidConfiguration.get(CoreConsts.DB_DATASOURCE_CONNECTION_TIMEOUT, true));
 		config.addDataSourceProperty("cachePrepStmts", RapidConfiguration.get(CoreConsts.DB_DATASOURCE_CACHE_PREP_STMTS, true));
 		config.addDataSourceProperty("prepStmtCacheSize", RapidConfiguration.get(CoreConsts.DB_DATASOURCE_PREP_STMT_CACHE_SIZE, true));
 		config.addDataSourceProperty("prepStmtCacheSqlLimit", RapidConfiguration.get(CoreConsts.DB_DATASOURCE_PREP_STMT_CACHE_SQL_LIMIT, true));
