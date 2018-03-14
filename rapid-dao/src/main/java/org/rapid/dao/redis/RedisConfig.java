@@ -41,13 +41,13 @@ public class RedisConfig {
 		// 最大连接数, 默认8个
 		config.setMaxTotal(RapidConfiguration.get(CoreConsts.REDIS_MAX_TOTAL, true));
 		// 获取连接时的最大等待毫秒数(如果设置为阻塞时BlockWhenExhausted),如果超时就抛异常, 小于零:阻塞不确定的时间, 默认-1
-		config.setMaxWaitMillis(RapidConfiguration.get(CoreConsts.REDIS_MAX_WAIT_MILLIS, true));
+		config.setMaxWaitMillis((long)RapidConfiguration.get(CoreConsts.REDIS_MAX_WAIT_MILLIS, true));
 		// 逐出连接的最小空闲时间 默认1800000毫秒(30分钟)
-		config.setMinEvictableIdleTimeMillis(RapidConfiguration.get(CoreConsts.REDIS_MIN_EVICTABLE_IDLE_TIME_MILLIS, true));
+		config.setMinEvictableIdleTimeMillis((long)RapidConfiguration.get(CoreConsts.REDIS_MIN_EVICTABLE_IDLE_TIME_MILLIS, true));
 		// 每次逐出检查时逐出的最大数目 如果为负数就是 : 1/abs(n), 默认3
 		config.setNumTestsPerEvictionRun(RapidConfiguration.get(CoreConsts.REDIS_NUM_TESTS_PER_EVICTION_RUN, true));
 		// 对象空闲多久后逐出, 当空闲时间>该值且空闲连接>最大空闲数时直接逐出,不再根据MinEvictableIdleTimeMillis判断  (默认逐出策略)   
-		config.setSoftMinEvictableIdleTimeMillis(RapidConfiguration.get(CoreConsts.REDIS_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS, true));
+		config.setSoftMinEvictableIdleTimeMillis((long)RapidConfiguration.get(CoreConsts.REDIS_SOFT_MIN_EVICTABLE_IDLE_TIME_MILLIS, true));
 		// 在获取连接的时候检查有效性, 默认false
 		config.setTestOnBorrow(RapidConfiguration.get(CoreConsts.REDIS_TEST_ON_BORROW, true));
 		config.setTestOnCreate(RapidConfiguration.get(CoreConsts.REDIS_TEST_ON_CREATE, true));
@@ -55,7 +55,7 @@ public class RedisConfig {
 		// 在空闲时检查有效性, 默认false
 		config.setTestWhileIdle(RapidConfiguration.get(CoreConsts.REDIS_TEST_WHILE_IDLE, true));
 		// 逐出扫描的时间间隔(毫秒) 如果为负数,则不运行逐出线程, 默认-1
-		config.setTimeBetweenEvictionRunsMillis(RapidConfiguration.get(CoreConsts.REDIS_TIME_BETWEEN_EVICTION_RUNS_MILLIS, true));
+		config.setTimeBetweenEvictionRunsMillis((long)RapidConfiguration.get(CoreConsts.REDIS_TIME_BETWEEN_EVICTION_RUNS_MILLIS, true));
 		
 		String poolName = RapidConfiguration.get(CoreConsts.REDIS_POOL, true);
 		if (poolName.equals(ShardedJedisPool.class.getName())) {

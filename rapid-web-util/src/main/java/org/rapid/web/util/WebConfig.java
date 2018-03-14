@@ -45,9 +45,9 @@ public class WebConfig {
 	public MultipartResolver multipartResolver() {
 		CommonsMultipartResolver resolver = new CommonsMultipartResolver();
 		resolver.setDefaultEncoding("UTF-8");
-		resolver.setMaxUploadSize(RapidConfiguration.get(CoreConsts.RAPID_MAX_UPLOAD_SIZE, true));
+		resolver.setMaxUploadSize((long)RapidConfiguration.get(CoreConsts.RAPID_MAX_UPLOAD_SIZE, true));
 		resolver.setMaxInMemorySize(RapidConfiguration.get(CoreConsts.RAPID_MAX_IN_MEMORY_SIZE, true));
-		resolver.setMaxUploadSizePerFile(RapidConfiguration.get(CoreConsts.RAPID_MAX_UPLOAD_SIZE_PER_FILE, true));
+		resolver.setMaxUploadSizePerFile((long)RapidConfiguration.get(CoreConsts.RAPID_MAX_UPLOAD_SIZE_PER_FILE, true));
 		return resolver;
 	}
 }

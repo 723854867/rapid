@@ -64,7 +64,7 @@ public class MQConsumerBoot {
 		DefaultMessageListenerContainer messageListenerContainer = new DefaultMessageListenerContainer();
 		messageListenerContainer.setConnectionFactory(connectionFactory());
 		messageListenerContainer.setDestinationName(StringUtil.EMPTY);
-		messageListenerContainer.setReceiveTimeout(RapidConfiguration.get(CoreConsts.ACTIVEMQ_RECEIVE_TIMEOUT, false));
+		messageListenerContainer.setReceiveTimeout((long) RapidConfiguration.get(CoreConsts.ACTIVEMQ_RECEIVE_TIMEOUT, false));
 		messageListenerContainer.setTaskExecutor(taskExecutor());
 		messageListenerContainer.setConcurrentConsumers(RapidConfiguration.get(CoreConsts.ACTIVEMQ_CONCURRENT_CONSUMERS, false));
 		return messageListenerContainer;
