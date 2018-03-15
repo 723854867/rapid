@@ -35,6 +35,14 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import org.springframework.web.servlet.mvc.method.annotation.ServletRequestDataBinderFactory;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+/**
+ * 1、在 dispatcher.xml 中定义该 intercepto；
+ * 2、需要在方法上使用 @Valid 注解标注；
+ * 3、并且需要对基本类型的参数使用 @RequestParam同时需要注意的是，由于 @RequestParam 本身有 require 属性来对是否允许为 null 做控制，
+ * 而且当 @RequestParam 的 require 为 true时如果客户端未传该值，则会抛出异常。因此如果需要启用 springmvc 的 validate，最好将 @RequestParam 的 require 设置为 false。
+ * 
+ * @author lynn
+ */
 public class ValidationInterceptor implements HandlerInterceptor {
 
 	private static final Logger logger = LoggerFactory.getLogger(ValidationInterceptor.class);
