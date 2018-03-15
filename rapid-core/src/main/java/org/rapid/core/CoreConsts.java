@@ -11,10 +11,10 @@ public interface CoreConsts {
 
 	final Option<Env> RAPID_ENV									= new Option<Env>("rapid.env", Env.LOCAL);
 	final StrOption RAPID_RESOURCES_PREFIX 						= new StrOption("rapid.resources.prefix");
-	final IntegerOption RAPID_MAX_UPLOAD_SIZE					= new IntegerOption("maxUploadSize", 5242880);
-	final IntegerOption RAPID_MAX_IN_MEMORY_SIZE				= new IntegerOption("maxInMemorySize", 51200);
+	final IntegerOption RAPID_MAX_UPLOAD_SIZE					= new IntegerOption("rapid.maxUploadSize", 5242880);
+	final IntegerOption RAPID_MAX_IN_MEMORY_SIZE				= new IntegerOption("rapid.maxInMemorySize", 51200);
 	final Option<Locale> RAPID_LOCALE							= new Option<Locale>("rapid.locale", Locale.ZH_CN);
-	final IntegerOption RAPID_MAX_UPLOAD_SIZE_PER_FILE			= new IntegerOption("maxUploadSizePerFile", 1048576);
+	final IntegerOption RAPID_MAX_UPLOAD_SIZE_PER_FILE			= new IntegerOption("rapid.maxUploadSizePerFile", 1048576);
 	
 	final BoolOption SINA_ENABLE								= new BoolOption("sina.enable", false);
 	
