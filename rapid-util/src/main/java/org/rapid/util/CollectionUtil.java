@@ -21,6 +21,13 @@ public class CollectionUtil {
 		return null == collection || collection.isEmpty();
 	}
 	
+	public static final Set<String> convertToSet(String... params) {
+		Set<String> set = new HashSet<String>();
+		for (String object : params)
+			set.add(object);
+		return set;
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static final <T> Set<T> convertToSet(Object... params) {
 		Set<T> set = new HashSet<T>();
