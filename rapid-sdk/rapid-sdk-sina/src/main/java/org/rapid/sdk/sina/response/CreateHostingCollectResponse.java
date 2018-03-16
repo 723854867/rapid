@@ -2,7 +2,7 @@ package org.rapid.sdk.sina.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CreateCollectResponse extends SinaResponse {
+public class CreateHostingCollectResponse extends SinaResponse {
 
 	private static final long serialVersionUID = -6425888103990855749L;
 

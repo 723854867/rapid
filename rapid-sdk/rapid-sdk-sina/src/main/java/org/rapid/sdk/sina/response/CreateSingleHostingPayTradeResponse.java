@@ -2,7 +2,7 @@ package org.rapid.sdk.sina.response;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CreatePayResponse extends SinaResponse {
+public class CreateSingleHostingPayTradeResponse extends SinaResponse {
 
 	private static final long serialVersionUID = 2755279791726498682L;
 

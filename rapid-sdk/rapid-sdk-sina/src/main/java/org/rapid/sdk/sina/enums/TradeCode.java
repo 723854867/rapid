@@ -18,4 +18,12 @@ public enum TradeCode {
 	public String mark() {
 		return mark;
 	}
+	
+	public static final TradeCode match(String code) {
+		for (TradeCode temp : TradeCode.values()) {
+			if (temp.mark.equals(code))
+				return temp;
+		}
+		return null;
+	}
 }

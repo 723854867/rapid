@@ -7,13 +7,18 @@ import java.text.MessageFormat;
 import org.rapid.core.IDWorker;
 import org.rapid.sdk.sina.SinaConfig;
 import org.rapid.sdk.sina.enums.TradeCode;
-import org.rapid.sdk.sina.request.so.OnlineBankPay;
-import org.rapid.sdk.sina.response.CreateCollectResponse;
+import org.rapid.sdk.sina.request.so.PayMethod;
+import org.rapid.sdk.sina.response.CreateHostingCollectResponse;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
+/**
+ * 创建托管代收交易
+ * 
+ * @author lynn
+ */
+public class CreateHostingCollectRequest extends SinaRequest<CreateHostingCollectResponse> {
 
 	private static final long serialVersionUID = 1714803290068915548L;
 
@@ -24,7 +29,7 @@ public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
 	// 业务码
 	@Expose
 	@SerializedName("out_trade_code")
-	private String outTradeCode;
+	private String outTradeCode = "1001";
 	@Expose
 	private String summary;
 	// 交易关闭时间:设置未付款交易的超时时间，一旦超时，该笔交易就会自动被关闭。1m～15d。m-分钟，h-小时，d-天不接受小数点，如1.5d，可转换为36h。如果是代收完成交易，则该关闭时间指冻结成功前有效时间。
@@ -34,11 +39,14 @@ public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
 	// 支付失败后是否可以再次支付
 	@Expose
 	@SerializedName("can_repay_on_failed")
-	private String canRepayOnFailed = "Y";
+	private String canRepayOnFailed = "N";
 	@Expose
 	@SerializedName("extend_param")
 	private String extendParam;
 	// 如果是标的则该编号表示标的ID，否则为空表示其他资金业务
+	@Expose
+	@SerializedName("cashdesk_addr_category")
+	private String cashdeskAddrCategory;
 	@Expose
 	@SerializedName("goods_id")
 	private String goodsId;
@@ -61,7 +69,7 @@ public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
 	@SerializedName("collect_trade_type")
 	private String collectTradeType;
 
-	public CreateCollectRequest() {
+	public CreateHostingCollectRequest() {
 		super("新浪创建托管代收交易", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_hosting_collect_trade");
 		this.outTradeNo = IDWorker.INSTANCE.nextSid();
@@ -114,6 +122,14 @@ public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
 	public void setExtendParam(String extendParam) {
 		this.extendParam = extendParam;
 	}
+	
+	public String getCashdeskAddrCategory() {
+		return cashdeskAddrCategory;
+	}
+	
+	public void setCashdeskAddrCategory(String cashdeskAddrCategory) {
+		this.cashdeskAddrCategory = cashdeskAddrCategory;
+	}
 
 	public String getGoodsId() {
 		return goodsId;
@@ -159,8 +175,8 @@ public class CreateCollectRequest extends SinaRequest<CreateCollectResponse> {
 		this.collectTradeType = collectTradeType;
 	}
 	
-	public void setAmount(BigDecimal amount) {
+	public void setAmount(BigDecimal amount, PayMethod payMethod) {
 		amount = amount.setScale(2, RoundingMode.UP);
-		this.payMethod = MessageFormat.format(new OnlineBankPay().toString(), amount).toString();
+		this.payMethod = MessageFormat.format(payMethod.toString(), amount.toString());
 	}
 }

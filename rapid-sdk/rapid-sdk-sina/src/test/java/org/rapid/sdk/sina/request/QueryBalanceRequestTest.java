@@ -11,12 +11,11 @@ public class QueryBalanceRequestTest extends SinaTest {
 	@Test
 	public void testExecute() {
 		QueryBalanceRequest request = new QueryBalanceRequest();
-		request.setIdentityId("200004595271");
-		request.setIdentityType("MEMBER_ID");
-		request.setAccountType(AccountType.BANK);
+		request.setIdentityId("423854531235807232");
+		request.setAccountType(AccountType.BASIC);
 		QueryBalanceResponse response = request.execute();
-		System.out.println(response.code() + " " + response.desc());
 		ProfitTips profit = response.profit();
+		System.out.println(response.getBalance() + " " + response.getAvailableBalance());
 		System.out.println(profit.getDayProfit() + " " + profit.getMonthProfit() + " " + profit.getTotalProfit());
 	}
 }

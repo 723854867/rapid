@@ -3,15 +3,21 @@ package org.rapid.sdk.sina.request;
 import java.util.List;
 import java.util.Map;
 
+import org.rapid.core.IDWorker;
 import org.rapid.sdk.sina.SinaConfig;
 import org.rapid.sdk.sina.request.so.PayDetail;
-import org.rapid.sdk.sina.response.CreatePayResponse;
+import org.rapid.sdk.sina.response.CreateSingleHostingPayTradeResponse;
 import org.rapid.util.reflect.BeanUtil;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class CreatePayRequest extends SinaRequest<CreatePayResponse> {
+/**
+ * 托管代付
+ * 
+ * @author lynn
+ */
+public class CreateSingleHostingPayTradeRequest extends SinaRequest<CreateSingleHostingPayTradeResponse> {
 
 	private static final long serialVersionUID = -1740096043433283242L;
 	
@@ -25,7 +31,11 @@ public class CreatePayRequest extends SinaRequest<CreatePayResponse> {
 	// 业务码
 	@Expose
 	@SerializedName("out_trade_code")
-	private String outTradeCode;
+	private String outTradeCode = "2001";
+	// 收款人标识
+	@Expose
+	@SerializedName("payee_identity_id")
+	private String payeeIdentityId;
 	// 收款人标识类型
 	@Expose
 	@SerializedName("payee_identity_type")
@@ -56,9 +66,10 @@ public class CreatePayRequest extends SinaRequest<CreatePayResponse> {
 	@SerializedName("creditor_info_list")
 	private String creditorInfoList;
 
-	public CreatePayRequest() {
+	public CreateSingleHostingPayTradeRequest() {
 		super("新浪创建托管代付交易", SinaConfig.GATEWAY_ORDER.getDefaultValue());
 		setService("create_single_hosting_pay_trade");
+		this.outTradeNo = IDWorker.INSTANCE.nextSid();
 	}
 
 	public String getOutTradeNo() {
@@ -75,6 +86,14 @@ public class CreatePayRequest extends SinaRequest<CreatePayResponse> {
 
 	public void setOutTradeCode(String outTradeCode) {
 		this.outTradeCode = outTradeCode;
+	}
+	
+	public String getPayeeIdentityId() {
+		return payeeIdentityId;
+	}
+	
+	public void setPayeeIdentityId(String payeeIdentityId) {
+		this.payeeIdentityId = payeeIdentityId;
 	}
 
 	public String getPayeeIdentityType() {
