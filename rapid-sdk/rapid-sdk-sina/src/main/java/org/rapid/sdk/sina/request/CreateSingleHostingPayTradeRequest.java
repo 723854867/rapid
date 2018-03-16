@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.rapid.core.IDWorker;
 import org.rapid.sdk.sina.SinaConfig;
+import org.rapid.sdk.sina.enums.AccountType;
 import org.rapid.sdk.sina.request.so.PayDetail;
 import org.rapid.sdk.sina.response.CreateSingleHostingPayTradeResponse;
 import org.rapid.util.reflect.BeanUtil;
@@ -108,8 +109,8 @@ public class CreateSingleHostingPayTradeRequest extends SinaRequest<CreateSingle
 		return accountType;
 	}
 
-	public void setAccountType(String accountType) {
-		this.accountType = accountType;
+	public void setAccountType(AccountType accountType) {
+		this.accountType = accountType.name();
 	}
 
 	public String getAmount() {

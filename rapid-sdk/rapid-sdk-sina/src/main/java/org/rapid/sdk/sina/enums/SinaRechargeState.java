@@ -1,4 +1,4 @@
-package org.rapid.sdk.sina.enums.sina;
+package org.rapid.sdk.sina.enums;
 
 /**
  * 充值状态
