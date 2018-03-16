@@ -7,6 +7,7 @@ public class CommonNotice extends SinaNotice {
 	private static final long serialVersionUID = 834745046749229728L;
 
 	private String notify_request_no;
+	@NotEmpty
 	private String identity_id;
 	private String identity_type;
 	private String member_id;
