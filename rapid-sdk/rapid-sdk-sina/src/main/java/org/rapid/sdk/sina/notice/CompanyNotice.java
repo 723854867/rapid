@@ -1,6 +1,6 @@
 package org.rapid.sdk.sina.notice;
 
-public class CompanyNotic extends SinaNotice {
+public class CompanyNotice extends SinaNotice {
 
 	private static final long serialVersionUID = -3227242006888724873L;
 
