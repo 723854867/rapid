@@ -15,5 +15,7 @@ public enum CommonNoticeType {
 	// 修改委托扣款成功
 	MIG_MODIFY_WITHHOLD_SUCCESS,
 	// 取消委托扣款成功
-	MIG_CANCEL_WITHHOLD_SUCCESS;
+	MIG_CANCEL_WITHHOLD_SUCCESS,
+	// 企业会员审核结果通知
+	MIG_COMPANY_REVIEW_SUCCESS;
 }
