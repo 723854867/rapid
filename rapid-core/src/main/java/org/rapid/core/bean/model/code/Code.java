@@ -26,6 +26,7 @@ public enum Code implements ICode {
 	UNREALNAME(112, "code.unrealname", "用户未实名"),
 	USABLE_LACK(120, "code.money.lack", "可用余额不足"),
 	FROZEN_LACK(121, "code.frozen.lack", "冻结余额不足"),
+	SYS_CONFIG_ERROR(122, "code.sys.config.error", "系统配置错误"),
 	
 	COMPANY_NOT_EXIST(130, "code.company.not.exist", "公司不存在");
 	
