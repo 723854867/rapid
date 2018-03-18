@@ -57,9 +57,8 @@ public class Page implements Request {
 	}
 	
 	@Override
-	public String verify() {
+	public void verify() {
 		if (null != page)
 			Assert.isTrue(Code.PARAM_ERROR, null != pageSize);
-		return Request.super.verify();
 	}
 }

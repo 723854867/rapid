@@ -7,21 +7,35 @@ import org.rapid.core.bean.model.Identifiable;
  * 
  * @author lynn
  */
-public class Access implements Identifiable<String> {
+public class LogAccess implements Identifiable<String> {
 
 	private static final long serialVersionUID = -1624110602560363089L;
 
+	// 请求编号：唯一
 	private String _id;
+	// 请求时间：yyyy-MM-dd HH:mm:ss.SSS
 	private String ctime;
+	// 响应时间：yyyy-MM-dd HH:mm:ss.SSS
 	private String rtime;
+	// 请求ip
 	private String ip;
+	// 请求方法类型：GET、POST等
 	private String type;
+	// 请求接口描述
+	private String desc;
+	// 请求路劲
 	private String path;
+	// url查询参数
 	private String query;
+	// 请求类方法：类全名.方法名
 	private String method;
+	// 请求参数(包括了 body 和 表单等参数，只包括了可序列化且不是io流的参数)
 	private Object param;
+	// 响应结果
 	private Object response;
+	// 是否成功
 	private boolean success;
+	// 创建时间10位unix戳(用于排序)
 	private int created;
 
 	public String get_id() {
@@ -63,6 +77,14 @@ public class Access implements Identifiable<String> {
 	public void setType(String type) {
 		this.type = type;
 	}
+	
+	public String getDesc() {
+		return desc;
+	}
+	
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
 
 	public String getPath() {
 		return path;
@@ -95,7 +117,7 @@ public class Access implements Identifiable<String> {
 	public void setParam(Object param) {
 		this.param = param;
 	}
-
+	
 	public Object getResponse() {
 		return response;
 	}

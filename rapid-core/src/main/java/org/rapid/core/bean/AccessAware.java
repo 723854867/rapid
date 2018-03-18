@@ -1,8 +1,8 @@
 package org.rapid.core.bean;
 
-public interface AccessAware{
-	
-	Access getAccess();
+public interface AccessAware {
 
-	void access(Access access);
+	LogAccess getAccess();
+
+	void access(LogAccess access);
 }

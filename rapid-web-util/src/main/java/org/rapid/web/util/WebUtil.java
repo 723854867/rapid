@@ -1,9 +1,18 @@
 package org.rapid.web.util;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.rapid.core.IDWorker;
+import org.rapid.core.bean.LogAccess;
+import org.rapid.util.DateUtil;
+import org.springframework.core.io.InputStreamSource;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -41,5 +50,32 @@ public class WebUtil {
 			}
 		}
 		return ip;
+	}
+	
+	public static final LogAccess logAcess(HttpServletRequest request, ProceedingJoinPoint point) throws IOException {
+		LogAccess access = new LogAccess();
+		access.set_id(IDWorker.INSTANCE.nextSid());
+		access.setIp(getIpAddress(request));
+		access.setCtime(DateUtil.getDate(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS));
+		access.setType(request.getMethod());
+		access.setPath(request.getRequestURI().toString());
+		access.setQuery(request.getQueryString());
+		Object[] params = point.getArgs();
+		List<Object> list = new ArrayList<Object>();
+		for(int i = 0 ; i<params.length ; i++) {
+			if (params[i] instanceof InputStream || params[i] instanceof InputStreamSource)
+				continue;
+			if(params[i] instanceof Serializable) 
+				list.add(params[i]);
+		}
+		params = list.toArray(new Object[] {});
+		if (params.length == 1)
+			access.setParam(params[0]);
+		else
+			access.setParam(params);
+		String method = point.getTarget().getClass().getName() + "." + point.getSignature().getName();
+		access.setMethod(method);
+		access.setCreated(DateUtil.current());
+		return access;
 	}
 }

@@ -10,8 +10,7 @@ public interface Request extends Message {
 	/**
 	 * 基本的参数验证，返回错误描述，如果返回为 null 则表示验证成功
 	 */
-	default String verify() {
-		return null;
+	default void verify() {
 	}
 	
 	@Override
