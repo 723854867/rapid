@@ -1,19 +1,19 @@
 package org.rapid.core.bean.model.message;
 
+import org.rapid.core.bean.RequestMeta;
+
 /**
  * 请求
  * 
  * @author lynn
  */
 public interface Request extends Message {
+	
+	RequestMeta meta();
 
-	String ip();
-	
-	String requestId();
-	
 	@Override
 	default String identity() {
-		return requestId();
+		return meta().get_id();
 	}
 	
 	/**

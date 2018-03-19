@@ -1,28 +1,26 @@
 package org.rapid.core.bean.model.message;
 
-import org.rapid.core.bean.LogAccess;
-import org.rapid.core.bean.AccessAware;
+import org.rapid.core.bean.RequestMeta;
+import org.rapid.core.bean.RequestMetaAware;
 
-public class Notice implements Request, AccessAware {
+public class Notice implements Request, RequestMetaAware {
 
 	private static final long serialVersionUID = -1920657361787296335L;
 	
-	private String ip;
-	private String requestId;
+	private RequestMeta meta;
 	
 	@Override
-	public String ip() {
-		return this.ip;
-	}
-
-	@Override
-	public String requestId() {
-		return this.requestId;
+	public RequestMeta meta() {
+		return this.meta;
 	}
 	
 	@Override
-	public void access(LogAccess access) {
-		this.ip = access.getIp();
-		this.requestId = access.get_id();
+	public void unwrap() {
+		this.meta = null;
+	}
+	
+	@Override
+	public void wrap(RequestMeta meta) {
+		this.meta = meta;
 	}
 }

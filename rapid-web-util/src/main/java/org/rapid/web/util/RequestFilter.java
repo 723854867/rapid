@@ -1,7 +1,7 @@
 package org.rapid.web.util;
 
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.rapid.core.bean.LogAccess;
+import org.rapid.core.bean.RequestMeta;
 
 /**
  * 访问记录
@@ -10,5 +10,5 @@ import org.rapid.core.bean.LogAccess;
  */
 public interface RequestFilter {
 
-	Object request(LogAccess access, ProceedingJoinPoint point) throws Throwable;
+	Object request(RequestMeta meta, ProceedingJoinPoint point) throws Throwable;
 }

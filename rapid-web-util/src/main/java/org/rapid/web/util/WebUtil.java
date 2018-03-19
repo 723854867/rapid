@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.rapid.core.IDWorker;
-import org.rapid.core.bean.LogAccess;
+import org.rapid.core.bean.RequestMeta;
 import org.rapid.util.DateUtil;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -52,14 +52,14 @@ public class WebUtil {
 		return ip;
 	}
 	
-	public static final LogAccess logAcess(HttpServletRequest request, ProceedingJoinPoint point) throws IOException {
-		LogAccess access = new LogAccess();
-		access.set_id(IDWorker.INSTANCE.nextSid());
-		access.setIp(getIpAddress(request));
-		access.setCtime(DateUtil.getDate(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS));
-		access.setType(request.getMethod());
-		access.setPath(request.getRequestURI().toString());
-		access.setQuery(request.getQueryString());
+	public static final RequestMeta requestMeta(HttpServletRequest request, ProceedingJoinPoint point) throws IOException {
+		RequestMeta meta = new RequestMeta();
+		meta.set_id(IDWorker.INSTANCE.nextSid());
+		meta.setIp(getIpAddress(request));
+		meta.setCtime(DateUtil.getDate(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS));
+		meta.setType(request.getMethod());
+		meta.setPath(request.getRequestURI().toString());
+		meta.setQuery(request.getQueryString());
 		Object[] params = point.getArgs();
 		List<Object> list = new ArrayList<Object>();
 		for(int i = 0 ; i<params.length ; i++) {
@@ -70,12 +70,12 @@ public class WebUtil {
 		}
 		params = list.toArray(new Object[] {});
 		if (params.length == 1)
-			access.setParam(params[0]);
+			meta.setParam(params[0]);
 		else
-			access.setParam(params);
+			meta.setParam(params);
 		String method = point.getTarget().getClass().getName() + "." + point.getSignature().getName();
-		access.setMethod(method);
-		access.setCreated(DateUtil.current());
-		return access;
+		meta.setMethod(method);
+		meta.setCreated(DateUtil.current());
+		return meta;
 	}
 }

@@ -3,11 +3,11 @@ package org.rapid.core.bean;
 import org.rapid.core.bean.model.Identifiable;
 
 /**
- * 访问日志
+ * 请求元信息
  * 
  * @author lynn
  */
-public class LogAccess implements Identifiable<String> {
+public class RequestMeta implements Identifiable<String> {
 
 	private static final long serialVersionUID = -1624110602560363089L;
 
