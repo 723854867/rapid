@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.rapid.core.Assert;
+import org.rapid.core.bean.model.Paginate;
 import org.rapid.core.bean.model.code.Code;
 import org.rapid.util.Callback;
 
@@ -29,12 +30,17 @@ public class Pager<T> implements Serializable {
 	public Pager(List<T> list) {
 		if (list instanceof Page) {
 			this.list = new ArrayList<T>(list.size());
-			for (T temp : list)
-				this.list.add(temp);
+			list.forEach(item -> this.list.add(item));
 			Page<T> page = (Page<T>) list;
 			this.total = page.getTotal();
 			this.pages = page.getPages();
 			page.close();
+		} else if (list instanceof Paginate) {
+			this.list = new ArrayList<T>(list.size());
+			list.forEach(item -> this.list.add(item));
+			Paginate<T> page = (Paginate<T>) list;
+			this.total = page.getTotal();
+			this.pages = page.getPages();
 		} else
 			this.list = list;
 	}

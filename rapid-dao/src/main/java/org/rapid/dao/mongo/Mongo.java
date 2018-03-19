@@ -14,7 +14,7 @@ import org.rapid.core.Assert;
 import org.rapid.core.CoreConsts;
 import org.rapid.core.RapidConfiguration;
 import org.rapid.core.bean.model.Identifiable;
-import org.rapid.core.bean.model.info.Pager;
+import org.rapid.core.bean.model.Paginate;
 import org.rapid.core.bean.model.param.Page;
 import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.dao.bean.model.Condition;
@@ -166,7 +166,7 @@ public class Mongo {
 		return list;
 	}
 	
-	public <T> Pager<T> query(String collectionName, Query<?> query, Page page, Class<T> clazz) {
+	public <T> Paginate<T> query(String collectionName, Query<?> query, Page page, Class<T> clazz) {
 		MongoCollection<Document> collection = collection(collectionName);
 		List<Condition> conditions = query.getConditions();
 		List<Bson> filters = new ArrayList<Bson>();
@@ -200,15 +200,21 @@ public class Mongo {
 			case nin:
 				filters.add(Filters.nin(condition.getCol(), condition.getValue()));
 				break;
+			case all:
+				filters.add(Filters.all(condition.getCol(), condition.getValue()));
+				break;
 			default:
 				break;
 			}
 		}
+		Paginate<T> paginate = new Paginate<T>();
 		Bson filter = CollectionUtil.isEmpty(filters) ? null : Filters.and(filters);
 		long total = collection.count(filter);
 		if (total <= 0)
-			return Pager.<T>empty();
+			return paginate;
 		page.calculate(total);
+		paginate.setTotal(page.getTotal());
+		paginate.setPages(page.getPages());
 		FindIterable<Document> iterable = collection.find();
 		List<Pair<String, Boolean>> orders = query.getOrderBys();
 		if (!CollectionUtil.isEmpty(orders)) {
@@ -216,11 +222,10 @@ public class Mongo {
 				iterable.sort(pair.getValue() ? Sorts.ascending(pair.getKey()) : Sorts.descending(pair.getKey()));
 		}
 		iterable.skip(page.getPageStart()).limit(page.getPageSize());
-		List<T> list = new ArrayList<T>(0);
 		MongoCursor<Document> cursor = iterable.iterator();
 		while (cursor.hasNext()) 
-			list.add(SerializeUtil.GSON.fromJson(cursor.next().toJson(), clazz));
-		return new Pager<T>(list, page);
+			paginate.add(SerializeUtil.GSON.fromJson(cursor.next().toJson(), clazz));
+		return paginate;
 	}
 	
 	/**

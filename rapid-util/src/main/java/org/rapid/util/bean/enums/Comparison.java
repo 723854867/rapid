@@ -22,7 +22,9 @@ public enum Comparison {
 	// in
 	in(128),
 	// not in
-	nin(256);
+	nin(256),
+	// 包含
+	all(512);
 	
 	private int mark;
 	
