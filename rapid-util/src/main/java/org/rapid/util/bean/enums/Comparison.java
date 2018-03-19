@@ -33,4 +33,12 @@ public enum Comparison {
 	public int mark() {
 		return mark;
 	}
+	
+	public static final Comparison match(int type) {
+		for (Comparison temp : Comparison.values()) {
+			if (temp.mark == type)
+				return temp;
+		}
+		return null;
+	}
 }

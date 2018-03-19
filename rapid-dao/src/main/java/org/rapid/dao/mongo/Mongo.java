@@ -14,7 +14,14 @@ import org.rapid.core.Assert;
 import org.rapid.core.CoreConsts;
 import org.rapid.core.RapidConfiguration;
 import org.rapid.core.bean.model.Identifiable;
+import org.rapid.core.bean.model.info.Pager;
+import org.rapid.core.bean.model.param.Page;
 import org.rapid.core.serialize.SerializeUtil;
+import org.rapid.dao.bean.model.Condition;
+import org.rapid.dao.bean.model.Query;
+import org.rapid.util.CollectionUtil;
+import org.rapid.util.bean.Pair;
+import org.rapid.util.bean.enums.Comparison;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
@@ -27,6 +34,7 @@ import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.FindOneAndUpdateOptions;
 import com.mongodb.client.model.ReplaceOneModel;
+import com.mongodb.client.model.Sorts;
 import com.mongodb.client.model.UpdateOneModel;
 import com.mongodb.client.model.UpdateOptions;
 import com.mongodb.client.result.DeleteResult;
@@ -156,6 +164,63 @@ public class Mongo {
 		while (cursor.hasNext()) 
 			list.add(SerializeUtil.GSON.fromJson(cursor.next().toJson(), clazz));
 		return list;
+	}
+	
+	public <T> Pager<T> query(String collectionName, Query<?> query, Page page, Class<T> clazz) {
+		MongoCollection<Document> collection = collection(collectionName);
+		List<Condition> conditions = query.getConditions();
+		List<Bson> filters = new ArrayList<Bson>();
+		for (Condition condition : conditions) {
+			Comparison comparison = Comparison.match(condition.getComparison());
+			switch (comparison) {
+			case lt:
+				filters.add(Filters.lt(condition.getCol(), condition.getValue()));
+				break;
+			case lte:
+				filters.add(Filters.lte(condition.getCol(), condition.getValue()));
+				break;
+			case gt:
+				filters.add(Filters.gt(condition.getCol(), condition.getValue()));
+				break;
+			case gte:
+				filters.add(Filters.gte(condition.getCol(), condition.getValue()));
+				break;
+			case eq:
+				filters.add(Filters.eq(condition.getCol(), condition.getValue()));
+				break;
+			case neq:
+				filters.add(Filters.ne(condition.getCol(), condition.getValue()));
+				break;
+			case like:
+				filters.add(Filters.regex(condition.getCol(), condition.getValue().toString()));
+				break;
+			case in:
+				filters.add(Filters.in(condition.getCol(), condition.getValue()));
+				break;
+			case nin:
+				filters.add(Filters.nin(condition.getCol(), condition.getValue()));
+				break;
+			default:
+				break;
+			}
+		}
+		Bson filter = CollectionUtil.isEmpty(filters) ? null : Filters.and(filters);
+		long total = collection.count(filter);
+		if (total <= 0)
+			return Pager.<T>empty();
+		page.calculate(total);
+		FindIterable<Document> iterable = collection.find();
+		List<Pair<String, Boolean>> orders = query.getOrderBys();
+		if (!CollectionUtil.isEmpty(orders)) {
+			for (Pair<String, Boolean> pair : orders) 
+				iterable.sort(pair.getValue() ? Sorts.ascending(pair.getKey()) : Sorts.descending(pair.getKey()));
+		}
+		iterable.skip(page.getPageStart()).limit(page.getPageSize());
+		List<T> list = new ArrayList<T>(0);
+		MongoCursor<Document> cursor = iterable.iterator();
+		while (cursor.hasNext()) 
+			list.add(SerializeUtil.GSON.fromJson(cursor.next().toJson(), clazz));
+		return new Pager<T>(list, page);
 	}
 	
 	/**
