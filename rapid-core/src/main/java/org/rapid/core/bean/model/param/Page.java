@@ -1,18 +1,12 @@
 package org.rapid.core.bean.model.param;
 
-import javax.validation.constraints.Min;
+import java.io.Serializable;
 
-import org.rapid.core.Assert;
-import org.rapid.core.bean.model.code.Code;
-import org.rapid.core.bean.model.message.Request;
+public class Page implements Serializable {
 
-public class Page implements Request {
-
-	private static final long serialVersionUID = -3215070730859530455L;
+	private static final long serialVersionUID = 7566049812023341371L;
 	
-	@Min(1)
 	private Integer page;
-	@Min(1)
 	private Integer pageSize;
 	private long total;
 	private int pages;
@@ -54,11 +48,5 @@ public class Page implements Request {
 		this.page = Math.max(1, this.page);
 		this.page = Math.min(this.pages, this.page);
 		this.pageStart = (this.page - 1) * pageSize;
-	}
-	
-	@Override
-	public void verify() {
-		if (null != page)
-			Assert.isTrue(Code.PARAM_ERROR, null != pageSize);
 	}
 }

@@ -7,15 +7,22 @@ public class Notice implements Request, AccessAware {
 
 	private static final long serialVersionUID = -1920657361787296335L;
 	
-	private LogAccess access;
+	private String ip;
+	private String requestId;
 	
 	@Override
-	public LogAccess getAccess() {
-		return this.access;
+	public String ip() {
+		return this.ip;
 	}
 
 	@Override
+	public String requestId() {
+		return this.requestId;
+	}
+	
+	@Override
 	public void access(LogAccess access) {
-		this.access = access;
+		this.ip = access.getIp();
+		this.requestId = access.get_id();
 	}
 }

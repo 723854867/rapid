@@ -20,9 +20,11 @@ import org.rapid.core.bean.model.option.Option;
 import org.rapid.util.DateUtil;
 import org.rapid.web.util.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
+@Order(10)
 @Component
 public class AccessInterceptor {
 
