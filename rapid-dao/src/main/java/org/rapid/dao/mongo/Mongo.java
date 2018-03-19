@@ -15,7 +15,6 @@ import org.rapid.core.CoreConsts;
 import org.rapid.core.RapidConfiguration;
 import org.rapid.core.bean.model.Identifiable;
 import org.rapid.core.bean.model.Paginate;
-import org.rapid.core.bean.model.param.Page;
 import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.dao.bean.model.Condition;
 import org.rapid.dao.bean.model.Query;
@@ -166,7 +165,7 @@ public class Mongo {
 		return list;
 	}
 	
-	public <T> Paginate<T> query(String collectionName, Query<?> query, Page page, Class<T> clazz) {
+	public <T> Paginate<T> query(String collectionName, Query<?> query, Class<T> clazz) {
 		MongoCollection<Document> collection = collection(collectionName);
 		List<Condition> conditions = query.getConditions();
 		List<Bson> filters = new ArrayList<Bson>();
@@ -212,16 +211,14 @@ public class Mongo {
 		long total = collection.count(filter);
 		if (total <= 0)
 			return paginate;
-		page.calculate(total);
-		paginate.setTotal(page.getTotal());
-		paginate.setPages(page.getPages());
-		FindIterable<Document> iterable = collection.find();
+		paginate.calculate(query.getPage(), query.getPageSize(), total);
+		FindIterable<Document> iterable = null == filter ? collection.find() : collection.find(filter);
 		List<Pair<String, Boolean>> orders = query.getOrderBys();
 		if (!CollectionUtil.isEmpty(orders)) {
 			for (Pair<String, Boolean> pair : orders) 
 				iterable.sort(pair.getValue() ? Sorts.ascending(pair.getKey()) : Sorts.descending(pair.getKey()));
 		}
-		iterable.skip(page.getPageStart()).limit(page.getPageSize());
+		iterable.skip(paginate.getPageStart()).limit(query.getPageSize());
 		MongoCursor<Document> cursor = iterable.iterator();
 		while (cursor.hasNext()) 
 			paginate.add(SerializeUtil.GSON.fromJson(cursor.next().toJson(), clazz));

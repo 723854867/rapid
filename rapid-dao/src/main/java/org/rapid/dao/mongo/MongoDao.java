@@ -76,8 +76,7 @@ public class MongoDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY,
 
 	@Override
 	public List<ENTITY> queryList(Query<?> query) {
-		// TODO Auto-generated method stub
-		return null;
+		return mongo.query(collection, query, clazz);
 	}
 
 	@Override
