@@ -101,29 +101,4 @@ public interface CoreConsts {
 	final StrOption MONGO_DB					= new StrOption("mongo.db");
 	final StrOption MONGO_HOST					= new StrOption("mongo.host");
 	final BoolOption MONGO_ENABLE				= new BoolOption("mongo.enable", false);
-	
-	// dubbo
-	final StrOption DUBBO_APP_TYPE					= new StrOption("dubbo.app.type", "provider");
-	final StrOption DUBBO_APP_NAME					= new StrOption("dubbo.app.name");
-	final StrOption DUBBO_APP_OWNER					= new StrOption("dubbo.app.owner");
-	final StrOption DUBBO_APP_ENVIRONMENT			= new StrOption("dubbo.app.environment");
-	final StrOption DUBBO_APP_ORGANIZATION			= new StrOption("dubbo.app.organization");
-	final StrOption DUBBO_REGISTRY_ID				= new StrOption("dubbo.registry.id");
-	final StrOption DUBBO_REGISTRY_PROTOCOL			= new StrOption("dubbo.registry.protocol");
-	final IntegerOption DUBBO_REGISTRY_PORT			= new IntegerOption("dubbo.registry.port");
-	final StrOption DUBBO_REGISTRY_USERNAME			= new StrOption("dubbo.registry.username");
-	final StrOption DUBBO_REGISTRY_PASSWORD			= new StrOption("dubbo.registry.password");
-	final StrOption DUBBO_REGISTRY_TRANSPORTER		= new StrOption("dubbo.registry.transporter");
-	final IntegerOption DUBBO_REGISTRY_TIMEOUT		= new IntegerOption("dubbo.registry.timeout");
-	final IntegerOption DUBBO_REGISTRY_SESSION		= new IntegerOption("dubbo.registry.session");
-	final StrOption DUBBO_REGISTRY_FILE				= new StrOption("dubbo.registry.file");
-	final StrOption DUBBO_REGISTRY_ADDRESS			= new StrOption("dubbo.registry.address");
-	final IntegerOption DUBBO_PROTOCOL_PORT			= new IntegerOption("dubbo.protocol.port", -1);
-	final StrOption DUBBO_PROTOCOL_TYPE				= new StrOption("dubbo.protocol.type", "dubbo");
-	final StrOption DUBBO_PROTOCOL_THREADPOOL		= new StrOption("dubbo.protocol.threadpool", "fixed");
-	final IntegerOption DUBBO_PROTOCOL_THREADS		= new IntegerOption("dubbo.protocol.threads", 100);
-	final IntegerOption DUBBO_PROTOCOL_IOTHREADS	= new IntegerOption("dubbo.protocol.iothreads", Runtime.getRuntime().availableProcessors() + 1);
-	final IntegerOption DUBBO_PROTOCOL_ACCEPTS		= new IntegerOption("dubbo.protocol.accepts", 0);
-	final IntegerOption DUBBO_PROTOCOL_PAYLOAD		= new IntegerOption("dubbo.protocol.payload", 88388608);
-	final IntegerOption DUBBO_PROTOCOL_TIMEOUT		= new IntegerOption("dubbo.protocol.timeout", 3000);
 }
