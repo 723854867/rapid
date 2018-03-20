@@ -128,7 +128,7 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	private String clientIp;
 
 	public AuditMemberInfosRequest() {
-		super("2.19请求审核企业会员资质", SinaConfig.GATEWAY_ORDER.getDefaultValue());
+		super("请求审核企业会员资质", SinaConfig.GATEWAY_MEMBER.getDefaultValue());
 		setService("audit_member_infos");
 		this.auditOrderNo = IDWorker.INSTANCE.nextSid();
 	}
