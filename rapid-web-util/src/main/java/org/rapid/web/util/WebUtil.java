@@ -12,6 +12,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.rapid.core.IDWorker;
 import org.rapid.core.bean.RequestMeta;
 import org.rapid.util.DateUtil;
+import org.rapid.util.StringUtil;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,21 +29,20 @@ public class WebUtil {
 	 */
 	public static final String getIpAddress(HttpServletRequest request) throws IOException {
 		String ip = request.getHeader("X-Forwarded-For");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
-				ip = request.getHeader("Proxy-Client-IP");
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+		if (!StringUtil.hasText(ip) || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+			if (!StringUtil.hasText(ip) || "unknown".equalsIgnoreCase(ip))
 				ip = request.getHeader("WL-Proxy-Client-IP");
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+			if (!StringUtil.hasText(ip) || "unknown".equalsIgnoreCase(ip))
 				ip = request.getHeader("HTTP_CLIENT_IP");
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+			if (!StringUtil.hasText(ip) || "unknown".equalsIgnoreCase(ip))
 				ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-			if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip))
+			if (!StringUtil.hasText(ip) || "unknown".equalsIgnoreCase(ip))
 				ip = request.getRemoteAddr();
 		} else if (ip.length() > 15) {
 			String[] ips = ip.split(",");
 			for (int index = 0; index < ips.length; index++) {
-				String strIp = (String) ips[index];
+				String strIp = ips[index];
 				if (!("unknown".equalsIgnoreCase(strIp))) {
 					ip = strIp;
 					break;
