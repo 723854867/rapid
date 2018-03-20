@@ -14,6 +14,7 @@ public enum Code implements ICode {
 	UNSUPPORT_CONTENT_TYPE(50, "code.unsupport.content.type", "不支持的 ContentType"),
 	UNSUPPORT_HTTP_METHOD(51, "code.unsupport.http.method", "不支持的HTTP请求方法"),
 	UPLOAD_SIZE_EXCEEDED(52, "code.upload.size.exceeded", "上传文件太大"),
+	UPLOAD_COUNT_EXCEEDED(53, "code.upload.count.exceeded", "上传文件数量超过限制"),
 	
 	USER_NOT_EXIST(100, "code.user.not.exist", "用户不存在"),
 	PASSWORD_ERROR(101, "code.password.error", "密码错误"),
