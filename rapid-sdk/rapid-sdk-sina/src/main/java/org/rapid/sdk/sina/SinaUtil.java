@@ -9,25 +9,24 @@ public class SinaUtil {
      * @param file 文件路劲
      * @return 32位的MD5摘要
      */
-    public static String getFileMD5(InputStream in) {
-      
-      MessageDigest digest = null;
-      byte buffer[] = new byte[1024];
-      int len;
-      try {
-        digest = MessageDigest.getInstance("MD5");
-        while ((len = in.read(buffer, 0, 1024)) != -1) {
-          digest.update(buffer, 0, len);
-        }
-        in.close();
-      } catch (Exception e) {
-        e.printStackTrace();
-        return null;
-      }
-      String bytes2hex03 = bytes2hex03(digest.digest());
-      return bytes2hex03;
+	 public static String getFileMD5(InputStream in) {
+	      MessageDigest digest = null;
+	      byte buffer[] = new byte[1024];
+	      int len;
+	      try {
+	        digest = MessageDigest.getInstance("MD5");
+	        while ((len = in.read(buffer, 0, 1024)) != -1) {
+	          digest.update(buffer, 0, len);
+	        }
+	        in.close();
+	      } catch (Exception e) {
+	        e.printStackTrace();
+	        return null;
+	      }
+	      String bytes2hex03 = bytes2hex03(digest.digest());
+	      return bytes2hex03;
 
-    }
+	    }
     
     public static String bytes2hex03(byte[] bytes)  
     {  
