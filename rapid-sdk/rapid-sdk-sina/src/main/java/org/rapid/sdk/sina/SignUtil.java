@@ -25,6 +25,14 @@ public class SignUtil {
 			add("validity_period");
 			add("bank_account_no");
 			add("verification_value");
+			add("license_no");
+			add("telephone");
+			add("email");
+			add("organization_no");
+			add("legal_person");
+			add("cert_no");
+			add("legal_person_phone");
+			add("bank_account_no");
 		}
 	};
 

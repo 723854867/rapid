@@ -43,9 +43,9 @@ public class SFTPConnection {
 			config.put("StrictHostKeyChecking", "no");
 			session.setConfig(config);
 			session.connect();
-			Channel channel = session.openChannel("sftp");
-			channel.connect();
-			channel = (ChannelSftp) channel;
+			Channel channelw = session.openChannel("sftp");
+			channelw.connect();
+			channel = (ChannelSftp) channelw;
 			logger.info(String.format("sftp server host:[%s] port:[%s] is connect successfull", host, port));
 		} catch (JSchException e) {
 			logger.error("Cannot connect to specified sftp server : {}:{} \n {}", host, port, e);
