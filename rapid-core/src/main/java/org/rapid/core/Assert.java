@@ -13,7 +13,7 @@ public class Assert {
 	}
 	
 	public static final <T> T notNull(ICode code, T target) {
-		notNull(code, "arguments is null!", target);
+		notNull(code, code.desc(), target);
 		return target;
 	}
 	

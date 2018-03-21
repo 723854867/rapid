@@ -8,6 +8,7 @@ import javax.validation.ConstraintViolationException;
 
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.rapid.core.bean.exception.BizException;
+import org.rapid.core.bean.exception.SdkException;
 import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.bean.model.code.ICode;
 import org.rapid.core.bean.model.message.Response;
@@ -55,6 +56,13 @@ public class GlobalExceptionHandler {
 	@ResponseBody
 	@ExceptionHandler({ RapidException.class, RapidRuntimeException.class})
 	public Response<Void> bizExceptionHandler(Exception e) {
+		if (e instanceof SdkException) {
+			BizException bizException = (BizException) e;
+			ICode code = bizException.getCode();
+			Response<Void> response = Option.createResponse(code);
+			response.setDesc(((SdkException) e).getErrorMessage());
+			return response;
+		}
 		if (e instanceof BizException) {
 			BizException bizException = (BizException) e;
 			ICode code = bizException.getCode();
