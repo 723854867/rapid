@@ -28,6 +28,7 @@ public enum Code implements ICode {
 	USABLE_LACK(120, "code.money.lack", "可用余额不足"),
 	FROZEN_LACK(121, "code.frozen.lack", "冻结余额不足"),
 	SYS_CONFIG_ERROR(122, "code.sys.config.error", "系统配置错误"),
+	SYS_CONFIG_NOT_EXIST(123, "code.sys.config.not.exist", "系统配置不存在"),
 	
 	COMPANY_NOT_EXIST(130, "code.company.not.exist", "公司不存在");
 	
