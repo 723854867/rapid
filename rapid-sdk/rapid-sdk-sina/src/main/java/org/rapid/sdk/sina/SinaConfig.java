@@ -1,6 +1,7 @@
 package org.rapid.sdk.sina;
 
 import org.rapid.core.RapidConfiguration;
+import org.rapid.core.bean.model.option.IntegerOption;
 import org.rapid.core.bean.model.option.StrOption;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
@@ -20,7 +21,7 @@ public class SinaConfig {
 	public static final StrOption GATEWAY_MEMBER = new StrOption("sina.gatewayMember","https://testgate.pay.sina.com.cn/mgs/gateway.do");
 
 	public static final StrOption HOST = new StrOption("sina.host");
-	public static final StrOption PORT = new StrOption("sina.port");
+	public static final IntegerOption PORT = new IntegerOption("sina.port");
 	public static final StrOption DIRECTORY = new StrOption("sina.directory");
 	public static final StrOption PRIVATEKEY = new StrOption("sina.privateKey");
 

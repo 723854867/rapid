@@ -56,5 +56,11 @@
 			<artifactId>validation-api</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<dependency>
+			<groupId>com.jcraft</groupId>
+			<artifactId>jsch</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 </project>

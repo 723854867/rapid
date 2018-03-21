@@ -15,13 +15,10 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	@Expose
 	@SerializedName("audit_order_no")
 	private String auditOrderNo;
-
 	// 公司名称
 	@Expose
 	@SerializedName("company_name")
 	private String companyName;
-
-
 	// 企业地址
 	@Expose
 	@SerializedName("address")
@@ -30,7 +27,6 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	@Expose
 	@SerializedName("license_no")
 	private String licenseNo;
-
 	// 营业执照所在地
 	@Expose
 	@SerializedName("license_address")
@@ -39,17 +35,14 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	@Expose
 	@SerializedName("license_expire_date")
 	private String licenseExpireDate;
-
 	// 营业范围
 	@Expose
 	@SerializedName("business_scope")
 	private String businessScope;
-
 	// 联系电话
 	@Expose
 	@SerializedName("telephone")
 	private String telephone;
-
 	// 联系Email
 	@Expose
 	@SerializedName("email")
@@ -66,7 +59,6 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	@Expose
 	@SerializedName("legal_person")
 	private String legalPerson;
-
 	// 法人证件号码
 	@Expose
 	@SerializedName("cert_no")
@@ -74,8 +66,7 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	// 证件类型
 	@Expose
 	@SerializedName("cert_type")
-	private String certType;
-
+	private String certType = "IC";
 	// 法人手机号码
 	@Expose
 	@SerializedName("legal_person_phone")
@@ -91,12 +82,11 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	// 卡类型
 	@Expose
 	@SerializedName("card_type")
-	private String cardType;
-
+	private String cardType = "DEBIT";
 	// 卡属性
 	@Expose
 	@SerializedName("card_attribute")
-	private String cardAttribute;
+	private String cardAttribute = "B";
 	// 开户行省份
 	@Expose
 	@SerializedName("province")
@@ -113,7 +103,6 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	@Expose
 	@SerializedName("fileName")
 	private String fileName;
-
 	// 文件摘要
 	@Expose
 	@SerializedName("digest")
@@ -121,7 +110,7 @@ public class AuditMemberInfosRequest extends UserRequest<AuditMemberInfosRespons
 	// 文件摘要算法
 	@Expose
 	@SerializedName("digestType")
-	private String digestType;
+	private String digestType = "MD5";
 	// 请求者IP
 	@Expose
 	@SerializedName("client_ip")
