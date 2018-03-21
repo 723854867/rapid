@@ -2,6 +2,7 @@ package org.rapid.dubbo;
 
 import java.lang.reflect.Method;
 
+import org.rapid.core.bean.exception.SdkException;
 import org.rapid.util.exception.RapidException;
 import org.rapid.util.exception.RapidRuntimeException;
 import org.slf4j.Logger;
@@ -90,6 +91,10 @@ public class ExceptionFilter implements Filter {
     }
     
     private boolean _ignoreProcess(Throwable exception) {
+    	if (exception instanceof SdkException) {
+    		logger.info("第三方调用异常：" + exception);
+    		return true;
+    	}
     	if (exception instanceof RapidException || exception instanceof RapidRuntimeException) {
     		logger.info("业务异常：" + exception);
         	return true;
