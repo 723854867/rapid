@@ -30,7 +30,9 @@ public enum Code implements ICode {
 	SYS_CONFIG_ERROR(122, "code.sys.config.error", "系统配置错误"),
 	SYS_CONFIG_NOT_EXIST(123, "code.sys.config.not.exist", "系统配置不存在"),
 	
-	COMPANY_NOT_EXIST(130, "code.company.not.exist", "公司不存在");
+	COMPANY_NOT_EXIST(130, "code.company.not.exist", "公司不存在"),
+	
+	NOTICE_SIGN_VERIFY_FAILURE(131, "code.notice.sign.verify.failure", "通知验签失败");
 	
 	private int code;
 	private String key;

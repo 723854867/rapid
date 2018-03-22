@@ -3,8 +3,11 @@ package org.rapid.util.codec;
 import java.io.ByteArrayOutputStream;
 import java.security.Key;
 import java.security.KeyFactory;
+import java.security.PublicKey;
 import java.security.SecureRandom;
+import java.security.Signature;
 import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -13,6 +16,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 import org.rapid.util.Consts;
+import org.rapid.util.codec.CryptConsts.SignatureAlgorithm;
 import org.rapid.util.codec.CryptConsts.Transformation;
 import org.rapid.util.exception.CryptException;
 
@@ -46,6 +50,22 @@ public class Decrypt {
 		} catch (Exception e) {
 			throw new CryptException("AES解密失败:" + e.getMessage(), e);
 		}
+	}
+	
+	// RSA 验签
+	public static boolean RSASignVerify(String text, byte[] sign, String publicKey, SignatureAlgorithm algorithm) {
+		try {
+			byte[] keyBytes = Base64.decodeBase64(publicKey);
+			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PublicKey publicK = keyFactory.generatePublic(keySpec);
+			Signature signature = Signature.getInstance(algorithm.name());
+			signature.initVerify(publicK);
+			signature.update(text.getBytes(Consts.UTF_8));
+			return signature.verify(sign);
+		} catch (Exception e) {
+			throw new CryptException("RSA验签失败", e);
+		} 
 	}
 	
 	/**

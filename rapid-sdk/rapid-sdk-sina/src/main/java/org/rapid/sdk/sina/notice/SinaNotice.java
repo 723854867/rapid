@@ -5,8 +5,8 @@ import org.rapid.core.bean.model.message.Notice;
 public class SinaNotice extends Notice {
 
 	private static final long serialVersionUID = 1782908032182804981L;
-	
-	public static final String RESPONSE_OK			= "success";
+
+	public static final String RESPONSE_OK = "success";
 
 	// 通知类型
 	private String notify_type;
@@ -108,8 +108,14 @@ public class SinaNotice extends Notice {
 	public void setError_message(String error_message) {
 		this.error_message = error_message;
 	}
-	
+
 	public boolean success() {
 		return this.error_code.equalsIgnoreCase("success");
+	}
+
+	@Override
+	public void verify() {
+		super.verify();
+//		Assert.isTrue(Code.NOTICE_SIGN_VERIFY_FAILURE, SignUtil.verify(this));
 	}
 }

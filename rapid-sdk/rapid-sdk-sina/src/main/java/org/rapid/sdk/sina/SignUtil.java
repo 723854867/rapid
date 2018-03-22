@@ -1,17 +1,23 @@
 package org.rapid.sdk.sina;
 
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.TreeMap;
 
 import org.apache.commons.codec.binary.Base64;
+import org.rapid.sdk.sina.notice.SinaNotice;
 import org.rapid.util.Consts.Symbol;
 import org.rapid.util.codec.CryptConsts.SignatureAlgorithm;
 import org.rapid.util.codec.CryptConsts.Transformation;
+import org.rapid.util.codec.Decrypt;
 import org.rapid.util.codec.Encrypt;
+import org.rapid.util.reflect.BeanUtil;
 
 public class SignUtil {
 
@@ -61,6 +67,32 @@ public class SignUtil {
 	 * 签名
 	 */
 	public static final String sign(Map<String, String> params, String priKey) {
+		byte[] sinData = Encrypt.RSASign(signStr(params).getBytes(), priKey, SignatureAlgorithm.SHA1withRSA);
+		return Base64.encodeBase64String(sinData);
+	}
+	
+	// 验签
+	public static final boolean verify(SinaNotice notice) {
+		Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
+		Map<String, String> params = new TreeMap<String, String>();
+		for (Entry<String, Object> entry : map.entrySet()) {
+			try {
+				String key = URLDecoder.decode(entry.getKey(), "UTF-8");
+				String value = URLDecoder.decode(entry.getValue().toString(), "UTF-8");
+				params.put(key, value);
+			} catch (UnsupportedEncodingException e) {
+				throw new RuntimeException("新浪字段 urldecode 失败！");
+			}
+		}
+		byte[] sign = Base64.decodeBase64(params.remove("sign"));
+		String signStr = SignUtil.signStr(params);
+		return Decrypt.RSASignVerify(signStr, sign, SinaConfig.PUB_KEY.getDefaultValue(), SignatureAlgorithm.SHA1withRSA);
+	}
+	
+	/**
+	 * 待签名字符串
+	 */
+	public static final String signStr(Map<String, String> params) {
 		StringBuilder builder = new StringBuilder();
 		for (Entry<String, String> entry : params.entrySet()) {
 			if (entry.getKey().equals("sign") || entry.getKey().equals("sign_type")
@@ -69,10 +101,9 @@ public class SignUtil {
 			builder.append(entry.getKey()).append(Symbol.EQUAL).append(entry.getValue()).append("&");
 		}
 		builder.deleteCharAt(builder.length() - 1);
-		byte[] sinData = Encrypt.RSASign(builder.toString().getBytes(), priKey, SignatureAlgorithm.SHA1withRSA);
-		return Base64.encodeBase64String(sinData);
+		return builder.toString();
 	}
-
+	
 	/**
 	 * 敏感字段加密
 	 */
