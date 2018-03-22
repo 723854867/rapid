@@ -33,7 +33,7 @@ public class Assert {
 	}
 
 	public static final void notNull(ICode code, Object... targets) {
-		notNull(code, "arguments is null!", targets);
+		notNull(code, code.desc(), targets);
 	}
 	
 	public static final void notNull(ICode code, String message, Object... targets) {
@@ -62,7 +62,7 @@ public class Assert {
 	}
 	
 	public static final boolean isTrue(ICode code, boolean expression) {
-		return isTrue(code, "arguments is not true", expression);
+		return isTrue(code, code.desc(), expression);
 	}
 	
 	public static final boolean isTrue(String message, boolean expression) {
@@ -80,7 +80,7 @@ public class Assert {
 	}
 	
 	public static final String hasText(ICode code, String text) {
-		return hasText(code, "text has no text", text);
+		return hasText(code, code.desc(), text);
 	}
 	
 	public static final String hasText(String message, String text) {

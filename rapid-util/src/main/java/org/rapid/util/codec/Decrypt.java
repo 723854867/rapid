@@ -62,6 +62,7 @@ public class Decrypt {
 			Signature signature = Signature.getInstance(algorithm.name());
 			signature.initVerify(publicK);
 			signature.update(text.getBytes(Consts.UTF_8));
+			System.out.println("==================="+text.getBytes(Consts.UTF_8));
 			return signature.verify(sign);
 		} catch (Exception e) {
 			throw new CryptException("RSA验签失败", e);

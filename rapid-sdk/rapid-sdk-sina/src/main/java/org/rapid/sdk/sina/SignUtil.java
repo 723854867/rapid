@@ -2,20 +2,28 @@ package org.rapid.sdk.sina;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.security.KeyFactory;
 import java.security.MessageDigest;
+import java.security.PublicKey;
+import java.security.Signature;
+import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.sdk.sina.notice.SinaNotice;
 import org.rapid.util.Consts.Symbol;
 import org.rapid.util.codec.CryptConsts.SignatureAlgorithm;
 import org.rapid.util.codec.CryptConsts.Transformation;
-import org.rapid.util.codec.Decrypt;
 import org.rapid.util.codec.Encrypt;
 import org.rapid.util.reflect.BeanUtil;
 
@@ -72,22 +80,69 @@ public class SignUtil {
 	}
 
 	// 验签
-	public static final boolean verify(SinaNotice notice) {
-		Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
-		Map<String, String> params = new TreeMap<String, String>();
-		for (Entry<String, Object> entry : map.entrySet()) {
-			try {
-				String key = URLDecoder.decode(entry.getKey(), "UTF-8");
-				String value = URLDecoder.decode(entry.getValue().toString(), "UTF-8");
-				params.put(key, value);
-			} catch (UnsupportedEncodingException e) {
-				throw new RuntimeException("新浪字段 urldecode 失败！");
-			}
+	public static final boolean verify(SinaNotice notice, String pubKey) {
+		boolean result = false;
+		try {
+			String sign_result = notice.getSign().toString();
+			String _input_charset_result = notice.get_input_charset().toString();
+			Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
+			//Map<String, String> params = new TreeMap<String, String>();
+			map.remove("sign");
+			map.remove("sign_type");
+			map.remove("sign_version");
+			//去除map中为空参数
+			 Iterator<Map.Entry<String, Object>> it2 = map.entrySet().iterator();  
+		        while(it2.hasNext()){  
+		            Map.Entry<String, Object> entry2=it2.next();  
+		            String value2=entry2.getValue().toString(); 
+		            //value不能是null，否则equals会抛错
+		            if(value2==null||value2==""||value2.equals("")){  
+		                it2.remove();        
+		            }  
+		        } 
+			String like_result = trimInnerSpaceStr(createLinkString(map, false));
+			byte[] keyBytes = Base64.decodeBase64(pubKey);
+			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
+			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+			PublicKey publicK = keyFactory.generatePublic(keySpec);
+			Signature signature = Signature.getInstance("SHA1withRSA");
+			signature.initVerify(publicK);
+			signature.update(getContentBytes(like_result, _input_charset_result));
+			return signature.verify(Base64.decodeBase64(sign_result));
+			
+		} catch (Exception e) {
 		}
-		byte[] sign = Base64.decodeBase64(params.remove("sign"));
-		String signStr = SignUtil.signStr(params);
-		return Decrypt.RSASignVerify(signStr, sign, SinaConfig.PUB_KEY.getDefaultValue(),
-				SignatureAlgorithm.SHA1withRSA);
+		return result;
+	}
+
+	/**
+	 * @param content
+	 * @param charset
+	 * @return
+	 * @throws SignatureException
+	 * @throws UnsupportedEncodingException
+	 */
+	private static byte[] getContentBytes(String content, String charset) {
+		if (charset == null || "".equals(charset)) {
+			return content.getBytes();
+		}
+		try {
+			return content.getBytes(charset);
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException("签名过程中出现错误,指定的编码集不对,您目前指定的编码集是:" + charset);
+		}
+	}
+
+	public static String trimInnerSpaceStr(String str) {
+		str = str.trim();
+		while (str.startsWith(" ")) {
+			str = str.substring(1, str.length()).trim();
+		}
+		while (str.endsWith(" ")) {
+			str = str.substring(0, str.length() - 1).trim();
+		}
+
+		return str;
 	}
 
 	/**
@@ -118,5 +173,29 @@ public class SignUtil {
 		}
 	}
 
+	public static String createLinkString(Map<String, Object> params, boolean encode) {
+		List<String> keys = new ArrayList<String>(params.keySet());
+		Collections.sort(keys);
+		String prestr = "";
+		String charset = params.get("_input_charset").toString();
+		for (int i = 0; i < keys.size(); i++) {
+			String key = keys.get(i);
+			String value = params.get(key).toString();
+			if (encode) {
+				try {
+					value = URLEncoder.encode(URLEncoder.encode(value, charset), charset);
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}
+			}
+			if (i == keys.size() - 1) {
+				prestr = prestr + key + "=" + value;
+			} else {
+				prestr = prestr + key + "=" + value + "&";
+			}
+		}
+
+		return prestr;
+	}
 
 }
