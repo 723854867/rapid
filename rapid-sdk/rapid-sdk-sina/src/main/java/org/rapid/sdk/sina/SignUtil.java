@@ -2,7 +2,7 @@ package org.rapid.sdk.sina;
 
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.util.HashSet;
 import java.util.Map;
@@ -75,18 +75,21 @@ public class SignUtil {
 	public static final boolean verify(SinaNotice notice) {
 		Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
 		Map<String, String> params = new TreeMap<String, String>();
+		Object sign = map.remove("sign");
+		Object signType = map.remove("sign_type");
+		Object signVersion = map.remove("sign_version");
 		for (Entry<String, Object> entry : map.entrySet()) {
 			try {
-				String key = URLDecoder.decode(entry.getKey(), "UTF-8");
-				String value = URLDecoder.decode(entry.getValue().toString(), "UTF-8");
+				String key = URLEncoder.encode(entry.getKey(), "UTF-8");
+				String value = URLEncoder.encode(entry.getValue().toString(), "UTF-8");
 				params.put(key, value);
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException("新浪字段 urldecode 失败！");
 			}
 		}
-		byte[] sign = Base64.decodeBase64(params.remove("sign"));
+		byte[] signData = Base64.decodeBase64(sign.toString());
 		String signStr = SignUtil.signStr(params);
-		return Decrypt.RSASignVerify(signStr, sign, SinaConfig.PUB_KEY.getDefaultValue(), SignatureAlgorithm.SHA1withRSA);
+		return Decrypt.RSASignVerify(signStr, signData, SinaConfig.PUB_KEY.getDefaultValue(), SignatureAlgorithm.SHA1withRSA);
 	}
 	
 	/**
