@@ -15,8 +15,8 @@ public class SinaNotice extends Notice {
 	private String notify_type;
 	// 通知编号
 	private String notify_id;
-	// 参数编码字符集
-	private String _input_charset;
+	// 参数编码字符集:注意真实字符串为 input_charset
+	private String input_charset;
 	// 通知时间
 	private String notify_time;
 	// 签名
@@ -48,12 +48,12 @@ public class SinaNotice extends Notice {
 		this.notify_id = notify_id;
 	}
 
-	public String get_input_charset() {
-		return _input_charset;
+	public String getInput_charset() {
+		return input_charset;
 	}
-
-	public void set_input_charset(String _input_charset) {
-		this._input_charset = _input_charset;
+	
+	public void setInput_charset(String input_charset) {
+		this.input_charset = input_charset;
 	}
 
 	public String getNotify_time() {
