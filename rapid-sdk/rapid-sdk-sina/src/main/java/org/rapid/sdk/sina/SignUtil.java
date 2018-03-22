@@ -52,7 +52,7 @@ public class SignUtil {
 		in.close();
 		return _bytes2hex03(digest.digest());
 	}
-	
+
 	private static String _bytes2hex03(byte[] bytes) {
 		final String HEX = "0123456789abcdef";
 		StringBuilder sb = new StringBuilder(bytes.length * 2);
@@ -70,7 +70,7 @@ public class SignUtil {
 		byte[] sinData = Encrypt.RSASign(signStr(params).getBytes(), priKey, SignatureAlgorithm.SHA1withRSA);
 		return Base64.encodeBase64String(sinData);
 	}
-	
+
 	// 验签
 	public static final boolean verify(SinaNotice notice) {
 		Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
@@ -86,9 +86,10 @@ public class SignUtil {
 		}
 		byte[] sign = Base64.decodeBase64(params.remove("sign"));
 		String signStr = SignUtil.signStr(params);
-		return Decrypt.RSASignVerify(signStr, sign, SinaConfig.PUB_KEY.getDefaultValue(), SignatureAlgorithm.SHA1withRSA);
+		return Decrypt.RSASignVerify(signStr, sign, SinaConfig.PUB_KEY.getDefaultValue(),
+				SignatureAlgorithm.SHA1withRSA);
 	}
-	
+
 	/**
 	 * 待签名字符串
 	 */
@@ -103,7 +104,7 @@ public class SignUtil {
 		builder.deleteCharAt(builder.length() - 1);
 		return builder.toString();
 	}
-	
+
 	/**
 	 * 敏感字段加密
 	 */
@@ -116,4 +117,6 @@ public class SignUtil {
 			entry.setValue(Base64.encodeBase64String(encryptData));
 		}
 	}
+
+
 }
