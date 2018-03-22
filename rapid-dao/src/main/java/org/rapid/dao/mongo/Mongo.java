@@ -218,7 +218,7 @@ public class Mongo {
 			for (Pair<String, Boolean> pair : orders) 
 				iterable.sort(pair.getValue() ? Sorts.ascending(pair.getKey()) : Sorts.descending(pair.getKey()));
 		}
-		iterable.skip(paginate.getPageStart()).limit(query.getPageSize());
+		iterable.skip(paginate.getPageStart()).limit(query.getPageSize()).batchSize(50);
 		MongoCursor<Document> cursor = iterable.iterator();
 		while (cursor.hasNext()) 
 			paginate.add(SerializeUtil.GSON.fromJson(cursor.next().toJson(), clazz));

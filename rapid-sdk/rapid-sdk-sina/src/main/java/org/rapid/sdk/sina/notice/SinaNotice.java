@@ -1,6 +1,9 @@
 package org.rapid.sdk.sina.notice;
 
+import org.rapid.core.Assert;
+import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.bean.model.message.Notice;
+import org.rapid.sdk.sina.SignUtil;
 
 public class SinaNotice extends Notice {
 
@@ -116,6 +119,6 @@ public class SinaNotice extends Notice {
 	@Override
 	public void verify() {
 		super.verify();
-//		Assert.isTrue(Code.NOTICE_SIGN_VERIFY_FAILURE, SignUtil.verify(this));
+		Assert.isTrue(Code.NOTICE_SIGN_VERIFY_FAILURE, SignUtil.verify(this));
 	}
 }
