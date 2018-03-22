@@ -208,7 +208,7 @@ public class Mongo {
 		}
 		Paginate<T> paginate = new Paginate<T>();
 		Bson filter = CollectionUtil.isEmpty(filters) ? null : Filters.and(filters);
-		long total = collection.count(filter);
+		long total = null == filter ? collection.count() : collection.count(filter);
 		if (total <= 0)
 			return paginate;
 		paginate.calculate(query.getPage(), query.getPageSize(), total);
