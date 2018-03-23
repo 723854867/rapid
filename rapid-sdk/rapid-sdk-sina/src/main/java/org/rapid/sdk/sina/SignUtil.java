@@ -76,8 +76,6 @@ public class SignUtil {
 
 	// 验签
 	public static final boolean verify(SinaNotice notice, String pubKey) {
-		boolean result = false;
-		try {
 			String sign_result = notice.getSign().toString();
 			Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
 			map.remove("sign");
@@ -94,9 +92,6 @@ public class SignUtil {
 			}
 			String like_result = trimInnerSpaceStr(createLinkString(map, false));
 			return Decrypt.RSASignVerify(like_result, Base64.decodeBase64(sign_result), pubKey, SignatureAlgorithm.SHA1withRSA);
-		} catch (Exception e) {
-		}
-		return result;
 	}
 	public static String trimInnerSpaceStr(String str) {
 		str = str.trim();
