@@ -7,6 +7,7 @@ import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.PublicKey;
 import java.security.Signature;
+import java.security.SignatureException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -16,10 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.sdk.sina.notice.SinaNotice;
 import org.rapid.util.Consts.Symbol;
 import org.rapid.util.codec.CryptConsts.SignatureAlgorithm;
@@ -86,20 +85,20 @@ public class SignUtil {
 			String sign_result = notice.getSign().toString();
 			String _input_charset_result = notice.get_input_charset().toString();
 			Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
-			//Map<String, String> params = new TreeMap<String, String>();
+			// Map<String, String> params = new TreeMap<String, String>();
 			map.remove("sign");
 			map.remove("sign_type");
 			map.remove("sign_version");
-			//去除map中为空参数
-			 Iterator<Map.Entry<String, Object>> it2 = map.entrySet().iterator();  
-		        while(it2.hasNext()){  
-		            Map.Entry<String, Object> entry2=it2.next();  
-		            String value2=entry2.getValue().toString(); 
-		            //value不能是null，否则equals会抛错
-		            if(value2==null||value2==""||value2.equals("")){  
-		                it2.remove();        
-		            }  
-		        } 
+			// 去除map中为空参数
+			Iterator<Map.Entry<String, Object>> it2 = map.entrySet().iterator();
+			while (it2.hasNext()) {
+				Map.Entry<String, Object> entry2 = it2.next();
+				String value2 = entry2.getValue().toString();
+				// value不能是null，否则equals会抛错
+				if (value2 == null || value2 == "" || value2.equals("")) {
+					it2.remove();
+				}
+			}
 			String like_result = trimInnerSpaceStr(createLinkString(map, false));
 			byte[] keyBytes = Base64.decodeBase64(pubKey);
 			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
@@ -109,7 +108,7 @@ public class SignUtil {
 			signature.initVerify(publicK);
 			signature.update(getContentBytes(like_result, _input_charset_result));
 			return signature.verify(Base64.decodeBase64(sign_result));
-			
+
 		} catch (Exception e) {
 		}
 		return result;
