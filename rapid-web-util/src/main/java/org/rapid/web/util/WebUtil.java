@@ -3,6 +3,7 @@ package org.rapid.web.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +78,14 @@ public class WebUtil {
 		meta.setMethod(method);
 		meta.setCreated(DateUtil.current());
 		return meta;
+	}
+	
+	public static Class<?> returnType(ProceedingJoinPoint point) throws Exception {
+		Object[] args = point.getArgs();
+		Class<?>[] paramsCls = new Class<?>[args.length];
+		for (int i = 0; i < args.length; ++i)
+			paramsCls[i] = args[i].getClass();
+		Method method = point.getTarget().getClass().getMethod(point.getSignature().getName(), paramsCls);
+		return method.getReturnType();
 	}
 }

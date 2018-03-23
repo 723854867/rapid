@@ -25,8 +25,11 @@ public class ControllerInterceptor {
 
 	@Around("pointcut()")
 	public Object controllerAround(ProceedingJoinPoint point) throws Throwable {
+		Class<?> returnType = WebUtil.returnType(point);
+		if (returnType == Void.TYPE)
+			return point.proceed();
 		HttpServletRequest request = WebUtil.getRequest();
 		RequestMeta meta = WebUtil.requestMeta(request, point);
-		return null != requestFilter ? requestFilter.request(meta, point) : point.proceed();
+		return null != requestFilter ? requestFilter.request(meta, point, returnType) : point.proceed();
 	}
 }

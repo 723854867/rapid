@@ -10,5 +10,5 @@ import org.rapid.core.bean.RequestMeta;
  */
 public interface RequestFilter {
 
-	Object request(RequestMeta meta, ProceedingJoinPoint point) throws Throwable;
+	Object request(RequestMeta meta, ProceedingJoinPoint point, Class<?> returnType) throws Throwable;
 }
