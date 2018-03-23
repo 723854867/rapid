@@ -132,7 +132,7 @@ public class GlobalExceptionHandler {
 		Response<Void> response = Option.createResponse(Code.UNSUPPORT_CONTENT_TYPE);
 		response.setDesc(ex.getContentType().toString());
 		return response;
-	}
+	} 
 
 	private Response<Void> _validatorError(BindingResult bindingResult) {
 		List<FieldError> errors = bindingResult.getFieldErrors();

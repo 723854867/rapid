@@ -3,12 +3,7 @@ package org.rapid.sdk.sina;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.security.KeyFactory;
 import java.security.MessageDigest;
-import java.security.PublicKey;
-import java.security.Signature;
-import java.security.SignatureException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -23,6 +18,7 @@ import org.rapid.sdk.sina.notice.SinaNotice;
 import org.rapid.util.Consts.Symbol;
 import org.rapid.util.codec.CryptConsts.SignatureAlgorithm;
 import org.rapid.util.codec.CryptConsts.Transformation;
+import org.rapid.util.codec.Decrypt;
 import org.rapid.util.codec.Encrypt;
 import org.rapid.util.reflect.BeanUtil;
 
@@ -80,12 +76,8 @@ public class SignUtil {
 
 	// 验签
 	public static final boolean verify(SinaNotice notice, String pubKey) {
-		boolean result = false;
-		try {
 			String sign_result = notice.getSign().toString();
-			String _input_charset_result = notice.get_input_charset().toString();
 			Map<String, Object> map = BeanUtil.beanToTreeMap(notice, false);
-			// Map<String, String> params = new TreeMap<String, String>();
 			map.remove("sign");
 			map.remove("sign_type");
 			map.remove("sign_version");
@@ -94,44 +86,13 @@ public class SignUtil {
 			while (it2.hasNext()) {
 				Map.Entry<String, Object> entry2 = it2.next();
 				String value2 = entry2.getValue().toString();
-				// value不能是null，否则equals会抛错
 				if (value2 == null || value2 == "" || value2.equals("")) {
 					it2.remove();
 				}
 			}
 			String like_result = trimInnerSpaceStr(createLinkString(map, false));
-			byte[] keyBytes = Base64.decodeBase64(pubKey);
-			X509EncodedKeySpec keySpec = new X509EncodedKeySpec(keyBytes);
-			KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-			PublicKey publicK = keyFactory.generatePublic(keySpec);
-			Signature signature = Signature.getInstance("SHA1withRSA");
-			signature.initVerify(publicK);
-			signature.update(getContentBytes(like_result, _input_charset_result));
-			return signature.verify(Base64.decodeBase64(sign_result));
-
-		} catch (Exception e) {
-		}
-		return result;
+			return Decrypt.RSASignVerify(like_result, Base64.decodeBase64(sign_result), pubKey, SignatureAlgorithm.SHA1withRSA);
 	}
-
-	/**
-	 * @param content
-	 * @param charset
-	 * @return
-	 * @throws SignatureException
-	 * @throws UnsupportedEncodingException
-	 */
-	private static byte[] getContentBytes(String content, String charset) {
-		if (charset == null || "".equals(charset)) {
-			return content.getBytes();
-		}
-		try {
-			return content.getBytes(charset);
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException("签名过程中出现错误,指定的编码集不对,您目前指定的编码集是:" + charset);
-		}
-	}
-
 	public static String trimInnerSpaceStr(String str) {
 		str = str.trim();
 		while (str.startsWith(" ")) {
