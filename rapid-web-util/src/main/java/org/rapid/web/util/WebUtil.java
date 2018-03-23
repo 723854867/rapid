@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.rapid.core.IDWorker;
 import org.rapid.core.bean.RequestMeta;
+import org.rapid.core.bean.exception.BizException;
+import org.rapid.core.bean.model.code.Code;
 import org.rapid.util.DateUtil;
 import org.rapid.util.StringUtil;
 import org.springframework.core.io.InputStreamSource;
@@ -81,11 +83,13 @@ public class WebUtil {
 	}
 	
 	public static Class<?> returnType(ProceedingJoinPoint point) throws Exception {
-		Object[] args = point.getArgs();
-		Class<?>[] paramsCls = new Class<?>[args.length];
-		for (int i = 0; i < args.length; ++i)
-			paramsCls[i] = args[i].getClass();
-		Method method = point.getTarget().getClass().getMethod(point.getSignature().getName(), paramsCls);
-		return method.getReturnType();
+		String name = point.getSignature().getName();
+		Method[] methods = point.getTarget().getClass().getMethods();
+		for (Method method : methods) {
+			if (!method.getName().equals(name))
+				continue;
+			return method.getReturnType();
+		}
+		throw new BizException(Code.SYS_ERROR);
 	}
 }
