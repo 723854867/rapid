@@ -16,7 +16,7 @@ public class CreateHostingCollectRequestTest extends SinaTest {
 	public void testExecute() { 
 		CreateHostingCollectRequest request = new CreateHostingCollectRequest();
 		request.setOutTradeCode(TradeCode.COLLECT_INVEST);
-		request.setSummary("充值待收");
+		request.setSummary("加息");
 		BalancePay pay = new BalancePay();
 		request.setOutTradeNo("424933861630148608");
 		pay.setAccountType(AccountType.SAVING_POT);
