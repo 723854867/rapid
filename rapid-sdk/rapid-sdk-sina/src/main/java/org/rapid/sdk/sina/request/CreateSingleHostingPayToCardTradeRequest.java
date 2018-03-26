@@ -49,6 +49,7 @@ public class CreateSingleHostingPayToCardTradeRequest extends SinaRequest<Create
 
 	public CreateSingleHostingPayToCardTradeRequest() {
 		super("新浪单笔代付到提现银行卡", SinaConfig.GATEWAY_ORDER.getDefaultValue());
+		setService("create_single_hosting_pay_to_card_trade");
 	}
 
 	public String getOutTradeNo() {
