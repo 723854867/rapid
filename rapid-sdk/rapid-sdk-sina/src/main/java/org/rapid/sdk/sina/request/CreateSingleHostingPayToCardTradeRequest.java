@@ -17,7 +17,7 @@ public class CreateSingleHostingPayToCardTradeRequest extends SinaRequest<Create
 	// 交易码
 	@Expose
 	@SerializedName("out_trade_code")
-	private String outTradeCode;
+	private String outTradeCode = "2001";
 	// 收款方式
 	@Expose
 	@SerializedName("collect_method")
