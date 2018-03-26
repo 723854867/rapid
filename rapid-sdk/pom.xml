@@ -27,6 +27,7 @@
 
 	<modules>
 		<module>rapid-sdk-unspay</module>
-    <module>rapid-sdk-sina</module>
+		<module>rapid-sdk-sina</module>
+    <module>rapid-sdk-amazon</module>
   </modules>
 </project>
