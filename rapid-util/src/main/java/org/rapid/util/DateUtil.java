@@ -58,6 +58,11 @@ public class DateUtil {
 		}
 	}
 	
+	public static final int getTimeSeconds(Date date) {
+		int time =  (int) (date.getTime() / 1000);
+		return time < 0 ? 0 : time;
+	}
+	
 	// ************* 获取指定格式的时间   *************
 	
 	/**
