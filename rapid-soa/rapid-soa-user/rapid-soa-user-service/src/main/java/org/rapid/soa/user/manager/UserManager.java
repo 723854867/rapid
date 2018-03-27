@@ -26,7 +26,7 @@ public class UserManager {
 	private UserInvitationDao userInvitationDao;
 
 	@Transactional
-	public void register(RegisterRequest request) {
+	public long register(RegisterRequest request) {
 		UserInfo user = EntityGenerator.newUserInfo(request.getPassword());
 		userInfoDao.insert(user);
 		Username username = EntityGenerator.newUsername(user, request.getUsername(), request.getUsernameType());
@@ -37,5 +37,6 @@ public class UserManager {
 			UserInvitation invitation = EntityGenerator.newUserInvitation(invitor, user);
 			userInvitationDao.insert(invitation);
 		}
+		return user.getId();
 	}
 }

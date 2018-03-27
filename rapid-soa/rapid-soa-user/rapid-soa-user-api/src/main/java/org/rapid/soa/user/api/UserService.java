@@ -10,5 +10,5 @@ import org.rapid.core.bean.model.request.RegisterRequest;
 public interface UserService {
 
 	// 新建用户(注册)
-	void register(RegisterRequest request);
+	long register(RegisterRequest request);
 }

@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
+	
 	<parent>
 		<groupId>org.rapid</groupId>
-		<artifactId>rapid</artifactId>
+		<artifactId>rapid-soa</artifactId>
 		<version>1.0</version>
 	</parent>
-
-	<artifactId>rapid-soa</artifactId>
-	<name>rapid-soa</name>
+	
+	<artifactId>rapid-soa-config</artifactId>
+	<name>rapid-soa-config</name>
 	<packaging>pom</packaging>
 	<url>http://maven.apache.org</url>
-  <modules>
-    <module>rapid-soa-user</module>
-    <module>rapid-soa-courier</module>
-    <module>rapid-soa-config</module>
+	
+	<modules>
+		<module>rapid-soa-config-api</module>
+    <module>rapid-soa-config-bean</module>
+    <module>rapid-soa-config-service</module>
   </modules>
 </project>
