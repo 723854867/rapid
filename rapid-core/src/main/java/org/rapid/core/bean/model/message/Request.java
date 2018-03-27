@@ -16,6 +16,10 @@ public interface Request extends Message {
 		return meta().get_id();
 	}
 	
+	void dispose();
+	
+	void init(RequestMeta meta);
+	
 	/**
 	 * 基本的参数验证，返回错误描述，如果返回为 null 则表示验证成功
 	 */
