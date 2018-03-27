@@ -1,7 +1,7 @@
-package org.rapid.service.mybatis.dao;
+package org.rapid.soa.user.dao;
 
 import org.rapid.dao.db.DBDao;
-import org.rapid.service.mybatis.entity.UserDevice;
+import org.rapid.soa.user.bean.entity.UserDevice;
 
 public interface UserDeviceDao extends DBDao<Long, UserDevice> {
 

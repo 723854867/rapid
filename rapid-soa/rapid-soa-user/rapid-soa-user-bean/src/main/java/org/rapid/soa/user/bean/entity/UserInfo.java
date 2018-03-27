@@ -1,4 +1,4 @@
-package org.rapid.service.mybatis.entity;
+package org.rapid.soa.user.bean.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;

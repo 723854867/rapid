@@ -1,4 +1,4 @@
-package org.rapid.service.mybatis.entity;
+package org.rapid.soa.user.bean.entity;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -6,25 +6,21 @@ import javax.persistence.Id;
 import org.rapid.core.bean.model.Identifiable;
 
 /**
- * 用户账号
- * 
- * <pre>
- * username、type、uid 作为联合唯一索引
- * </pre>
+ * 用户设备信息:同一个设备只能登陆一个用户
  * 
  * @author lynn
  */
-public class Username implements Identifiable<Long> {
+public class UserDevice implements Identifiable<Long> {
 
-	private static final long serialVersionUID = 8121287853604963144L;
+	private static final long serialVersionUID = 4745108999226672474L;
 
 	@Id
 	@GeneratedValue
 	private long id;
 	private long uid;
 	private int type;
-	private String pwd;
-	private String username;
+	private int loginTime;
+	private int logoutTime;
 	private int created;
 	private int updated;
 
@@ -52,20 +48,20 @@ public class Username implements Identifiable<Long> {
 		this.type = type;
 	}
 
-	public String getPwd() {
-		return pwd;
+	public int getLoginTime() {
+		return loginTime;
 	}
 
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
+	public void setLoginTime(int loginTime) {
+		this.loginTime = loginTime;
 	}
 
-	public String getUsername() {
-		return username;
+	public int getLogoutTime() {
+		return logoutTime;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setLogoutTime(int logoutTime) {
+		this.logoutTime = logoutTime;
 	}
 
 	public int getCreated() {
