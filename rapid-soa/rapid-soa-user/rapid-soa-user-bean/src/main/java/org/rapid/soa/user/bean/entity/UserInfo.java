@@ -1,6 +1,5 @@
 package org.rapid.soa.user.bean.entity;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.rapid.core.bean.model.Identifiable;
@@ -15,7 +14,6 @@ public class UserInfo implements Identifiable<Long> {
 	private static final long serialVersionUID = 607168546448230962L;
 
 	@Id
-	@GeneratedValue
 	private long id;
 	private String pwd;
 	private String salt;

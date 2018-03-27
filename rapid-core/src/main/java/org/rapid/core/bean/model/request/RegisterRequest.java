@@ -23,7 +23,47 @@ public class RegisterRequest extends RapidRequest {
 	private String password;
 	@NotNull
 	private UsernameType usernameType;
-	
+
+	public Long getInviter() {
+		return inviter;
+	}
+
+	public void setInviter(Long inviter) {
+		this.inviter = inviter;
+	}
+
+	public String getCaptcha() {
+		return captcha;
+	}
+
+	public void setCaptcha(String captcha) {
+		this.captcha = captcha;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public UsernameType getUsernameType() {
+		return usernameType;
+	}
+
+	public void setUsernameType(UsernameType usernameType) {
+		this.usernameType = usernameType;
+	}
+
 	@Override
 	public void verify() {
 		super.verify();

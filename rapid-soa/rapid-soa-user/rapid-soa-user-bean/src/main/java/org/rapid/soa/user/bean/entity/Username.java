@@ -23,7 +23,6 @@ public class Username implements Identifiable<Long> {
 	private long id;
 	private long uid;
 	private int type;
-	private String pwd;
 	private String username;
 	private int created;
 	private int updated;
@@ -50,14 +49,6 @@ public class Username implements Identifiable<Long> {
 
 	public void setType(int type) {
 		this.type = type;
-	}
-
-	public String getPwd() {
-		return pwd;
-	}
-
-	public void setPwd(String pwd) {
-		this.pwd = pwd;
 	}
 
 	public String getUsername() {
