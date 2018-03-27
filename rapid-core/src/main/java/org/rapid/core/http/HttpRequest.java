@@ -76,6 +76,7 @@ public abstract class HttpRequest<RESPONSE extends HttpResponse> implements Seri
 	public RESPONSE execute() {
 		try {
 			Response response = this.httpClient.request(request());
+			logger.info("{} 请求响应  - {} - {}!", prefix, url, SerializeUtil.GSON_ANNO.toJson(response));
 			return response(response);
 		} catch (Exception e) {
 			logger.error("{} 请求失败  - {} - {}!", prefix, url, SerializeUtil.GSON_ANNO.toJson(this), e);
