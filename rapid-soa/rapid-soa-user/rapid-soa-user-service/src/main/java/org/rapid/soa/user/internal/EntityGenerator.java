@@ -1,11 +1,13 @@
-package org.rapid.soa.user.util;
+package org.rapid.soa.user.internal;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.core.IDWorker;
-import org.rapid.core.bean.enums.UsernameType;
+import org.rapid.soa.user.bean.entity.UserDevice;
 import org.rapid.soa.user.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.entity.UserInvitation;
 import org.rapid.soa.user.bean.entity.Username;
+import org.rapid.soa.user.bean.enums.DeviceType;
+import org.rapid.soa.user.bean.enums.UsernameType;
 import org.rapid.util.Consts.Symbol;
 import org.rapid.util.DateUtil;
 import org.rapid.util.KeyUtil;
@@ -41,6 +43,15 @@ public class EntityGenerator {
 		UserInvitation instance = new UserInvitation();
 		instance.setInvitee(invitee.getId());
 		instance.setInvitor(invitor.getId());
+		instance.setCreated(DateUtil.current());
+		return instance;
+	}
+	
+	public static final UserDevice newUserDevice(long uid, DeviceType type, String deviceId) {
+		UserDevice instance = new UserDevice();
+		instance.setId(deviceId);
+		instance.setUid(uid);
+		instance.setType(type.mark());
 		instance.setCreated(DateUtil.current());
 		return instance;
 	}

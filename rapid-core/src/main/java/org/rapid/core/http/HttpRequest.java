@@ -10,8 +10,8 @@ import java.util.Map.Entry;
 
 import org.rapid.core.SpringContextUtil;
 import org.rapid.core.bean.exception.BizException;
-import org.rapid.core.serialize.SerializeUtil;
-import org.rapid.core.serialize.Serializer;
+import org.rapid.util.serialize.SerializeUtil;
+import org.rapid.util.serialize.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

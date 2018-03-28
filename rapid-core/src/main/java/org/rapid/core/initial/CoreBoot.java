@@ -3,7 +3,7 @@ package org.rapid.core.initial;
 import javax.annotation.Resource;
 
 import org.rapid.core.condition.GsonCondition;
-import org.rapid.core.serialize.GsonSerializer;
+import org.rapid.util.serialize.GsonSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;

@@ -7,6 +7,9 @@ import java.security.SecureRandom;
 import java.util.Random;
 import java.util.UUID;
 
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
 import org.apache.commons.codec.binary.Base64;
 import org.rapid.util.bean.Pair;
 import org.rapid.util.exception.CryptException;
@@ -55,7 +58,7 @@ public class KeyUtil {
 	/**
 	 * 生成RSA公钥和私钥
 	 */
-	public static Pair<String, String> genKeyPair() {
+	public static Pair<String, String> RSAKey() {
         try {
 			KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
 			keyPairGen.initialize(1024);
@@ -68,4 +71,15 @@ public class KeyUtil {
 		}
     }
 	
+	public static String AESKey(int bit) {
+		try {
+			KeyGenerator kg = KeyGenerator.getInstance("AES");    
+			kg.init(bit);
+			SecretKey sk = kg.generateKey();    
+			byte[] b = sk.getEncoded();   
+			return Base64.encodeBase64String(b);
+		} catch (Exception e) {
+			throw new CryptException("AES密钥生成失败", e);
+		}
+	}
 }

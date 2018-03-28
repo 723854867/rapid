@@ -8,9 +8,9 @@ public class Page implements Serializable {
 	
 	private Integer page;
 	private Integer pageSize;
-	private long total;
-	private int pages;
-	private int pageStart;
+	private Long total;
+	private Integer pages;
+	private Integer pageStart;
 	
 	public Integer getPage() {
 		return page;
@@ -28,15 +28,15 @@ public class Page implements Serializable {
 		this.pageSize = pageSize;
 	}
 	
-	public long getTotal() {
+	public Long getTotal() {
 		return total;
 	}
 	
-	public int getPages() {
+	public Integer getPages() {
 		return pages;
 	}
 	
-	public int getPageStart() {
+	public Integer getPageStart() {
 		return pageStart;
 	}
 	

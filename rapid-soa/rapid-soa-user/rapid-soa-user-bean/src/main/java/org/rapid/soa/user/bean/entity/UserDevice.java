@@ -1,34 +1,34 @@
 package org.rapid.soa.user.bean.entity;
 
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import org.rapid.core.bean.model.Identifiable;
 
 /**
  * 用户设备信息:同一个设备只能登陆一个用户
+ * <pre>
+ * type 和 uid 做唯一索引
+ * token 做 unique 索引
+ * </pre>
  * 
  * @author lynn
  */
-public class UserDevice implements Identifiable<Long> {
+public class UserDevice implements Identifiable<String> {
 
 	private static final long serialVersionUID = 4745108999226672474L;
 
 	@Id
-	@GeneratedValue
-	private long id;
+	private String id;
 	private long uid;
 	private int type;
-	private int loginTime;
-	private int logoutTime;
+	private String token;
 	private int created;
-	private int updated;
-
-	public long getId() {
+	
+	public String getId() {
 		return id;
 	}
-
-	public void setId(long id) {
+	
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -47,21 +47,13 @@ public class UserDevice implements Identifiable<Long> {
 	public void setType(int type) {
 		this.type = type;
 	}
-
-	public int getLoginTime() {
-		return loginTime;
+	
+	public String getToken() {
+		return token;
 	}
-
-	public void setLoginTime(int loginTime) {
-		this.loginTime = loginTime;
-	}
-
-	public int getLogoutTime() {
-		return logoutTime;
-	}
-
-	public void setLogoutTime(int logoutTime) {
-		this.logoutTime = logoutTime;
+	
+	public void setToken(String token) {
+		this.token = token;
 	}
 
 	public int getCreated() {
@@ -72,16 +64,8 @@ public class UserDevice implements Identifiable<Long> {
 		this.created = created;
 	}
 
-	public int getUpdated() {
-		return updated;
-	}
-
-	public void setUpdated(int updated) {
-		this.updated = updated;
-	}
-
 	@Override
-	public Long identity() {
+	public String identity() {
 		return id;
 	}
 }

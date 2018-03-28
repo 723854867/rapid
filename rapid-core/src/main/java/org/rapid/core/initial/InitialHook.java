@@ -5,7 +5,7 @@ package org.rapid.core.initial;
  */
 public interface InitialHook {
 
-	void init();
+	void init() throws Exception;
 	
 	/**
 	 * 加载顺位：小的先执行

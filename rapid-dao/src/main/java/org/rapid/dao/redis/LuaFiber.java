@@ -1,6 +1,6 @@
 package org.rapid.dao.redis;
 
-import static org.rapid.core.serialize.SerializeUtil.REDIS.encode;
+import static org.rapid.util.serialize.SerializeUtil.REDIS.encode;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

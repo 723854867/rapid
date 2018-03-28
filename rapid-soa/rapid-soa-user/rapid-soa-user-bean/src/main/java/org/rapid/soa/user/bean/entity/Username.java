@@ -9,7 +9,7 @@ import org.rapid.core.bean.model.Identifiable;
  * 用户账号
  * 
  * <pre>
- * username、type、uid 作为联合唯一索引
+ * username、type 作为联合唯一索引
  * </pre>
  * 
  * @author lynn

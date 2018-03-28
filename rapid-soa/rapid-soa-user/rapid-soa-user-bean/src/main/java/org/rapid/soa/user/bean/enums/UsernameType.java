@@ -1,4 +1,4 @@
-package org.rapid.core.bean.enums;
+package org.rapid.soa.user.bean.enums;
 
 /**
  * 用户名类型

@@ -3,10 +3,10 @@ package org.rapid.sdk.sina.request;
 import java.math.BigDecimal;
 
 import org.junit.Test;
-import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.sdk.sina.SinaTest;
 import org.rapid.sdk.sina.request.so.OnlineBankPay;
 import org.rapid.sdk.sina.response.RechargeResponse;
+import org.rapid.util.serialize.SerializeUtil;
 
 public class RechargeRequestTest extends SinaTest {
 

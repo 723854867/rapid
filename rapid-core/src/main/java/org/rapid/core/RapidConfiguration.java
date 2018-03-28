@@ -38,6 +38,14 @@ public class RapidConfiguration {
 		}
 	}
 	
+	public static final <T> T get(Option<T> option) {
+		String property = properties.get(option.getKey());
+		T value = null == property ? option.getDefaultValue() : CONVERSION_SERVICE.convert(property, option.getClazz());
+		if (null == option.getDefaultValue())
+			return Assert.notNull("property [" + option.getKey() + "] is no specified!", value); 
+		return value;
+	}
+	
 	public static final <T> T get(Option<T> option, boolean necessary) {
 		String property = properties.get(option.getKey());
 		T value = null == property ? option.getDefaultValue() : CONVERSION_SERVICE.convert(property, option.getClazz());

@@ -10,13 +10,13 @@ import org.rapid.core.bean.enums.ContentType;
 import org.rapid.core.bean.exception.BizException;
 import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.http.HttpPost;
-import org.rapid.core.serialize.GsonSerializer;
-import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.sdk.sina.SignUtil;
 import org.rapid.sdk.sina.SinaConfig;
 import org.rapid.sdk.sina.SinaSerializer;
 import org.rapid.sdk.sina.response.SinaResponse;
 import org.rapid.util.DateUtil;
+import org.rapid.util.serialize.GsonSerializer;
+import org.rapid.util.serialize.SerializeUtil;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

@@ -10,7 +10,7 @@ import org.I0Itec.zkclient.ZkClient;
 import org.rapid.core.Rapid;
 import org.rapid.core.ZkUtil;
 import org.rapid.core.initial.InitialHook;
-import org.rapid.core.serialize.Serializer;
+import org.rapid.util.serialize.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -5,8 +5,8 @@ import java.net.URLDecoder;
 
 import org.rapid.core.bean.exception.BizException;
 import org.rapid.core.bean.model.code.Code;
-import org.rapid.core.serialize.GsonSerializer;
-import org.rapid.core.serialize.SerializeUtil;
+import org.rapid.util.serialize.GsonSerializer;
+import org.rapid.util.serialize.SerializeUtil;
 
 public class SinaSerializer extends GsonSerializer {
 

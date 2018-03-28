@@ -1,12 +1,13 @@
-package org.rapid.core.bean.model.request;
+package org.rapid.soa.user.bean.request;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.rapid.core.Assert;
-import org.rapid.core.bean.enums.UsernameType;
 import org.rapid.core.bean.model.code.Code;
+import org.rapid.core.bean.model.request.RapidRequest;
+import org.rapid.soa.user.bean.enums.UsernameType;
 import org.rapid.util.PhoneUtil;
 
 public class RegisterRequest extends RapidRequest {

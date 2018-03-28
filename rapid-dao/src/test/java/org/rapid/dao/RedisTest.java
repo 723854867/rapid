@@ -4,7 +4,6 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.rapid.core.Assert;
-import org.rapid.core.bean.model.code.ICode;
 import org.rapid.dao.redis.Redis;
 import org.rapid.dao.redis.RedisLock;
 
@@ -17,7 +16,7 @@ public class RedisTest extends DaoTest {
 	
 	@Test
 	public void testCaptchaObtain() { 
-		ICode code = redis.captchaObtain("test", "count", "6231", 60000, 3, 300000, 10000);
+		String code = redis.captchaObtain("test", "count", "6231", 60000, 3, 300000, 10000);
 		System.out.println(code);
 	}
 	

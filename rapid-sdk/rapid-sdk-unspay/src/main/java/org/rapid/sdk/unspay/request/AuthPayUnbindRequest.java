@@ -5,9 +5,9 @@ import java.text.MessageFormat;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.core.bean.enums.ContentType;
 import org.rapid.core.http.HttpPost;
-import org.rapid.core.serialize.GsonSerializer;
 import org.rapid.sdk.unspay.UnspayConfig;
 import org.rapid.sdk.unspay.response.AuthPayUnbindResponse;
+import org.rapid.util.serialize.GsonSerializer;
 
 import com.google.gson.annotations.Expose;
 

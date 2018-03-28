@@ -40,8 +40,8 @@ public class Encrypt {
 			SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
 			random.setSeed(aesKey.getBytes());
 			keygen.init(128, random);
-			SecretKey original_key = keygen.generateKey();
-			byte[] raw = original_key.getEncoded();
+			SecretKey originalKey = keygen.generateKey();
+			byte[] raw = originalKey.getEncoded();
 			SecretKey key = new SecretKeySpec(raw, "AES");
 			Cipher cipher = Cipher.getInstance("AES");
 			cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -51,7 +51,7 @@ public class Encrypt {
 			throw new CryptException("AES加密失败", e);
 		}
 	}
-
+	
 	/**
 	 * RSA 签名
 	 * 

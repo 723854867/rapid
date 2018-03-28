@@ -2,9 +2,9 @@ package org.rapid.core;
 
 import org.I0Itec.zkclient.ZkClient;
 import org.apache.zookeeper.CreateMode;
-import org.rapid.core.serialize.SerializeUtil;
-import org.rapid.core.serialize.Serializer;
 import org.rapid.util.Consts;
+import org.rapid.util.serialize.SerializeUtil;
+import org.rapid.util.serialize.Serializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

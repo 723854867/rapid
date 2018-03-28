@@ -27,7 +27,7 @@ public class DaoInitialHook implements InitialHook {
 	private PathMatchingResourcePatternResolver resourceResolver;
 
 	@Override
-	public void init() {
+	public void init() throws Exception {
 		logger.info("Lua script initial start...");
 		int count = 0;
 		try {

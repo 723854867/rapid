@@ -7,9 +7,9 @@ import org.rapid.core.Assert;
 import org.rapid.core.bean.enums.ContentType;
 import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.http.HttpPost;
-import org.rapid.core.serialize.GsonSerializer;
 import org.rapid.sdk.unspay.UnspayConfig;
 import org.rapid.sdk.unspay.response.AuthPayRecodeResponse;
+import org.rapid.util.serialize.GsonSerializer;
 
 import com.google.gson.annotations.Expose;
 

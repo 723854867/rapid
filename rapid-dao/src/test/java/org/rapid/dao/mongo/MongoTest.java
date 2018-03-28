@@ -6,10 +6,10 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.rapid.core.IDWorker;
-import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.dao.DaoTest;
 import org.rapid.dao.bean.SuperUser;
 import org.rapid.dao.bean.WrapUser;
+import org.rapid.util.serialize.SerializeUtil;
 
 import com.mongodb.client.model.Filters;
 

@@ -8,6 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.rapid.core.bean.enums.Env;
 import org.rapid.core.bean.enums.Locale;
+import org.rapid.core.bean.exception.BizException;
 import org.rapid.core.initial.InitialHook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,11 @@ public class Rapid implements ApplicationListener<ApplicationContextEvent> {
 		List<InitialHook> list = new ArrayList<InitialHook>(hooks.values());
 		Collections.sort(list, (o1, o2) -> o1.priority() - o2.priority());
 		for (InitialHook hook : list)
-			hook.init();
+			try {
+				hook.init();
+			} catch (Exception e) {
+				throw new BizException(e);
+			}
 		long end = System.nanoTime();
 		logger.info("application initial success in {} seconds!", TimeUnit.NANOSECONDS.toSeconds(end - start));
 	}

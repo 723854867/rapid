@@ -1,6 +1,6 @@
 package org.rapid.dao.redis;
 
-import static org.rapid.core.serialize.SerializeUtil.REDIS.encode;
+import static org.rapid.util.serialize.SerializeUtil.REDIS.encode;
 
 import java.util.HashMap;
 import java.util.List;
@@ -9,9 +9,6 @@ import java.util.Map.Entry;
 
 import javax.annotation.Resource;
 
-import org.rapid.core.Assert;
-import org.rapid.core.bean.model.code.Code;
-import org.rapid.core.bean.model.code.ICode;
 import org.rapid.dao.DaoConsts;
 import org.rapid.dao.DaoConsts.RedisConsts.EXPX;
 import org.rapid.dao.DaoConsts.RedisConsts.NXXX;
@@ -146,11 +143,10 @@ public class Redis {
 	 * @param countMaxinum 验证码最大获取次数
 	 * @param countLifetTime 验证码次数生命周期(超过该时间没有获取验证码，则验证码次数 key 会被删除，也就是说验证码次数会被清零)，单位毫秒
 	 * @param interval 两次获取验证码之间的时间间隔：在该时间之内再次获取会提示验证码获取太频繁
-	 * @return 0 - 表示成功；-1 - 表示获取验证码获取太频繁，-2 - 表示验证码获取次数上限
 	 */
-	public ICode captchaObtain(String captchaKey, String countKey, String captcha, long lifeTime, long countMaxinum, long countLifetTime, int interval) {
+	public String captchaObtain(String captchaKey, String countKey, String captcha, long lifeTime, long countMaxinum, long countLifetTime, int interval) {
 		byte[] buffer = this.luaFiber.invoke(LuaCmd.CAPTCHA_OBTAIN, captchaKey, countKey, captcha, lifeTime, countMaxinum, countLifetTime, interval);
-		return Assert.notNull("Unrecognizable response from lua script CAPTCHA_OBTAIN", Code.match(new String(buffer)));
+		return new String(buffer);
 	}
 	
 	/**

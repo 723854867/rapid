@@ -1,4 +1,4 @@
-package org.rapid.core.serialize;
+package org.rapid.util.serialize;
 
 import org.rapid.util.Consts;
 

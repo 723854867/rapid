@@ -17,7 +17,19 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.rapid</groupId>
+			<artifactId>rapid-soa-config-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.rapid</groupId>
 			<artifactId>rapid-soa-courier-api</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.rapid</groupId>
+			<artifactId>rapid-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

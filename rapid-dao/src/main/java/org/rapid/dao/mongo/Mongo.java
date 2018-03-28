@@ -15,12 +15,12 @@ import org.rapid.core.CoreConsts;
 import org.rapid.core.RapidConfiguration;
 import org.rapid.core.bean.model.Identifiable;
 import org.rapid.core.bean.model.Paginate;
-import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.dao.bean.model.Condition;
 import org.rapid.dao.bean.model.Query;
 import org.rapid.util.CollectionUtil;
 import org.rapid.util.bean.Pair;
 import org.rapid.util.bean.enums.Comparison;
+import org.rapid.util.serialize.SerializeUtil;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 

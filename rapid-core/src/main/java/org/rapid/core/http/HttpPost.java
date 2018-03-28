@@ -3,8 +3,8 @@ package org.rapid.core.http;
 import java.util.Map.Entry;
 
 import org.rapid.core.bean.enums.ContentType;
-import org.rapid.core.serialize.Serializer;
 import org.rapid.util.Consts;
+import org.rapid.util.serialize.Serializer;
 
 import com.google.gson.annotations.Expose;
 

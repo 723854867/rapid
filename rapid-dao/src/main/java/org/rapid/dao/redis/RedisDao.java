@@ -10,10 +10,10 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.rapid.core.bean.model.Identifiable;
-import org.rapid.core.serialize.SerializeUtil;
-import org.rapid.core.serialize.Serializer;
 import org.rapid.dao.Dao;
 import org.rapid.dao.bean.model.Query;
+import org.rapid.util.serialize.SerializeUtil;
+import org.rapid.util.serialize.Serializer;
 
 @SuppressWarnings("unchecked")
 public class RedisDao<KEY, ENTITY extends Identifiable<KEY>> implements Dao<KEY, ENTITY> {

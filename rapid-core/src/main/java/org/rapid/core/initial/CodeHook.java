@@ -28,7 +28,7 @@ public class CodeHook implements InitialHook {
 	private PathMatchingResourcePatternResolver resourceResolver;
 	
 	@Override
-	public void init() {
+	public void init() throws Exception {
 		String path = "classpath*:lang/error_code_" + rapid.getLocale().mark() + ".properties";
 		logger.info("Error code initial start...", path);
 		int total = 0;

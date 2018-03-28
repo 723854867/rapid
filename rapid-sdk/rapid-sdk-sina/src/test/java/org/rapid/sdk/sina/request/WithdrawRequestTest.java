@@ -1,9 +1,9 @@
 package org.rapid.sdk.sina.request;
 
 import org.junit.Test;
-import org.rapid.core.serialize.SerializeUtil;
 import org.rapid.sdk.sina.SinaTest;
 import org.rapid.sdk.sina.response.WithdrawResponse;
+import org.rapid.util.serialize.SerializeUtil;
 
 public class WithdrawRequestTest extends SinaTest {
 
