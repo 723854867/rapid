@@ -6,11 +6,11 @@ import javax.persistence.Id;
 import org.rapid.core.bean.model.Identifiable;
 
 /**
- * 用户模块权限
+ * 用户角色
  * 
  * @author lynn
  */
-public class UserModular implements Identifiable<Long> {
+public class UserRole implements Identifiable<Long> {
 
 	private static final long serialVersionUID = 4021067991472476040L;
 
@@ -18,7 +18,7 @@ public class UserModular implements Identifiable<Long> {
 	@GeneratedValue
 	private long id;
 	private long uid;
-	private int modularId;
+	private int roleId;
 	private int created;
 
 	public long getId() {
@@ -37,12 +37,12 @@ public class UserModular implements Identifiable<Long> {
 		this.uid = uid;
 	}
 
-	public int getModularId() {
-		return modularId;
+	public int getRoleId() {
+		return roleId;
 	}
-
-	public void setModularId(int modularId) {
-		this.modularId = modularId;
+	
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
 
 	public int getCreated() {

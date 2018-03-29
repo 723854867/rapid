@@ -5,7 +5,8 @@ import org.rapid.core.bean.model.code.ICode;
 
 public enum SoaCode implements ICode {
 	
-	AUTH_FAIL(200, "code.auth_fail", "访问未授权");
+	AUTH_FAIL(200, "code.auth_fail", "访问未授权"),
+	DEVICE_UNSUPPORT(201, "code.device.unsupport", "该功能暂不支持该设备");
 
 	private int code;
 	private String key;

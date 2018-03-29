@@ -6,24 +6,21 @@ import javax.persistence.Id;
 import org.rapid.core.bean.model.Identifiable;
 
 /**
- * <pre>
- * 权限关系表
- * tid、type、authId 三者做唯一索引
- * </pre>
+ * 角色
  * 
  * @author lynn
  */
-public class CfgAuthority implements Identifiable<Integer> {
+public class CfgRole implements Identifiable<Integer> {
 
-	private static final long serialVersionUID = -1449282195019172095L;
+	private static final long serialVersionUID = -3493221687990391021L;
 
 	@Id
 	@GeneratedValue
 	private int id;
-	private int tid;
-	private int type;
-	private int authId;
+	private String name;
+	private String memo;
 	private int created;
+	private int updated;
 
 	public int getId() {
 		return id;
@@ -33,28 +30,20 @@ public class CfgAuthority implements Identifiable<Integer> {
 		this.id = id;
 	}
 
-	public int getTid() {
-		return tid;
+	public String getName() {
+		return name;
 	}
 
-	public void setTid(int tid) {
-		this.tid = tid;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public int getType() {
-		return type;
+	public String getMemo() {
+		return memo;
 	}
 
-	public void setType(int type) {
-		this.type = type;
-	}
-
-	public int getAuthId() {
-		return authId;
-	}
-
-	public void setAuthId(int authId) {
-		this.authId = authId;
+	public void setMemo(String memo) {
+		this.memo = memo;
 	}
 
 	public int getCreated() {
@@ -63,6 +52,14 @@ public class CfgAuthority implements Identifiable<Integer> {
 
 	public void setCreated(int created) {
 		this.created = created;
+	}
+
+	public int getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(int updated) {
+		this.updated = updated;
 	}
 
 	@Override

@@ -12,9 +12,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserLocker {
+public class ThreadsafeInvoker {
 	
-	private static final Logger logger = LoggerFactory.getLogger(UserLocker.class);
+	private static final Logger logger = LoggerFactory.getLogger(ThreadsafeInvoker.class);
 	
 	@Resource
 	private RedisLock redisLock;

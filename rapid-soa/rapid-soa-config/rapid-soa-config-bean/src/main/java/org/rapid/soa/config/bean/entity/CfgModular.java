@@ -20,7 +20,7 @@ public class CfgModular implements Identifiable<Integer> {
 	private int left;
 	private int right;
 	private int layer;
-	private int trunk;
+	private long trunk;
 	private String name;
 	private int created;
 	private int updated;
@@ -57,11 +57,11 @@ public class CfgModular implements Identifiable<Integer> {
 		this.layer = layer;
 	}
 
-	public int getTrunk() {
+	public long getTrunk() {
 		return trunk;
 	}
-
-	public void setTrunk(int trunk) {
+	
+	public void setTrunk(long trunk) {
 		this.trunk = trunk;
 	}
 

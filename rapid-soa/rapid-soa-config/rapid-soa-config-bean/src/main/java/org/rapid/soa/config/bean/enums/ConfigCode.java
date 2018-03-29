@@ -1,18 +1,19 @@
-package org.rapid.soa.courier.bean.enums;
+package org.rapid.soa.config.bean.enums;
 
 import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.bean.model.code.ICode;
 
-public enum CourierCode implements ICode {
+public enum ConfigCode implements ICode {
 	
-	CAPTCHA_OBTAIN_FREQ(400, "code.captcha.obtain.freq", "验证码获取太频繁"),
-	CAPTCHA_OBTAIN_COUNT_LIMIT(401, "code.captcha.obtain.count.limit", "验证码获取次数限制");
+	MODULAR_NOT_EXIST(500, "code.modular.not.exist", "模块不存在"),
+	GATEWAY_NOT_EXIST(501, "code.gateway.not.exist", "网关不存在"),
+	ROLE_NOT_EXIST(502, "code.role.not.exist", "角色不存在");
 
 	private int code;
 	private String key;
 	private String desc;
 	
-	private CourierCode(int code, String key, String desc) {
+	private ConfigCode(int code, String key, String desc) {
 		this.key = key;
 		this.code = code;
 		this.desc = desc;
@@ -34,7 +35,7 @@ public enum CourierCode implements ICode {
 	}
 	
 	public static final ICode match(String key) { 
-		for (CourierCode code : CourierCode.values()) {
+		for (ConfigCode code : ConfigCode.values()) {
 			if (code.key.equals(key))
 				return code;
 		}

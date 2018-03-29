@@ -24,16 +24,16 @@ import org.rapid.core.bean.model.message.Request;
 import org.rapid.core.bean.model.message.Response;
 import org.rapid.core.bean.model.message.WrapResponse;
 import org.rapid.core.bean.model.option.Option;
-import org.rapid.soa.config.api.GatewayService;
+import org.rapid.soa.config.api.AuthService;
 import org.rapid.soa.config.bean.entity.CfgGateway;
-import org.rapid.soa.core.bean.entity.UserInfo;
+import org.rapid.soa.core.bean.enums.SoaCode;
+import org.rapid.soa.core.bean.model.User;
 import org.rapid.soa.log.api.LogService;
 import org.rapid.soa.user.api.UserService;
 import org.rapid.soa.user.bean.enums.UserCode;
 import org.rapid.soa.web.WebUtil;
 import org.rapid.util.DateUtil;
 import org.rapid.util.StringUtil;
-import org.rapid.util.bean.Pair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.io.InputStreamSource;
@@ -50,7 +50,7 @@ public class GatewayInterceptor {
 	@Resource
 	private UserService userService;
 	@Resource
-	private GatewayService gatewayService;
+	private AuthService authService;
 
 	@Pointcut("execution(* org..controller.*.*(..))")
 	public void pointcut() {
@@ -63,34 +63,35 @@ public class GatewayInterceptor {
 			return point.proceed();
 		HttpServletRequest request = WebUtil.getRequest();
 		RequestMeta meta = _requestMeta(request, point);
-		CfgGateway gateway = gatewayService.gateway(meta.getPath()); 
+		CfgGateway gateway = authService.gateway(meta.getPath()); 
 		// 用户数据处理
-		UserInfo user = null;
-		String lockId = null;
+		User user = null;
 		String token = request.getHeader("Token");
 		if (StringUtil.hasText(token)) {
-			if (null != gateway && null != gateway.getUserLockTimeout()) {
-				int timeout = gateway.getUserLockTimeout();
-				Pair<UserInfo, String> pair = userService.lock(token, timeout);
-				user = pair.getKey();
-				lockId = pair.getValue();
-			} else
+			if (null != gateway && gateway.isSerial()) 
+				user = userService.lock(token, gateway.getLockTimeout());
+			else
 				user = userService.user(token);
 		}
 		try {
 			Object[] params = point.getArgs();
 			for (Object param : params) {
-				if (param instanceof Request)
-					((Request) param).init(meta, token, user);
+				if (param instanceof Request) {
+					Request req = (Request) param;
+					req.init(meta, token, user);
+					req.verify();
+				}
 			}
 			if (null != gateway) {
 				if (gateway.isLogin()) {			// 检测登录
 					Assert.notNull(UserCode.USER_UNLOGIN, user);
 					if (gateway.isAuth()) {			// 检测权限
-						Set<Integer> own = userService.modulars(user.getId());
-						gatewayService.auth(gateway, own);
+						Set<Integer> own = userService.roles(user.getId());
+						authService.auth(gateway, own);
 					}
 				}
+				int deviceType = user.getDevice().getType();
+				Assert.isTrue(SoaCode.DEVICE_UNSUPPORT, (gateway.getDeviceMod() & deviceType) == deviceType);
 			}
 			Object result = point.proceed();
 			Object response = null;
@@ -121,8 +122,8 @@ public class GatewayInterceptor {
 			meta.setRtime(DateUtil.getDate(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS));
 			throw e;
 		} finally {
-			if (StringUtil.hasText(lockId)) {
-				boolean released = userService.releaseLock(user.getId(), lockId);
+			if (StringUtil.hasText(user.getLockId())) {
+				boolean released = userService.releaseLock(user.getId(), user.getLockId());
 				if (!released)
 					logger.warn("用户  {} 锁资源释放失败！", user.getId());
 			}

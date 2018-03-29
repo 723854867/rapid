@@ -27,8 +27,10 @@ public class CfgGateway implements Identifiable<Integer> {
 	private int deviceMod;
 	// 是否启用访问日志
 	private boolean record;
-	// 用户线程安全锁获取超时时间:null 表示不获取用户锁，0 表示只获取一次，否则指定超时的毫秒
-	private Integer userLockTimeout;
+	// 是否串行执行：串行执行的接口不会有并发问题，但是需要获取用户的锁
+	private boolean serial;
+	// 用户线程安全锁获取超时时间:0 表示只获取一次，否则指定超时的毫秒
+	private int lockTimeout;
 	private int created;
 	private int updated;
 	
@@ -87,13 +89,21 @@ public class CfgGateway implements Identifiable<Integer> {
 	public void setRecord(boolean record) {
 		this.record = record;
 	}
-
-	public Integer getUserLockTimeout() {
-		return userLockTimeout;
+	
+	public boolean isSerial() {
+		return serial;
+	}
+	
+	public void setSerial(boolean serial) {
+		this.serial = serial;
 	}
 
-	public void setUserLockTimeout(Integer userLockTimeout) {
-		this.userLockTimeout = userLockTimeout;
+	public int getLockTimeout() {
+		return lockTimeout;
+	}
+	
+	public void setLockTimeout(int lockTimeout) {
+		this.lockTimeout = lockTimeout;
 	}
 
 	public int getCreated() {

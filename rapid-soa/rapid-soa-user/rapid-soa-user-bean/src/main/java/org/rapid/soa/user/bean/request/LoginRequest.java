@@ -4,7 +4,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import org.rapid.core.bean.model.request.RapidRequest;
-import org.rapid.soa.user.bean.enums.DeviceType;
+import org.rapid.soa.core.bean.enums.DeviceType;
 import org.rapid.soa.user.bean.enums.UsernameType;
 
 public class LoginRequest extends RapidRequest {

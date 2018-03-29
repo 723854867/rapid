@@ -6,22 +6,22 @@ import javax.annotation.Resource;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.core.Assert;
+import org.rapid.soa.core.bean.entity.UserDevice;
 import org.rapid.soa.core.bean.entity.UserInfo;
-import org.rapid.soa.user.bean.entity.UserDevice;
 import org.rapid.soa.user.bean.entity.UserInvitation;
-import org.rapid.soa.user.bean.entity.UserModular;
+import org.rapid.soa.user.bean.entity.UserRole;
 import org.rapid.soa.user.bean.entity.Username;
 import org.rapid.soa.user.bean.enums.UserCode;
 import org.rapid.soa.user.bean.enums.UsernameType;
 import org.rapid.soa.user.bean.info.LoginInfo;
 import org.rapid.soa.user.bean.model.query.DeviceQuery;
-import org.rapid.soa.user.bean.model.query.ModularQuery;
+import org.rapid.soa.user.bean.model.query.RoleQuery;
 import org.rapid.soa.user.bean.model.query.UsernameQuery;
 import org.rapid.soa.user.bean.request.RegisterRequest;
 import org.rapid.soa.user.dao.UserDeviceDao;
 import org.rapid.soa.user.dao.UserInfoDao;
 import org.rapid.soa.user.dao.UserInvitationDao;
-import org.rapid.soa.user.dao.UserModularDao;
+import org.rapid.soa.user.dao.UserRoleDao;
 import org.rapid.soa.user.dao.UsernameDao;
 import org.rapid.soa.user.internal.EntityGenerator;
 import org.rapid.util.Consts;
@@ -33,13 +33,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserManager {
 
 	@Resource
+	private UserRoleDao userRoleDao;
+	@Resource
 	private UserInfoDao userInfoDao;
 	@Resource
 	private UsernameDao usernameDao;
 	@Resource
 	private UserDeviceDao userDeviceDao;
-	@Resource
-	private UserModularDao userModularDao;
 	@Resource
 	private UserInvitationDao userInvitationDao;
 
@@ -88,8 +88,8 @@ public class UserManager {
 		return userDeviceDao.getByKey(id);
 	}
 	
-	public List<UserModular> modulars(long uid) {
-		return userModularDao.queryList(new ModularQuery().uid(uid));
+	public List<UserRole> roles(long uid) {
+		return userRoleDao.queryList(new RoleQuery().uid(uid));
 	}
 	
 	public Username username(UsernameType type, String username) {

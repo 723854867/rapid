@@ -12,7 +12,6 @@ public class AssetNotice extends SinaNotice {
 	private String inner_bid_no;
 	@NotEmpty
 	private String bid_status;
-
 	private String reject_reason;
 
 	public String getOut_bid_no() {

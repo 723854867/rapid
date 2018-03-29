@@ -1,4 +1,4 @@
-package org.rapid.soa.user.bean.enums;
+package org.rapid.soa.core.bean.enums;
 
 /**
  * 设备类型
@@ -30,5 +30,12 @@ public enum DeviceType {
 				return temp;
 		}
 		return null;
+	}
+	
+	public static final boolean verify(int mod) {
+		int cmod = 0;
+		for (DeviceType temp : DeviceType.values())
+			cmod |= temp.mark;
+		return (cmod & mod) == mod;
 	}
 }

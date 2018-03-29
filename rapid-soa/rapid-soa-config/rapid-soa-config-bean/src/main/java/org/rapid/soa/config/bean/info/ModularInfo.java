@@ -11,6 +11,7 @@ public class ModularInfo implements Serializable {
 	private static final long serialVersionUID = -2400688553636310550L;
 
 	private int id;
+	private int layer;
 	private String name;
 	private List<ModularInfo> childrens;
 	
@@ -19,6 +20,7 @@ public class ModularInfo implements Serializable {
 	public ModularInfo(CfgModular modular) {
 		this.id = modular.getId();
 		this.name = modular.getName();
+		this.layer = modular.getLayer();
 		this.childrens = new ArrayList<ModularInfo>();
 	}
 	
@@ -28,6 +30,14 @@ public class ModularInfo implements Serializable {
 	
 	public void setId(int id) {
 		this.id = id;
+	}
+	
+	public int getLayer() {
+		return layer;
+	}
+	
+	public void setLayer(int layer) {
+		this.layer = layer;
 	}
 	
 	public String getName() {
@@ -44,5 +54,11 @@ public class ModularInfo implements Serializable {
 	
 	public void setChildrens(List<ModularInfo> childrens) {
 		this.childrens = childrens;
+	}
+	
+	public ModularInfo append(CfgModular modular) { 
+		ModularInfo info = new ModularInfo(modular);
+		this.childrens.add(info);
+		return info;
 	}
 }
