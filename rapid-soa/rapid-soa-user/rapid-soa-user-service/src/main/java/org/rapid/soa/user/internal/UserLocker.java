@@ -59,6 +59,11 @@ public class UserLocker {
 		return Assert.hasText(UserCode.USER_LOCK_FAIL, lockId);
 	}
 	
+	public String lock(long uid, long timeout) {
+		String lockId =  redisLock.lock(KeyGenerator.userLockKey(uid), timeout);
+		return Assert.hasText(UserCode.USER_LOCK_FAIL, lockId);
+	}
+	
 	public boolean releaseLock(long uid, String lockId) {
 		return redisLock.releaseLock(KeyGenerator.userLockKey(uid), lockId);
 	}

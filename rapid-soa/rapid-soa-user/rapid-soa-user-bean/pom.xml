@@ -20,10 +20,5 @@
 			<artifactId>rapid-dao</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-		
-		<dependency>
-			<groupId>javax.persistence</groupId>
-			<artifactId>persistence-api</artifactId>
-		</dependency>
 	</dependencies>
 </project>

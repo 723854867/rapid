@@ -2,8 +2,8 @@ package org.rapid.soa.user.internal;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.core.IDWorker;
+import org.rapid.soa.core.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.entity.UserDevice;
-import org.rapid.soa.user.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.entity.UserInvitation;
 import org.rapid.soa.user.bean.entity.Username;
 import org.rapid.soa.user.bean.enums.DeviceType;

@@ -55,8 +55,9 @@ public class WebUtil {
 		return ip;
 	}
 	
-	public static final RequestMeta requestMeta(HttpServletRequest request, ProceedingJoinPoint point) throws IOException {
+	public static final RequestMeta requestMeta(ProceedingJoinPoint point) throws IOException {
 		RequestMeta meta = new RequestMeta();
+		HttpServletRequest request = WebUtil.getRequest();
 		meta.set_id(IDWorker.INSTANCE.nextSid());
 		meta.setIp(getIpAddress(request));
 		meta.setCtime(DateUtil.getDate(DateUtil.YYYY_MM_DD_HH_MM_SS_SSS));

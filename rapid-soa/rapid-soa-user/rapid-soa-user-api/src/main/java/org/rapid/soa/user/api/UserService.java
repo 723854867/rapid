@@ -1,5 +1,8 @@
 package org.rapid.soa.user.api;
 
+import java.util.Set;
+
+import org.rapid.soa.core.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.info.LoginInfo;
 import org.rapid.soa.user.bean.request.LoginRequest;
 import org.rapid.soa.user.bean.request.RegisterRequest;
@@ -12,11 +15,10 @@ import org.rapid.util.bean.Pair;
  */
 public interface UserService {
 	
-	// 获取用户锁，一旦获取成功则之后改用户的所有操作都是线程安全的
-	String tryLock(long uid);
+	UserInfo user(String token);
 	
 	// 通过 token 获取用户锁
-	Pair<Long, String> tryLock(String token);
+	Pair<UserInfo, String> lock(String token, long timeout);
 	
 	// 释放用户锁
 	boolean releaseLock(long uid, String lockId);
@@ -26,4 +28,7 @@ public interface UserService {
 	
 	// 登录
 	LoginInfo login(LoginRequest request);
+	
+	// 获取用户拥有的权限模块
+	Set<Integer> modulars(long uid);
 }

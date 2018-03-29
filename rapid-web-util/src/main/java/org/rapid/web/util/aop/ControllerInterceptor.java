@@ -1,7 +1,5 @@
 package org.rapid.web.util.aop;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -28,8 +26,7 @@ public class ControllerInterceptor {
 		Class<?> returnType = WebUtil.returnType(point);
 		if (returnType == Void.TYPE)
 			return point.proceed();
-		HttpServletRequest request = WebUtil.getRequest();
-		RequestMeta meta = WebUtil.requestMeta(request, point);
+		RequestMeta meta = WebUtil.requestMeta(point);
 		return null != requestFilter ? requestFilter.request(meta, point, returnType) : point.proceed();
 	}
 }

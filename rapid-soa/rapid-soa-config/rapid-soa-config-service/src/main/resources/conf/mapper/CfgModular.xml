@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.rapid.soa.config.mybatis.dao.CfgModularDao" >
+
+	<select id="modulars" parameterType="org.rapid.soa.config.bean.entity.CfgModular">
+		SELECT id FROM cfg_modular WHERE trunk=#{trunk} AND
+		<foreach collection="modulars" item="item" open="(" close=")", separator=" OR ">
+			<![CDATA[ (left>=#{item.left} AND right<=#{item.right}) ]]>
+		</foreach> 
+	</select>
+</mapper>

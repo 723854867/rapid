@@ -14,11 +14,4 @@
 	<name>rapid-soa-courier-bean</name>
 	<url>http://maven.apache.org</url>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.rapid</groupId>
-			<artifactId>rapid-core</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
 </project>

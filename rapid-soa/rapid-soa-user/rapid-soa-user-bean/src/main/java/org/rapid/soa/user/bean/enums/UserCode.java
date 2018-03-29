@@ -1,14 +1,15 @@
 package org.rapid.soa.user.bean.enums;
 
+import org.rapid.core.bean.model.code.Code;
 import org.rapid.core.bean.model.code.ICode;
 
 public enum UserCode implements ICode {
 	
-	INVITOR_NOT_EXIST(200, "code.invitor.not.exist", "邀请人不存在"),
-	USER_LOCK_FAIL(201, "code.user.lock.fail", "用户正在操作中"),
-	USERNAME_NOT_EXIST(202, "code.username.not.exist", "用户名不存在"),
-	LOGIN_PWD_ERROR(203, "code.login.pwd.error", "登录密码错误"),
-	USER_UNLOGIN(204, "code.unlogin", "用户未登录");
+	INVITOR_NOT_EXIST(300, "code.invitor.not.exist", "邀请人不存在"),
+	USER_LOCK_FAIL(301, "code.user.lock.fail", "用户正在操作中"),
+	USERNAME_NOT_EXIST(302, "code.username.not.exist", "用户名不存在"),
+	LOGIN_PWD_ERROR(303, "code.login.pwd.error", "登录密码错误"),
+	USER_UNLOGIN(304, "code.unlogin", "用户未登录");
 
 	private int code;
 	private String key;
@@ -35,11 +36,11 @@ public enum UserCode implements ICode {
 		return this.desc;
 	}
 	
-	public static final UserCode match(String key) { 
+	public static final ICode match(String key) { 
 		for (UserCode code : UserCode.values()) {
 			if (code.key.equals(key))
 				return code;
 		}
-		return null;
+		return Code.match(key);
 	}
 }

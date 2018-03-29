@@ -1,12 +1,18 @@
 package org.rapid.soa.user.service;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.rapid.core.Assert;
 import org.rapid.core.RapidConfiguration;
+import org.rapid.soa.core.bean.entity.UserInfo;
 import org.rapid.soa.user.api.UserService;
 import org.rapid.soa.user.bean.entity.UserDevice;
 import org.rapid.soa.user.bean.entity.UserInvitation;
+import org.rapid.soa.user.bean.entity.UserModular;
 import org.rapid.soa.user.bean.entity.Username;
 import org.rapid.soa.user.bean.enums.UserCode;
 import org.rapid.soa.user.bean.info.LoginInfo;
@@ -31,19 +37,24 @@ public class UserServiceImpl implements UserService {
 	private UserManager userManager;
 	
 	@Override
-	public String tryLock(long uid) {
-		return userLocker.tryLock(uid);
-	}
-	
-	@Override
-	public Pair<Long, String> tryLock(String token) {
+	public UserInfo user(String token) {
 		String key = RapidConfiguration.get(GlobalKeys.USER_TOKEN_SECRET_KEY);
 		String json = Decrypt.AESDecode(key, token);
 		UserDevice device = SerializeUtil.GSON.fromJson(json, UserDevice.class);
-		String lockId = tryLock(device.getUid());
 		UserDevice odevice = userManager.device(device.getId());
 		Assert.isTrue(UserCode.USER_UNLOGIN, null != odevice && odevice.getToken().equals(token) && odevice.getUid() == device.getUid());
-		return new Pair<Long, String>(device.getUid(), lockId);
+		return userManager.user(device.getUid());
+	}
+	
+	@Override
+	public Pair<UserInfo, String> lock(String token, long timeout) {
+		String key = RapidConfiguration.get(GlobalKeys.USER_TOKEN_SECRET_KEY);
+		String json = Decrypt.AESDecode(key, token);
+		UserDevice device = SerializeUtil.GSON.fromJson(json, UserDevice.class);
+		String lockId = 0 == timeout ? userLocker.tryLock(device.getUid()) : userLocker.lock(device.getUid(), timeout);
+		UserDevice odevice = userManager.device(device.getId());
+		Assert.isTrue(UserCode.USER_UNLOGIN, null != odevice && odevice.getToken().equals(token) && odevice.getUid() == device.getUid());
+		return new Pair<UserInfo, String>(userManager.user(device.getUid()), lockId);
 	}
 	
 	@Override
@@ -75,5 +86,13 @@ public class UserServiceImpl implements UserService {
 			// TODO： 原设备挤下线推送
 		}
 		return result.getKey();
+	}
+	
+	@Override
+	public Set<Integer> modulars(long uid) {
+		Set<Integer> set = new HashSet<Integer>();
+		List<UserModular> modulars = userManager.modulars(uid);
+		modulars.forEach(item -> set.add(item.getModularId()));
+		return set;
 	}
 }

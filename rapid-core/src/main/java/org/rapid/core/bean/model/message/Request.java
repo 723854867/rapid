@@ -18,7 +18,7 @@ public interface Request extends Message {
 	
 	void dispose();
 	
-	void init(RequestMeta meta);
+	void init(RequestMeta meta, Object... attaches);
 	
 	/**
 	 * 基本的参数验证，返回错误描述，如果返回为 null 则表示验证成功

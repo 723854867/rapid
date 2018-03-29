@@ -8,11 +8,11 @@ package org.rapid.soa.user.bean.enums;
 public enum DeviceType {
 
 	// 个人电脑
-	PC(0),
+	PC(1),
 	// 手机
-	MOBILE(1),
+	MOBILE(2),
 	// 平板
-	TABLET(2);
+	TABLET(4);
 	
 	private int mark;
 	

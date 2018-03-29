@@ -1,22 +1,27 @@
 package org.rapid.soa.user.manager;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.core.Assert;
+import org.rapid.soa.core.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.entity.UserDevice;
-import org.rapid.soa.user.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.entity.UserInvitation;
+import org.rapid.soa.user.bean.entity.UserModular;
 import org.rapid.soa.user.bean.entity.Username;
 import org.rapid.soa.user.bean.enums.UserCode;
 import org.rapid.soa.user.bean.enums.UsernameType;
 import org.rapid.soa.user.bean.info.LoginInfo;
 import org.rapid.soa.user.bean.model.query.DeviceQuery;
+import org.rapid.soa.user.bean.model.query.ModularQuery;
 import org.rapid.soa.user.bean.model.query.UsernameQuery;
 import org.rapid.soa.user.bean.request.RegisterRequest;
 import org.rapid.soa.user.dao.UserDeviceDao;
 import org.rapid.soa.user.dao.UserInfoDao;
 import org.rapid.soa.user.dao.UserInvitationDao;
+import org.rapid.soa.user.dao.UserModularDao;
 import org.rapid.soa.user.dao.UsernameDao;
 import org.rapid.soa.user.internal.EntityGenerator;
 import org.rapid.util.Consts;
@@ -33,6 +38,8 @@ public class UserManager {
 	private UsernameDao usernameDao;
 	@Resource
 	private UserDeviceDao userDeviceDao;
+	@Resource
+	private UserModularDao userModularDao;
 	@Resource
 	private UserInvitationDao userInvitationDao;
 
@@ -73,13 +80,21 @@ public class UserManager {
 		return pair;
 	}
 	
-	public Username username(UsernameType type, String username) {
-		UsernameQuery query = new UsernameQuery();
-		query.username(username).type(type);
-		return usernameDao.queryUnique(query);
+	public UserInfo user(long uid) {
+		return userInfoDao.getByKey(uid);
 	}
 	
 	public UserDevice device(String id) {
 		return userDeviceDao.getByKey(id);
+	}
+	
+	public List<UserModular> modulars(long uid) {
+		return userModularDao.queryList(new ModularQuery().uid(uid));
+	}
+	
+	public Username username(UsernameType type, String username) {
+		UsernameQuery query = new UsernameQuery();
+		query.username(username).type(type);
+		return usernameDao.queryUnique(query);
 	}
 }

@@ -21,7 +21,7 @@ public class RapidRequest extends Page implements Request {
 	}
 	
 	@Override
-	public void init(RequestMeta meta) {
+	public void init(RequestMeta meta, Object... attaches) {
 		this.meta = meta;
 	}
 }

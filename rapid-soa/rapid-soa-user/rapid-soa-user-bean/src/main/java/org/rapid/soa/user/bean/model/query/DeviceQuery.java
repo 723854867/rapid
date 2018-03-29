@@ -15,4 +15,8 @@ public class DeviceQuery extends Query<DeviceQuery> {
 	public DeviceQuery type(int type) {
 		return addCondition(new Condition("type", Comparison.eq, type));
 	}
+	
+	public DeviceQuery token(String token) {
+		return addCondition(new Condition("token", Comparison.eq, token));
+	}
 }

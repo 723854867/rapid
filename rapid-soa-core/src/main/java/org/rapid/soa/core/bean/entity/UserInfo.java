@@ -1,4 +1,4 @@
-package org.rapid.soa.user.bean.entity;
+package org.rapid.soa.core.bean.entity;
 
 import javax.persistence.Id;
 
