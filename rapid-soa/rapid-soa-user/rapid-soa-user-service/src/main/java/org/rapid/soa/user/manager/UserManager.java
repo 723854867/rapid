@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.rapid.core.Assert;
+import org.rapid.core.bean.model.code.Code;
 import org.rapid.soa.core.bean.entity.UserDevice;
 import org.rapid.soa.core.bean.entity.UserInfo;
 import org.rapid.soa.user.bean.entity.UserInvitation;
@@ -17,7 +18,9 @@ import org.rapid.soa.user.bean.info.LoginInfo;
 import org.rapid.soa.user.bean.model.query.DeviceQuery;
 import org.rapid.soa.user.bean.model.query.RoleQuery;
 import org.rapid.soa.user.bean.model.query.UsernameQuery;
+import org.rapid.soa.user.bean.request.AuthRequest;
 import org.rapid.soa.user.bean.request.RegisterRequest;
+import org.rapid.soa.user.bean.request.UnauthRequest;
 import org.rapid.soa.user.dao.UserDeviceDao;
 import org.rapid.soa.user.dao.UserInfoDao;
 import org.rapid.soa.user.dao.UserInvitationDao;
@@ -78,6 +81,36 @@ public class UserManager {
 		userDeviceDao.insert(device);
 		pair.setKey(new LoginInfo(user.getId(), device.getToken()));
 		return pair;
+	}
+	
+	@Transactional
+	public long auth(AuthRequest request, boolean root) {
+		UserInfo user = user(request.getUid());
+		Assert.notNull(UserCode.USER_NOT_EIXST, user);
+		UserRole parent = null;
+		if (!root) {
+			RoleQuery query = new RoleQuery();
+			query.uid(request.getUser().getId()).roleId(request.getRoleId());
+			parent = userRoleDao.queryUnique(query);
+			Assert.notNull(UserCode.USER_ROLE_NOT_EIXST, parent);
+		}
+		if (null != parent)
+			userRoleDao.insertUpdate(parent.getTrunk(), parent.getRight());
+		UserRole role = EntityGenerator.newUserRole(request, parent);
+		userRoleDao.insert(role);
+		return role.getId();
+	}
+	
+	@Transactional
+	public void unauth(UnauthRequest request, boolean root) { 
+		UserRole role = userRoleDao.getByKey(request.getId());
+		Assert.notNull(UserCode.USER_ROLE_NOT_EIXST, role);
+		if (!root) {
+			int parent = userRoleDao.parent(role.getTrunk(), role.getLeft(), role.getRight(), request.getUser().getId());
+			Assert.isTrue(Code.FORBID, parent == 1);
+		}
+		userRoleDao.unauth(role);
+		userRoleDao.deleteUpdate(role, role.getRight() - role.getLeft() + 1);
 	}
 	
 	public UserInfo user(long uid) {

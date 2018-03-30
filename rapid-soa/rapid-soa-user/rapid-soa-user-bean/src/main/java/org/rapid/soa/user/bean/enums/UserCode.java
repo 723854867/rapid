@@ -9,7 +9,9 @@ public enum UserCode implements ICode {
 	USER_LOCK_FAIL(301, "code.user.lock.fail", "用户正在操作中"),
 	USERNAME_NOT_EXIST(302, "code.username.not.exist", "用户名不存在"),
 	LOGIN_PWD_ERROR(303, "code.login.pwd.error", "登录密码错误"),
-	USER_UNLOGIN(304, "code.unlogin", "用户未登录");
+	USER_UNLOGIN(304, "code.unlogin", "用户未登录"),
+	USER_NOT_EIXST(305, "code.user.not.exist", "用户不存在"),
+	USER_ROLE_NOT_EIXST(306, "code.user.role.not.exist", "用户没有该角色权限");
 
 	private int code;
 	private String key;

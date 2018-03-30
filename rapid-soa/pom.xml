@@ -26,5 +26,6 @@
 		<module>rapid-soa-courier</module>
 		<module>rapid-soa-config</module>
     <module>rapid-soa-log</module>
+    <module>rapid-soa-all</module>
   </modules>
 </project>

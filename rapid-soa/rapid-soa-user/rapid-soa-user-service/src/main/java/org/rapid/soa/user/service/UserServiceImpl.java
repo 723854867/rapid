@@ -16,8 +16,10 @@ import org.rapid.soa.user.bean.entity.UserRole;
 import org.rapid.soa.user.bean.entity.Username;
 import org.rapid.soa.user.bean.enums.UserCode;
 import org.rapid.soa.user.bean.info.LoginInfo;
+import org.rapid.soa.user.bean.request.AuthRequest;
 import org.rapid.soa.user.bean.request.LoginRequest;
 import org.rapid.soa.user.bean.request.RegisterRequest;
+import org.rapid.soa.user.bean.request.UnauthRequest;
 import org.rapid.soa.user.internal.Consts.GlobalKeys;
 import org.rapid.soa.user.internal.EntityGenerator;
 import org.rapid.soa.user.internal.ThreadsafeInvoker;
@@ -94,5 +96,15 @@ public class UserServiceImpl implements UserService {
 			// TODO： 原设备挤下线推送
 		}
 		return result.getKey();
+	}
+	
+	@Override
+	public long auth(AuthRequest request, boolean root) {
+		return userManager.auth(request, root);
+	}
+	
+	@Override
+	public void unauth(UnauthRequest request, boolean root) {
+		
 	}
 }

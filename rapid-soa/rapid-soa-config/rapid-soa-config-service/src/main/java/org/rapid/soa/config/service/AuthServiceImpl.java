@@ -95,8 +95,18 @@ public class AuthServiceImpl implements AuthService {
 	}
 	
 	@Override
+	public void deleteRole(SoaIdRequest request) {
+		authManager.deleteRole(request.getId());
+	}
+	
+	@Override
 	public void deleteGateway(SoaIdRequest request) {
 		authManager.deleteGateway(request.getId());
+	}
+	
+	@Override
+	public void deleteModular(SoaIdRequest request) {
+		authManager.deleteModular(request.getId());
 	}
 	
 	@Override

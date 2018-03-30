@@ -14,15 +14,21 @@ import org.rapid.soa.config.bean.request.ModifyRoleRequest;
 import org.rapid.soa.core.bean.request.SoaIdRequest;
 
 public interface AuthService {
-
+	
 	// 获取模块结构列表
 	List<ModularInfo> modulars();
 	
 	// 获取网关配置
 	CfgGateway gateway(String path);
 	
+	// 删除角色
+	void deleteRole(SoaIdRequest request);
+	
 	// 删除网关
 	void deleteGateway(SoaIdRequest request);
+	
+	// 删除模块
+	void deleteModular(SoaIdRequest request);
 	
 	// 删除权限
 	void deleteAuthority(SoaIdRequest request);

@@ -11,4 +11,8 @@ public class RoleQuery extends Query<RoleQuery> {
 	public RoleQuery uid(long uid) {
 		return addCondition(new Condition("uid", Comparison.eq, uid));
 	}
+	
+	public RoleQuery roleId(int roleId) {
+		return addCondition(new Condition("role_id", Comparison.eq, roleId));
+	}
 }

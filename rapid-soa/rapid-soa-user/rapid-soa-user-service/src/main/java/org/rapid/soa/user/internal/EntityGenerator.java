@@ -6,8 +6,10 @@ import org.rapid.soa.core.bean.entity.UserDevice;
 import org.rapid.soa.core.bean.entity.UserInfo;
 import org.rapid.soa.core.bean.enums.DeviceType;
 import org.rapid.soa.user.bean.entity.UserInvitation;
+import org.rapid.soa.user.bean.entity.UserRole;
 import org.rapid.soa.user.bean.entity.Username;
 import org.rapid.soa.user.bean.enums.UsernameType;
+import org.rapid.soa.user.bean.request.AuthRequest;
 import org.rapid.util.Consts.Symbol;
 import org.rapid.util.DateUtil;
 import org.rapid.util.KeyUtil;
@@ -53,6 +55,19 @@ public class EntityGenerator {
 		instance.setUid(uid);
 		instance.setType(type.mark());
 		instance.setCreated(DateUtil.current());
+		return instance;
+	}
+	
+	public static final UserRole newUserRole(AuthRequest request, UserRole parent) {
+		UserRole instance = new UserRole();
+		instance.setUid(request.getUid());
+		instance.setRoleId(request.getRoleId());
+		instance.setTrunk(null == parent ? IDWorker.INSTANCE.nextId() : parent.getTrunk());
+		instance.setLeft(null == parent ? 1 : parent.getRight());
+		instance.setRight(instance.getLeft() + 1);
+		instance.setLayer(null == parent ? 1 : parent.getLayer() + 1);
+		int time = DateUtil.current();
+		instance.setCreated(time);
 		return instance;
 	}
 }

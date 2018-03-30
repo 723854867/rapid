@@ -18,6 +18,10 @@ public class UserRole implements Identifiable<Long> {
 	@GeneratedValue
 	private long id;
 	private long uid;
+	private long left;
+	private long right;
+	private long layer;
+	private long trunk;
 	private int roleId;
 	private int created;
 
@@ -35,6 +39,38 @@ public class UserRole implements Identifiable<Long> {
 
 	public void setUid(long uid) {
 		this.uid = uid;
+	}
+	
+	public long getLeft() {
+		return left;
+	}
+	
+	public void setLeft(long left) {
+		this.left = left;
+	}
+	
+	public long getRight() {
+		return right;
+	}
+	
+	public void setRight(long right) {
+		this.right = right;
+	}
+	
+	public long getLayer() {
+		return layer;
+	}
+	
+	public void setLayer(long layer) {
+		this.layer = layer;
+	}
+	
+	public long getTrunk() {
+		return trunk;
+	}
+	
+	public void setTrunk(long trunk) {
+		this.trunk = trunk;
 	}
 
 	public int getRoleId() {

@@ -1,5 +1,7 @@
 package org.rapid.soa.config.manager;
 
+import java.util.Set;
+
 import javax.annotation.Resource;
 
 import org.rapid.core.Assert;
@@ -7,6 +9,7 @@ import org.rapid.soa.config.bean.entity.CfgAuthority;
 import org.rapid.soa.config.bean.entity.CfgGateway;
 import org.rapid.soa.config.bean.entity.CfgModular;
 import org.rapid.soa.config.bean.entity.CfgRole;
+import org.rapid.soa.config.bean.enums.AuthorityType;
 import org.rapid.soa.config.bean.enums.ConfigCode;
 import org.rapid.soa.config.bean.request.CreateAuthorityRequest;
 import org.rapid.soa.config.bean.request.CreateGatewayRequest;
@@ -59,8 +62,35 @@ public class AuthManager {
 		return gateway.getId();
 	}
 	
+	// 删除角色和角色相关的权限配置
+	@Transactional
+	public void deleteRole(int id) {
+		cfgRoleDao.deleteByKey(id);
+		cfgAuthorityDao.deleteByTypeAndTid(AuthorityType.ROLE.mark(), id);
+	}
+	
+	// 删除网关和网关相关的权限配置
+	@Transactional
 	public void deleteGateway(int id) {
 		cfgGatewayDao.deleteByKey(id);
+		cfgAuthorityDao.deleteByTypeAndAuthId(AuthorityType.MODULAR.mark(), id);
+	}
+	
+	// 删除模块和模块相关的权限配置
+	@Transactional
+	public void deleteModular(int id) {
+		CfgModular modular = cfgModularDao.getByKey(id);
+		Assert.notNull(ConfigCode.MODULAR_NOT_EXIST, modular);
+		// 获取当前节点及子节点的序号
+		Set<Integer> children = cfgModularDao.tree(id);
+		// 先删除当前节点及其子节点
+		cfgModularDao.deleteNode(modular);
+		// 将该节点右边的数据的左右值变小
+		cfgModularDao.deleteUpdate(modular, modular.getRight() - modular.getLeft() + 1);
+		// 删除角色模块权限
+		cfgAuthorityDao.deleteRoleModulars(children);
+		// 删除模块网关配置
+		cfgAuthorityDao.deleteModularGateways(children);
 	}
 
 	@Transactional
@@ -70,9 +100,9 @@ public class AuthManager {
 			parent = modular(request.getParent());
 			Assert.notNull(ConfigCode.MODULAR_NOT_EXIST, parent);
 		}
-		CfgModular modular = EntityGenerator.newCfgModular(parent, request.getName());
 		if (null != parent)
 			cfgModularDao.insertUpdate(parent.getTrunk(), parent.getRight());
+		CfgModular modular = EntityGenerator.newCfgModular(parent, request.getName());
 		cfgModularDao.insert(modular);
 		return modular.getId();
 	}

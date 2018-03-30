@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.rapid.soa.config.mybatis.dao.CfgAuthorityDao" >
+
+	<delete id="deleteRoleModulars">
+		DELETE FROM cfg_authority WHERE type = 1 AND auth_id IN 
+		<foreach collection="collection" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<delete id="deleteModularGateways">
+		DELETE FROM cfg_authority WHERE type = 2 AND tid IN 
+		<foreach collection="collection" item="item" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>
