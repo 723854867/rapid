@@ -40,11 +40,6 @@ public class Query<QUERY extends Query<QUERY>> extends Page {
 		return lock;
 	}
 	
-	public QUERY setLock(boolean lock) {
-		this.lock = lock;
-		return (QUERY) this;
-	}
-	
 	public QUERY forUpdate()  {
 		this.lock = true;
 		return (QUERY) this;

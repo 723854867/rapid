@@ -17,6 +17,8 @@ import org.rapid.dao.db.dao.UserDao;
 public class UserDaoTest extends DaoTest {
 
 	@Resource
+	private Tx tx;
+	@Resource
 	private UserDao userDao;
 	
 	@Test
@@ -25,6 +27,15 @@ public class UserDaoTest extends DaoTest {
 		user.setAge(10);
 		user.setName("test");
 		userDao.insert(user);
+		System.out.println(user.getId());
+	}
+	
+	@Test
+	public void testInserTx() {
+		User user = new User();
+		user.setAge(10);
+		user.setName("test");
+		tx.insert(user);
 		System.out.println(user.getId());
 	}
 	

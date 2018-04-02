@@ -2,6 +2,7 @@ package org.rapid.util;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,10 @@ public class CollectionUtil {
 	
 	public static final <T> List<T> emptyList() {
 		return new ArrayList<T>();
+	}
+	
+	public static final <T, K> Map<T, K> emptyMap() {
+		return new HashMap<T, K>();
 	}
 	
 	public static final boolean isEmpty(Map<?, ?> map) { 
