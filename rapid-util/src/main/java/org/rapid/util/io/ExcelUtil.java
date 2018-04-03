@@ -2,7 +2,10 @@ package org.rapid.util.io;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +16,7 @@ import org.apache.poi.openxml4j.util.ZipSecureFile;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -70,11 +74,21 @@ public class ExcelUtil {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	private static final <T> T _parseEntity(Row row, String[] cols, Class<T> clazz) {
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0, len = cols.length; i < len; i++) {
 			Cell cell = row.getCell(i);
-			cell.setCellType(CellType.STRING);
+			 //判断是否为日期类型
+	         if(0==cell.getCellType()){  
+		        if(DateUtil.isCellDateFormatted(cell)){
+		         //用于转化为日期格式
+		         Date d = cell.getDateCellValue();
+		         DateFormat formater = new SimpleDateFormat("yyyyMMdd");
+		         cell.setCellValue(formater.format(d));
+	            }
+	         }
+	        cell.setCellType(CellType.STRING);
 			map.put(cols[i], cell.getStringCellValue());
 		}
 		try {
