@@ -2,8 +2,6 @@ package org.rapid.util.io;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -40,13 +38,15 @@ public class ExcelUtil {
 				throw new RuntimeException(file.getPath() + " load failure!", e);
 			}
 		} finally {
-			if (null != workbook)
+			if (null != workbook) {
 				try {
 					workbook.close();
-				} catch (IOException e) {}
+				} catch (IOException e) {
+				}
+			}
 		}
 	}
-	
+
 	private static final <T> List<T> _parse(Workbook workbook, Class<T> clazz) {
 		List<T> list = new ArrayList<T>();
 		Sheet sheet = workbook.getSheetAt(0);
@@ -54,10 +54,10 @@ public class ExcelUtil {
 		_parseContent(sheet, cols, list, clazz);
 		return list;
 	}
-	
+
 	private static final String[] _parseTitle(Sheet sheet) {
 		Row row = sheet.getRow(0);
-		String[] cols = new String[row.getPhysicalNumberOfCells()]; 
+		String[] cols = new String[row.getPhysicalNumberOfCells()];
 		for (int i = 0, len = cols.length; i < len; i++) {
 			Cell cell = row.getCell(i);
 			cell.setCellType(CellType.STRING);
@@ -65,7 +65,7 @@ public class ExcelUtil {
 		}
 		return cols;
 	}
-	
+
 	private static final <T> void _parseContent(Sheet sheet, String[] cols, List<T> list, Class<T> clazz) {
 		int rowNum = sheet.getPhysicalNumberOfRows();
 		for (int i = 1; i < rowNum; i++) {
@@ -73,22 +73,20 @@ public class ExcelUtil {
 			list.add(_parseEntity(row, cols, clazz));
 		}
 	}
-	
-	@SuppressWarnings("deprecation")
+
 	private static final <T> T _parseEntity(Row row, String[] cols, Class<T> clazz) {
 		Map<String, String> map = new HashMap<String, String>();
 		for (int i = 0, len = cols.length; i < len; i++) {
 			Cell cell = row.getCell(i);
-			 //判断是否为日期类型
-	         if(0==cell.getCellType()){  
-		        if(DateUtil.isCellDateFormatted(cell)){
-		         //用于转化为日期格式
-		         Date d = cell.getDateCellValue();
-		         DateFormat formater = new SimpleDateFormat("yyyyMMdd");
-		         cell.setCellValue(formater.format(d));
-	            }
-	         }
-	        cell.setCellType(CellType.STRING);
+			// 判断是否为日期类型
+			if (CellType.NUMERIC == cell.getCellTypeEnum()) {
+				if (DateUtil.isCellDateFormatted(cell)) {
+					// 用于转化为日期格式
+					Date d = cell.getDateCellValue();
+					cell.setCellValue(org.rapid.util.DateUtil.getDate(d, org.rapid.util.DateUtil.yyyyMMdd));
+				}
+			}
+			cell.setCellType(CellType.STRING);
 			map.put(cols[i], cell.getStringCellValue());
 		}
 		try {
