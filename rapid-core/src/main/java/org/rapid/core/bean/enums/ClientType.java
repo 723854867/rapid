@@ -14,7 +14,9 @@ public enum ClientType {
 	// 管理后台
 	MANAGER(3),
 	// h5(主要是推广页面，webview不算)
-	WAP(4);
+	WAP(4),
+	// 系统调用
+	SYSTEM(5);
 
 	private int mark;
 
