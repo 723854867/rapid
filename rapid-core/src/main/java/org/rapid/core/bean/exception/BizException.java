@@ -10,6 +10,8 @@ public class BizException extends RapidRuntimeException {
 
 	private ICode code;
 	
+	public BizException() {}
+	
 	public BizException(ICode code) {
 		this(code.desc());
 		this.code = code;

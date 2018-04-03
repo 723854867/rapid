@@ -9,6 +9,8 @@ public class SdkException extends BizException {
 	private String errorCode;
 	private String errorMessage;
 	
+	public SdkException() {}
+	
 	public SdkException(ICode code, String errorCode, String errorMessage) {
 		super(code);
 		this.errorCode = errorCode;
