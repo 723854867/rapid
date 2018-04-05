@@ -7,6 +7,7 @@ public enum Code implements ICode {
 	PARAM_ERROR(2, "code.param.error", "参数错误"),
 	FORBID(3, "code.forbid", "非法访问"),
 	SERVER_BUSY(10, "code.server.busy", "服务器繁忙"),
+	SERVER_MAINTENANCE(11, "code.server.maintenance", "系统维护中"),
 	
 	CAPTCHA_OBTAIN_FREQ(20, "code.captcha.obtain.freq", "验证码获取太频繁"),
 	CAPTCHA_OBTAIN_COUNT_LIMIT(21, "code.captcha.obtain.count.limit", "验证码获取次数限制"),
