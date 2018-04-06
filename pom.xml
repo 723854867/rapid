@@ -50,7 +50,6 @@
 		<validation.version>2.0.1.Final</validation.version>
 		<javax.jms-api.version>2.0.1</javax.jms-api.version>
 		<aspectjweaver.version>1.8.13</aspectjweaver.version>
-		<aspectjweaver.version>1.8.13</aspectjweaver.version>
 		<mybatis-spring.version>1.3.1</mybatis-spring.version>
 		<libphonenumber.version>8.9.0</libphonenumber.version>
 		<persistence-api.version>1.0.2</persistence-api.version>
