@@ -10,6 +10,10 @@ import java.util.Set;
 
 public class CollectionUtil {
 	
+	public static final <T> Set<T> emptySet() {
+		return new HashSet<T>();
+	}
+	
 	public static final <T> List<T> emptyList() {
 		return new ArrayList<T>();
 	}
