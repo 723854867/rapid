@@ -17,7 +17,7 @@ public class QueryMiddleAccountTest extends SinaTest {
 		QueryMiddleAccountResponse response = request.execute();
 		List<AccountMiddleTips> list = response.getList();
 		for (AccountMiddleTips tips : list) {
-			System.out.println(tips.getTradeCode() + " " + tips.getAccount() + " " + tips.getAmount());
+			System.out.println("sss==="+tips.getTradeCode() + " " + tips.getAccount() + " " + tips.getAmount());
 		}
 	}
 }
