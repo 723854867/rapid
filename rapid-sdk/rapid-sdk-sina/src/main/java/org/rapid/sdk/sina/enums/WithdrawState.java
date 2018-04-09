@@ -7,5 +7,6 @@ public enum WithdrawState {
 	FAILED,
 	PROCESSING,
 	RETURNT_TICKET,
+	WAIT_CONFIRM,
 	TIMEOUT;
 }
