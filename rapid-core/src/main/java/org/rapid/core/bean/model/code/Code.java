@@ -18,6 +18,7 @@ public enum Code implements ICode {
 	UPLOAD_COUNT_EXCEEDED(53, "code.upload.count.exceeded", "上传文件数量超过限制"),
 	
 	USER_NOT_EXIST(100, "code.user.not.exist", "用户不存在"),
+	
 	PASSWORD_ERROR(101, "code.password.error", "密码错误"),
 	CAPTCHA_ERROR(102, "code.captcha.error", "验证码错误"),
 	KEY_DUPLICATED(103, "code.data.exist", "主键冲突,请重试"),
@@ -31,7 +32,7 @@ public enum Code implements ICode {
 	SYS_CONFIG_ERROR(122, "code.sys.config.error", "系统配置错误"),
 	SYS_CONFIG_NOT_EXIST(123, "code.sys.config.not.exist", "系统配置不存在"),
 	PASSWORD_UNSET(124, "code.pwd.unset", "未设置面膜"),
-	
+	USER_ALREADY_EXIST(125, "code.user.already.exist", "用户已存在"),
 	COMPANY_NOT_EXIST(130, "code.company.not.exist", "公司不存在"),
 	
 	NOTICE_SIGN_VERIFY_FAILURE(131, "code.notice.sign.verify.failure", "通知验签失败");
