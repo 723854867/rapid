@@ -24,7 +24,7 @@ public class RapidConfiguration {
 	
 	static {
 		try {
-			Resource[] resources = RESOLVER.getResources("classpath*:conf/rapid.properties");
+			Resource[] resources = RESOLVER.getResources("classpath*:conf/*.properties");
 			for (Resource resource : resources) {
 				InputStream in = resource.getInputStream();
 				Properties properties = new Properties();
@@ -33,6 +33,19 @@ public class RapidConfiguration {
 					RapidConfiguration.properties.put(entry.getKey().toString(), entry.getValue().toString());
 				in.close();
 			}
+		} catch (Exception e) {
+			throw new BizException(e);
+		}
+	}
+	
+	public static final Properties getProperties(String path) { 
+		try {
+			Resource resource = RESOLVER.getResource(path);
+			InputStream in = resource.getInputStream();
+			Properties properties = new Properties();
+			properties.load(new InputStreamReader(in, Consts.UTF_8));
+			in.close();
+			return properties;
 		} catch (Exception e) {
 			throw new BizException(e);
 		}
@@ -50,6 +63,25 @@ public class RapidConfiguration {
 		String property = properties.get(option.getKey());
 		T value = null == property ? option.getDefaultValue() : CONVERSION_SERVICE.convert(property, option.getClazz());
 		return necessary ? Assert.notNull("property [" + option.getKey() + "] is no specified!", value) : value;
+	}
+	
+	public static final String get(String key) {
+		return get(key, String.class);
+	}
+	
+	public static final String get(String key, String defaultValue) {
+		return get(key, String.class, defaultValue);
+	}
+	
+	public static final <T> T get(String key, Class<T> clazz) {
+		String property = properties.get(key);
+		T value = null == property ? null : CONVERSION_SERVICE.convert(property, clazz);
+		return Assert.notNull("property [" + key + "] is no specified!", value);
+	}
+	
+	public static final <T> T get(String key, Class<T> clazz, T defaultValue) {
+		String property = properties.get(key);
+		return null == property ? defaultValue : CONVERSION_SERVICE.convert(property, clazz);
 	}
 	
 	public static final Resource[] getResources(String locationPattern) {

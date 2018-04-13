@@ -1,4 +1,4 @@
-package org.rapid.dao.db.mybatis.entity;
+package org.rapid.util.reflect;
 
 import java.beans.BeanInfo;
 import java.beans.IntrospectionException;

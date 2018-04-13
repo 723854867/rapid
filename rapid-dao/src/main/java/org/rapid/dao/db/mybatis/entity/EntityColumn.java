@@ -3,6 +3,7 @@ package org.rapid.dao.db.mybatis.entity;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeHandler;
 import org.rapid.util.StringUtil;
+import org.rapid.util.reflect.EntityField;
 
 public class EntityColumn {
 	

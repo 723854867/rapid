@@ -1,8 +1,12 @@
 package org.rapid.util;
 
+import javax.persistence.Column;
+
 public class SubPojo extends BasePojo {
 
+	@Column(name = "地址", scale = 3)
 	private String addr;
+	@Column(name = "邮箱", scale = 2)
 	private String email;
 	
 	public String getAddr() {

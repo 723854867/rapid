@@ -25,6 +25,7 @@ public interface CoreConsts {
 	final BoolOption REDIS_ENABLE				= new BoolOption("redis.enable", false);
 	final BoolOption UPLOAD_ENABLE				= new BoolOption("upload.enable", false);
 	final BoolOption ZOOKEEPER_ENABLE			= new BoolOption("zookeeper.enable", false);
+	final BoolOption MAIL_ENABLE				= new BoolOption("mail.enable", false);
 	
 	// activemq
 	final StrOption ACTIVEMQ_USERNAME						= new StrOption("activemq.username");

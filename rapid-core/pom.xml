@@ -89,5 +89,15 @@
 			<artifactId>javax.jms-api</artifactId>
 			<optional>true</optional>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<optional>true</optional>
+		</dependency>
 	</dependencies>
 </project>

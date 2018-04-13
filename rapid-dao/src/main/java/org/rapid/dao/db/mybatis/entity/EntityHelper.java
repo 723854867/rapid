@@ -16,6 +16,8 @@ import org.rapid.dao.db.mybatis.DaoConfig;
 import org.rapid.dao.db.mybatis.DaoConfig.Style;
 import org.rapid.dao.db.mybatis.SqlKeyWords;
 import org.rapid.util.StringUtil;
+import org.rapid.util.reflect.EntityField;
+import org.rapid.util.reflect.FieldHelper;
 
 public class EntityHelper {
 
