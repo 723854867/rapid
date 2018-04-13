@@ -7,7 +7,7 @@
 	<parent>
 		<groupId>org.rapid</groupId>
 		<artifactId>rapid</artifactId>
-		<version>1.0.1</version>
+		<version>1.0.2</version>
 	</parent>
 
 	<artifactId>rapid-dao</artifactId>
