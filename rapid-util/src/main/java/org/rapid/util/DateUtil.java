@@ -241,7 +241,7 @@ public class DateUtil {
 	}
 	
 	public static final long nextZeroTime() {
-		return zeroTime(new Date());
+		return nextZeroTime(new Date());
 	}
 	
 	public static final long nextZeroTime(Date date) {
