@@ -23,8 +23,8 @@ public class MailSender {
 
 	@Resource
 	private JavaMailSender javaMailSender;
-	
-	public void sendMail(String to, String subject, String text) { 
+
+	public void sendMail(String to, String subject, String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setFrom(RapidConfiguration.get("mail.from"));
 		message.setTo(to);
@@ -32,8 +32,8 @@ public class MailSender {
 		message.setText(text);
 		javaMailSender.send(message);
 	}
-	
-	public void sendMail(String to, String subject, String text, File file) throws MessagingException { 
+
+	public void sendMail(String to, String subject, String text, File file) throws MessagingException {
 		MimeMessage message = javaMailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, true);
 		helper.setFrom(RapidConfiguration.get("mail.from"));
@@ -43,8 +43,8 @@ public class MailSender {
 		helper.addAttachment(file.getName(), file);
 		javaMailSender.send(message);
 	}
-	
-	public void sendMail(String to, String subject, String text, String fileName, InputStream input) { 
+
+	public void sendMail(String to, String subject, String text, String fileName, InputStream input) {
 		try {
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -58,10 +58,10 @@ public class MailSender {
 			javaMailSender.send(message);
 		} catch (Exception e) {
 			throw new BizException(e);
-		} 
+		}
 	}
-	
-	public void sendMail(String to, String subject, String text, String fileName, byte[] input) { 
+
+	public void sendMail(String to, String subject, String text, String fileName, byte[] input) {
 		try {
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -73,10 +73,10 @@ public class MailSender {
 			javaMailSender.send(message);
 		} catch (Exception e) {
 			throw new BizException(e);
-		} 
+		}
 	}
-	
-	public void sendMail(String[] tos, String subject, String text, String fileName, byte[] input) { 
+
+	public void sendMail(String[] tos, String subject, String text, String fileName, byte[] input) {
 		try {
 			MimeMessage message = javaMailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -88,6 +88,34 @@ public class MailSender {
 			javaMailSender.send(message);
 		} catch (Exception e) {
 			throw new BizException(e);
-		} 
+		}
+	}
+	
+	public void sendHtmlMail(String tos, String subject, String text) {
+		try {
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");
+			helper.setSubject(subject);
+			helper.setFrom(RapidConfiguration.get("mail.from"));
+			helper.setTo(tos);
+			helper.setText(text, true);
+			javaMailSender.send(message);
+		} catch (Exception e) {
+			throw new BizException(e);
+		}
+	}
+
+	public void sendHtmlMail(String[] tos, String subject, String text) {
+		try {
+			MimeMessage message = javaMailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message,true,"utf-8");
+			helper.setSubject(subject);
+			helper.setFrom(RapidConfiguration.get("mail.from"));
+			helper.setTo(tos);
+			helper.setText(text, true);
+			javaMailSender.send(message);
+		} catch (Exception e) {
+			throw new BizException(e);
+		}
 	}
 }
