@@ -51,6 +51,16 @@ public class Redis {
 		return null != result && result.equalsIgnoreCase(DaoConsts.RedisConsts.OK);
 	}
 	
+	public boolean set(String key, String value, NXXX nxxx) {
+		String result = invoke(new Callback<Jedis, String>() {
+			@Override
+			public String invoke(Jedis jedis) {
+				return jedis.set(key, value, nxxx.name());
+			}
+		});
+		return null != result && result.equalsIgnoreCase(DaoConsts.RedisConsts.OK);
+	}
+	
 	public boolean set(String key, String value, NXXX nxxx, EXPX expx, int timeout) {
 		String result = invoke(new Callback<Jedis, String>() {
 			@Override
