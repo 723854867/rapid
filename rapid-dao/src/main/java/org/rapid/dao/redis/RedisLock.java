@@ -31,6 +31,10 @@ public class RedisLock {
 	 * @return
 	 */
 	public String tryLock(String lock) {
+		return tryLock(lock, lockTimeout);
+	}
+	
+	public String tryLock(String lock, int lockTimeout) {
 		String lockId = KeyUtil.uuid();
 		return redis.set(lock, lockId, NXXX.NX, EXPX.PX, lockTimeout) ? lockId : null;
 	}
