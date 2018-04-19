@@ -102,7 +102,7 @@ public class Query<QUERY extends Query<QUERY>> extends Page {
 	}
 	
 	public QUERY sum(String col) {
-		this.cols.add("SUM(" + col + ")");
+		this.cols.add("SUM(" + col + ") " + col);
 		return (QUERY) this;
 	}
 	
