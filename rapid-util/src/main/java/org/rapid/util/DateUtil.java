@@ -1,5 +1,7 @@
 package org.rapid.util;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -274,6 +276,17 @@ public class DateUtil {
 	
 	public static final long interval(Object date1, String format1, Object date2, String format2, org.rapid.util.bean.enums.TimeUnit unit) {
 		return interval(date1, format1, date2, format2, TIMEZONE_GMT_8, unit);
+	}
+	
+	public static void main(String[] args) {
+		long interval = interval("20180223", DateUtil.yyyyMMdd, "20180423", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
+		long tempInterval = DateUtil.interval("20180423", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
+		long investInterval = interval - tempInterval;
+		double ratio = (double)investInterval / interval;
+		System.out.println(tempInterval);
+		System.out.println(investInterval);
+		System.out.println(ratio);
+		System.out.println(BigDecimal.valueOf(4674.26).multiply(BigDecimal.valueOf(ratio)).setScale(2, RoundingMode.DOWN));
 	}
 	
 	/**
