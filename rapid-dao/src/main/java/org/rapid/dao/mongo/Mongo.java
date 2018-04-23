@@ -18,6 +18,7 @@ import org.rapid.core.bean.model.Paginate;
 import org.rapid.dao.bean.model.Condition;
 import org.rapid.dao.bean.model.Query;
 import org.rapid.util.CollectionUtil;
+import org.rapid.util.StringUtil;
 import org.rapid.util.bean.Pair;
 import org.rapid.util.bean.enums.Comparison;
 import org.rapid.util.serialize.SerializeUtil;
@@ -25,6 +26,9 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.bulk.BulkWriteResult;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -48,8 +52,16 @@ public class Mongo {
 	
 	@PostConstruct
 	public void init() {
-		this.mongo = new MongoClient(RapidConfiguration.get(CoreConsts.MONGO_HOST, true));
-		this.connection = mongo.getDatabase(RapidConfiguration.get(CoreConsts.MONGO_DB, true));
+		String db = RapidConfiguration.get(CoreConsts.MONGO_DB, true);
+		String username = RapidConfiguration.get(CoreConsts.MONGO_USERNAME, false);
+		String password = RapidConfiguration.get(CoreConsts.MONGO_PASSWORD, false);
+		if (StringUtil.hasText(username) && StringUtil.hasText(password)) {
+			MongoCredential credential = MongoCredential.createCredential("wywqj", db, "wywqj2018".toCharArray());
+			ServerAddress address = new ServerAddress(RapidConfiguration.get(CoreConsts.MONGO_HOST, true));
+			this.mongo = new MongoClient(address, credential, MongoClientOptions.builder().build());
+		} else 
+			this.mongo = new MongoClient(RapidConfiguration.get(CoreConsts.MONGO_HOST, true));
+		this.connection = mongo.getDatabase(db);
 	}
 	
 	public void insertOne(String collectionName, Object object) {
