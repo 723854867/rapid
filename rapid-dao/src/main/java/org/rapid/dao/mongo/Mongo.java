@@ -56,7 +56,7 @@ public class Mongo {
 		String username = RapidConfiguration.get(CoreConsts.MONGO_USERNAME, false);
 		String password = RapidConfiguration.get(CoreConsts.MONGO_PASSWORD, false);
 		if (StringUtil.hasText(username) && StringUtil.hasText(password)) {
-			MongoCredential credential = MongoCredential.createCredential("wywqj", db, "wywqj2018".toCharArray());
+			MongoCredential credential = MongoCredential.createCredential(username, db, password.toCharArray());
 			ServerAddress address = new ServerAddress(RapidConfiguration.get(CoreConsts.MONGO_HOST, true));
 			this.mongo = new MongoClient(address, credential, MongoClientOptions.builder().build());
 		} else 
