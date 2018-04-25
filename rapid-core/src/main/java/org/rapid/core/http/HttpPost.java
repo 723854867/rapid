@@ -64,6 +64,6 @@ public abstract class HttpPost<RESPONSE extends HttpResponse> extends HttpReques
 	}
 	
 	protected byte[] serial() {
-		return this.serializer.serial(this);
+		return null == this.serializer ? null : this.serializer.serial(this);
 	}
 }
