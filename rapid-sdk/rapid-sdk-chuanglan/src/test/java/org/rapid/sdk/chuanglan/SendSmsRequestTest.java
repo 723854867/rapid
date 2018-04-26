@@ -10,7 +10,7 @@ public class SendSmsRequestTest extends ChuangLanTest {
 	public void testExecuteCaptcha() {
 		SendSmsRequest request = new SendSmsRequest();
 		request.setMsg("尊敬的微钱进会员,您的短信验证码是123456,请您在5分钟之内验证.");
-		request.setMobile("15888837752");
+		request.setMobile("+8615888837752");
 		request.execute();
 	}
 	
