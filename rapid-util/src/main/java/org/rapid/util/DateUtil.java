@@ -1,7 +1,5 @@
 package org.rapid.util;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -278,17 +276,6 @@ public class DateUtil {
 		return interval(date1, format1, date2, format2, TIMEZONE_GMT_8, unit);
 	}
 	
-	public static void main(String[] args) {
-		long interval = interval("20180223", DateUtil.yyyyMMdd, "20180423", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
-		long tempInterval = DateUtil.interval("20180423", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
-		long investInterval = interval - tempInterval;
-		double ratio = (double)investInterval / interval;
-		System.out.println(tempInterval);
-		System.out.println(investInterval);
-		System.out.println(ratio);
-		System.out.println(BigDecimal.valueOf(4674.26).multiply(BigDecimal.valueOf(ratio)).setScale(2, RoundingMode.DOWN));
-	}
-	
 	/**
 	 * 计算 date1 和 date2 之间的时间差:如果 剩余时间不够一个周期则算一个时间差
 	 * 如果 date1 小于 date2 则返回正值，否则返回负值
@@ -319,5 +306,29 @@ public class DateUtil {
 		calendar.set(Calendar.DATE, 1);
 		calendar.roll(Calendar.DATE, false);
 		return calendar.get(Calendar.DATE);
+	}
+	
+	public static final long lastTimeOfMonth() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		calendar.add(Calendar.MONTH, -1);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.add(Calendar.DAY_OF_MONTH, 1);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTimeInMillis();
+	}
+	
+	public static final long firstyTimeOfMonth() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(System.currentTimeMillis());
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
+        calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 59);
+        calendar.set(Calendar.MILLISECOND, 999);
+        return calendar.getTimeInMillis();
 	}
 }
