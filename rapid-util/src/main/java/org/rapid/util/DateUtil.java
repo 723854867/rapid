@@ -279,10 +279,11 @@ public class DateUtil {
 	}
 	
 	public static void main(String[] args) {
-		long interval = interval("20180223", DateUtil.yyyyMMdd, "20180423", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
-		long tempInterval = DateUtil.interval("20180423", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
+		long interval = interval("20171229", DateUtil.yyyyMMdd, "20180427", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
+		long tempInterval = DateUtil.interval("20180427", DateUtil.yyyyMMdd, org.rapid.util.bean.enums.TimeUnit.DAY);
 		long investInterval = interval - tempInterval;
 		double ratio = (double)investInterval / interval;
+		System.out.println(interval);
 		System.out.println(tempInterval);
 		System.out.println(investInterval);
 		System.out.println(ratio);
