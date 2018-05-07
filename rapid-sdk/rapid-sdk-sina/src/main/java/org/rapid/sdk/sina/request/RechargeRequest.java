@@ -6,7 +6,6 @@ import java.text.MessageFormat;
 
 import org.rapid.core.IDWorker;
 import org.rapid.sdk.sina.SinaConfig;
-import org.rapid.sdk.sina.enums.AccountType;
 import org.rapid.sdk.sina.request.so.PayMethod;
 import org.rapid.sdk.sina.response.RechargeResponse;
 
@@ -24,7 +23,7 @@ public class RechargeRequest extends UserRequest<RechargeResponse> {
 	private String summary;
 	@Expose
 	@SerializedName("account_type")
-	private String accountType = AccountType.SAVING_POT.name();
+	private String accountType;
 	@Expose
 	private String amount;
 	@Expose
