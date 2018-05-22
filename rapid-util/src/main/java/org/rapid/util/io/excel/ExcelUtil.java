@@ -3,6 +3,7 @@ package org.rapid.util.io.excel;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -123,6 +124,13 @@ public class ExcelUtil {
 		writeSheet(workbook, sheetName, entityClass, list);
 	}
 	
+	public static final void writeSheet(Workbook workbook, String sheetName, Class<?> entityClass, Collection<?> entities) { 
+		List<Object> list = new ArrayList<Object>();
+		for (Object object : entities)
+			list.add(object);
+		writeSheet(workbook, sheetName, entityClass, list);
+	}
+	
 	public static final void writeSheet(Workbook workbook, String sheetName, Class<?> entityClass, List<Object> entities) { 
 		Sheet sheet = workbook.createSheet(sheetName);
 		ExcelEntity entity = EntityHelper.getEntity(entityClass);
@@ -144,6 +152,8 @@ public class ExcelUtil {
 				Object value = map.get(col.getField().getName());
 				Cell cell = row.createCell(colNum);
 				cell.setCellType(CellType.STRING);
+				if (null == value)
+					System.out.println("here");
 				cell.setCellValue(value.toString());
 			}
 		}

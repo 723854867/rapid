@@ -16,8 +16,6 @@ public enum TradeState {
 	PRE_AUTH_APPLY_SUCCESS,
 	// 代收撤销成功
 	PRE_AUTH_CANCELED,
-	// 提现失败回收中
-	WITHDRAW_REBACKING,
-	// 提现失败已收回
-	WITHDRAW_REBACK;
+	WITHDRAW_REBACK,
+	WITHDRAW_REBACKING;
 }
