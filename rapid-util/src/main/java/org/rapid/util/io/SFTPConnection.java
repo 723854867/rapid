@@ -35,7 +35,7 @@ public class SFTPConnection {
 		try {
 			JSch jsch = new JSch();
 			if (null != priKeyFile)
-				jsch.addIdentity(priKeyFile);// 设置私钥
+				jsch.addIdentity(priKeyFile);
 			session = jsch.getSession(username, host, port);
 			if (null != password)
 				session.setPassword(password);
