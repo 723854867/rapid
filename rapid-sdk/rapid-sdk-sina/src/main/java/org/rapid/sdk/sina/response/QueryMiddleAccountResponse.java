@@ -41,7 +41,7 @@ public class QueryMiddleAccountResponse extends SinaResponse {
 	}
 	
 	private AccountMiddleTips _parse(String info) {
-		StringTokenizer tokenizer = new StringTokenizer(this.accountList, "^");
+		StringTokenizer tokenizer = new StringTokenizer(info, "^");
 		int idx = 0;
 		AccountMiddleTips tips = new AccountMiddleTips();
 		while (tokenizer.hasMoreElements()) {
