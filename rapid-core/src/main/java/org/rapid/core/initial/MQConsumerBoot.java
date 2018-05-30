@@ -34,7 +34,7 @@ public class MQConsumerBoot {
 			amc.setUserName(username);
 		String password = RapidConfiguration.get(CoreConsts.ACTIVEMQ_PASSWORD, false);
 		if (null != password)
-			amc.setPassword(username);
+			amc.setPassword(password);
 		PooledConnectionFactory factory = new PooledConnectionFactory(amc);
 		factory.setMaxConnections(RapidConfiguration.get(CoreConsts.ACTIVEMQ_MAX_CONNECTIONS, false));
 		return factory;
